@@ -1,0 +1,39 @@
+@import '../../../styles/index.scss';
+
+.wrapper {
+  width: vw(450);
+  height: vh(50);
+  display: flex;
+  border-radius: vh($borderRadius);
+  display: flex;
+  align-items: center;
+
+  align-items: center;
+  background-color: $color-lldark;
+
+  input {
+    width: vw(370);
+    padding: vw(12) vw(24);
+    background-color: transparent;
+    outline: none;
+    border: none;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: vw(400);
+    font-size: vw(14);
+    line-height: vw(17);
+    color: $textColor;
+  }
+
+  .icon {
+    margin-right: vw(10);
+    width: vw(24);
+    height: vh(24);
+
+    svg {
+      width: vw(24);
+      height: vh(24);
+    }
+  }
+}

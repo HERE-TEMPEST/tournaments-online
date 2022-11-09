@@ -1,0 +1,46 @@
+@import '../../styles/index.scss';
+
+.wrapper {
+  background-color: $color-ldark;
+  width: vw(1920);
+  height: vh(50);
+
+  .mainLayout {
+    width: vw(900);
+    height: vh(50);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .logo {
+      width: vw(168);
+      height: vh(50);
+
+      svg {
+        width: vw(168);
+        height: vh(50);
+      }
+    }
+
+    .navigations {
+      display: flex;
+      align-items: center;
+
+      .icon {
+        width: vw(32);
+        height: vh(32);
+        margin-left: vw(20);
+
+        &:first-child {
+          margin-left: 0;
+        }
+
+        svg {
+          width: vw(32);
+          height: vh(32);
+        }
+      }
+    }
+  }
+}

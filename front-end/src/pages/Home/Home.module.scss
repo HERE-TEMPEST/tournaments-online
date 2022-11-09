@@ -1,0 +1,45 @@
+@import '../../styles/index.scss';
+
+$marging: 15;
+
+.wrapper {
+  width: vw($windowWidth);
+  height: vh(1135);
+  margin: 0 auto;
+
+  .content {
+    margin-top: vh($marging);
+    display: flex;
+    flex-direction: column;
+
+    .searchPanel {
+      width: vw($windowWidth);
+      height: vh(70);
+      background-color: $color-ldark;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-top-left-radius: vh($borderRadius);
+      border-top-right-radius: vh($borderRadius);
+    }
+
+    .tournamentSliderPanel {
+      margin-top: vh($marging);
+      height: vh(220);
+      width: vw($windowWidth);
+
+      background-color: $color-ldark;
+    }
+
+    .chatPanel {
+      margin-top: vh($marging);
+      width: vw($windowWidth);
+      height: vh(795);
+      background-color: $color-ldark;
+
+      border-bottom-left-radius: vh($borderRadius);
+      border-bottom-right-radius: vh($borderRadius);
+    }
+  }
+}

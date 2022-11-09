@@ -1,0 +1,12 @@
+@import '../styles/index.scss';
+
+.app {
+  width: vw(1920);
+  height: vh(1200);
+
+  background-color: $color-dark;
+}
+
+body {
+  background-color: $color-dark;
+}
