@@ -1,0 +1,20 @@
+@import '../../../styles/index.scss';
+
+.wrapper {
+  .sliderButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: vw(24);
+    height: vh(24);
+
+    svg {
+      width: vw(24);
+      height: vh(24);
+    }
+  }
+
+  .window {
+    width: vw(836);
+  }
+}

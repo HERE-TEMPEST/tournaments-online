@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import scss from './Home.module.scss'
 import { SearchInput } from './SearchInput'
+import { TournamentsSlider } from './TournamentsSlider'
 
 export const HomePage = () => {
   const [searchParam, setSearchParam] = useState('')
@@ -11,7 +12,7 @@ export const HomePage = () => {
         <div className={scss.searchPanel}>
           <SearchInput value={searchParam} setValue={setSearchParam} />
         </div>
-        <div className={scss.tournamentSliderPanel}></div>
+        <TournamentsSlider className={scss.tournamentSliderPanel} />
         <div className={scss.chatPanel}></div>
       </div>
     </div>

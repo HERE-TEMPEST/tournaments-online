@@ -1,0 +1,15 @@
+.wrapper {
+  .window {
+    overflow: hidden;
+
+    .pipeline {
+      width: fit-content;
+      display: flex;
+
+      transition: translate;
+      transition-property: transform;
+      transition-duration: 500ms;
+      transition-timing-function: ease-in-out;
+    }
+  }
+}

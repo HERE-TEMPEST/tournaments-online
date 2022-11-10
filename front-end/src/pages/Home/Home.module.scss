@@ -25,6 +25,9 @@ $marging: 15;
     }
 
     .tournamentSliderPanel {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       margin-top: vh($marging);
       height: vh(220);
       width: vw($windowWidth);
