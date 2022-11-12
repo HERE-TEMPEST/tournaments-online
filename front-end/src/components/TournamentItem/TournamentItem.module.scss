@@ -1,0 +1,51 @@
+@import '../../styles/index.scss';
+
+.wrapper {
+  &:first-child {
+    margin-left: 0;
+  }
+
+  cursor: pointer;
+  display: flex;
+  margin-left: vw(16);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: $color-lldark;
+  width: vw(197);
+  height: vh(180);
+
+  img {
+    width: vw(181);
+    height: vh(124);
+  }
+
+  .info {
+    margin-top: vh(3);
+    width: vw(181);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    .title {
+      width: vw(181);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-weight: vh(560);
+      font-size: vh(12);
+      line-height: vh(15);
+
+      color: $textColor;
+    }
+
+    .capacity {
+      width: vw(181);
+      margin-top: vh(5);
+      font-weight: vh(560);
+      font-size: vh(12);
+      line-height: vh(15);
+      color: $textColor;
+    }
+  }
+}

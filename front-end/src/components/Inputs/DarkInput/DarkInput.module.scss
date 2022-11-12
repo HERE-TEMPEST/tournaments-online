@@ -1,7 +1,7 @@
 @import '../../../styles/index.scss';
 
 .wrapper {
-  width: vw(450);
+  width: vw(480);
   height: vh(50);
   display: flex;
   border-radius: vh($borderRadius);
@@ -12,28 +12,18 @@
   background-color: $color-lldark;
 
   input {
-    width: vw(370);
-    padding: vw(12) vw(24);
-    background-color: transparent;
     outline: none;
+    background-color: transparent;
     border: none;
 
     font-family: 'Helvetica Neue', Roboto, sans-serif;
     font-style: normal;
+    color: $textColor;
     font-weight: vw(400);
     font-size: vw(14);
     line-height: vw(17);
-    color: $textColor;
-  }
 
-  .icon {
-    margin-right: vw(10);
-    width: vw(24);
-    height: vh(24);
-
-    svg {
-      width: vw(24);
-      height: vh(24);
-    }
+    width: vw(370);
+    padding: vw(12) vw(24);
   }
 }

@@ -5,7 +5,11 @@ import { Icon } from '../Icon'
 
 import scss from './Header.module.scss'
 
-export const Header = () => {
+interface HeaderProps {
+  isAuth: boolean
+}
+
+export const Header = ({ isAuth }: HeaderProps) => {
   return (
     <header className={scss.wrapper}>
       <div className={scss.mainLayout}>
@@ -14,20 +18,22 @@ export const Header = () => {
             <Icon type="Logo" />
           </Link>
         </div>
-        <div className={scss.navigations}>
-          <div className={scss.icon}>
-            <Icon type="Plus" />
+        {isAuth && (
+          <div className={scss.navigations}>
+            <div className={scss.icon}>
+              <Icon type="Plus" />
+            </div>
+            <div className={scss.icon}>
+              <Icon type="TableRecords" />
+            </div>
+            <div className={scss.icon}>
+              <Icon type="Profile" />
+            </div>
+            <div className={scss.icon}>
+              <Icon type="Exit" />
+            </div>
           </div>
-          <div className={scss.icon}>
-            <Icon type="TableRecords" />
-          </div>
-          <div className={scss.icon}>
-            <Icon type="Profile" />
-          </div>
-          <div className={scss.icon}>
-            <Icon type="Exit" />
-          </div>
-        </div>
+        )}
       </div>
     </header>
   )

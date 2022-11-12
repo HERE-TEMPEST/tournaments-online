@@ -1,25 +1,9 @@
 import { combineReducers } from 'redux'
-import { ActionInterface } from '../action'
 
-const initialState = {
-  users: [],
-}
+import { userReducer } from './user'
 
-const userReducer = (
-  state: any = initialState,
-  action: ActionInterface<any>
-) => {
-  const { type } = action
-
-  switch (type) {
-    case Symbol.for('asd'):
-      return state
-
-    default:
-      return state
-  }
-}
+export * from './user'
 
 export const rootReducer = combineReducers({
-  users: userReducer,
+  user: userReducer,
 })

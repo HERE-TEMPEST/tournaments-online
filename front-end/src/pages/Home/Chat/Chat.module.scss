@@ -1,0 +1,96 @@
+@import '../../../styles/index.scss';
+
+.wrapper {
+  width: vw(836);
+  height: vh(795);
+  margin: 0 auto;
+
+  .chatPlace {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: vw(836);
+    height: vh(725);
+    background-color: $color-lldark;
+
+    .chat {
+      scrollbar-width: none;
+      display: flex;
+      flex-direction: column;
+      width: vw(800);
+      height: vh(685);
+      overflow-y: scroll;
+
+      .message {
+        display: flex;
+        margin-top: vh(20);
+
+        &:first-child {
+          margin-top: 0;
+        }
+
+        .profile {
+          width: vw(40);
+          width: vh(40);
+          img {
+            width: vw(40);
+            width: vh(40);
+          }
+        }
+        .info {
+          margin-left: vw(5);
+          margin-right: vw(5);
+          display: flex;
+          flex-direction: column;
+
+          .username {
+            font-family: 'Helvetica Neue', Roboto, sans-serif;
+            font-style: normal;
+            font-weight: vw(400);
+            font-size: vw(15);
+            line-height: vh(18);
+            color: #71aaeb;
+          }
+
+          .messageBody {
+            width: vw(400);
+            overflow: hidden;
+            margin-top: vh(8);
+
+            word-wrap: break-word;
+            font-style: normal;
+            font-family: 'Helvetica Neue', Roboto, sans-serif;
+            font-weight: vw(400);
+            font-size: vw(15);
+            line-height: vh(25);
+            color: $textColor;
+          }
+        }
+      }
+    }
+  }
+
+  .input {
+    margin-top: vh(10);
+    width: vw(836);
+    height: vh(50);
+    background-color: $color-lldark;
+    border-bottom-left-radius: vh($borderRadius);
+    border-bottom-right-radius: vh($borderRadius);
+
+    input {
+      width: vw(700);
+      padding: vw(12) vw(24);
+      background-color: transparent;
+      outline: none;
+      border: none;
+
+      font-family: 'Helvetica Neue', Roboto, sans-serif;
+      font-style: normal;
+      font-weight: vw(400);
+      font-size: vw(14);
+      line-height: vw(17);
+      color: $textColor;
+    }
+  }
+}

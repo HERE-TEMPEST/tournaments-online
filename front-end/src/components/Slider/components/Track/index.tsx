@@ -47,8 +47,6 @@ export const Track = (props: TrackProps) => {
       setMove(newMove)
       setShift(0)
     }
-
-    console.log(windowWidth)
   }, [windowWidth])
 
   useEffect(() => {

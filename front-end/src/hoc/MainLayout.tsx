@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
+import { useSelector } from 'react-redux'
 import { Header } from '../components'
+import { IStore } from '../redux/store'
 
 interface MainLayoutProps {
   children:
@@ -10,9 +12,11 @@ interface MainLayoutProps {
 }
 
 export const MainLayout = ({ children }: MainLayoutProps) => {
+  const isAuth = useSelector((state: IStore) => !!state.user.token)
+
   return (
     <>
-      <Header />
+      <Header isAuth={isAuth} />
 
       {children}
     </>
