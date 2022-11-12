@@ -4,7 +4,7 @@ import { LOGIN_USER_ACTION, UserActions } from './actions'
 const initialValue: IUser = {
   name: '',
   surname: '',
-  token: 'ss',
+  token: '',
   profileUri: null,
 }
 

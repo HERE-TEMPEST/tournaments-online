@@ -11,18 +11,63 @@
 
 .wrapper {
   width: vw($windowWidth);
-  height: vh(1135);
+  height: vh(655);
   margin: 0 auto;
 
   .content {
     width: vw(550);
-    height: vh(245);
+    height: vh(510);
     margin: vh(270) auto 0 auto;
     border-radius: vh($borderRadius);
     background-color: $color-ldark;
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    .profile {
+      margin-top: vh(25);
+      width: vw(480);
+      display: flex;
+      align-items: center;
+
+      .setProfileInput {
+        margin-left: vw(5);
+        height: vh(34);
+        display: flex;
+        flex-direction: column;
+        height: vh(112);
+        justify-content: space-between;
+
+        .btn {
+          width: vw(235);
+          height: vh(34);
+        }
+
+        .title {
+          opacity: 50%;
+          @include textStyleMixin;
+        }
+      }
+
+      .profileImage {
+        width: vh(110);
+        height: vj(110);
+        border-radius: 110px;
+        overflow: hidden;
+        img {
+          width: vw(110);
+          height: vh(110);
+        }
+      }
+    }
+
+    .name {
+      margin-top: vh(15);
+    }
+
+    .surname {
+      margin-top: vh(15);
+    }
 
     .login {
       margin-top: vh(15);
@@ -37,7 +82,7 @@
       display: flex;
       flex-direction: column;
 
-      .loginBtn {
+      .registrationBtn {
         margin-top: vh(15);
         margin-right: vw(25);
         align-self: flex-end;

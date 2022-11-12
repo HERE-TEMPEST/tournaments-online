@@ -46,7 +46,11 @@ export const LoginPage = () => {
           />
           <div className={scss.createAccount}>
             Нет аккаунта?
-            <Link to={REGISTRATION_PAGE_ROUTE} className={scss.createLink}>
+            <Link
+              replace={true}
+              to={REGISTRATION_PAGE_ROUTE}
+              className={scss.createLink}
+            >
               Создать.
             </Link>
           </div>
