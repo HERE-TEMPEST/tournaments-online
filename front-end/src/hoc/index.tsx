@@ -1,3 +1,3 @@
 export * from './MainLayout'
-export * from './IsNotAuthRoute'
+export * from './PublicRoute'
 export * from './PrivateRoute'

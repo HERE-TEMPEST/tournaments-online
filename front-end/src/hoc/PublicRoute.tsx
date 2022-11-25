@@ -3,7 +3,7 @@ import { Navigate, Outlet } from 'react-router-dom'
 import { HOME_PAGE_ROUTE } from '../constants'
 import { IStore } from '../redux/store'
 
-export const IsNotAuthRoute = () => {
+export const PublicRoute = () => {
   const token = useSelector<IStore>((state) => state.user.token)
 
   if (token) {

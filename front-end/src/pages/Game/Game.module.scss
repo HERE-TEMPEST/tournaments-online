@@ -1,0 +1,24 @@
+@import '../../styles/index.scss';
+
+$marging: 15;
+
+.wrapper {
+  width: vw($windowWidth);
+  height: vh(1135);
+  margin: 0 auto;
+
+  .content {
+    margin-top: vh($marging);
+    display: flex;
+    flex-direction: column;
+
+    .gameArea {
+      margin-top: vh($marging);
+      width: vw($windowWidth);
+      height: vh(1024);
+      background-color: $color-ldark;
+
+      border-radius: vh($borderRadius);
+    }
+  }
+}

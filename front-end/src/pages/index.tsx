@@ -5,6 +5,7 @@ import { LoginPage } from './Login'
 import { ProfilePage } from './Profile'
 import { RegistrationPage } from './Registration'
 import {
+  GAME_PAGE_ROUTE,
   HOME_PAGE_ROUTE,
   LOGIN_PAGE_ROUTE,
   PROFILE_PAGE_ROUTE,
@@ -12,10 +13,11 @@ import {
   ROOT,
   TABLE_RECORDS_PAGE_ROUTE,
 } from '../constants'
-import { MainLayout, IsNotAuthRoute, PrivateRoute } from '../hoc'
+import { MainLayout, PublicRoute, PrivateRoute } from '../hoc'
 
 import scss from './index.module.scss'
 import { TableRecordsPage } from './TableRecords'
+import { GamePage } from './Game'
 
 export const TournamentsOnlineApp = () => {
   return (
@@ -30,8 +32,9 @@ export const TournamentsOnlineApp = () => {
               path={TABLE_RECORDS_PAGE_ROUTE}
               element={<TableRecordsPage />}
             />
+            <Route path={GAME_PAGE_ROUTE} element={<GamePage />} />
           </Route>
-          <Route path={ROOT} element={<IsNotAuthRoute />}>
+          <Route path={ROOT} element={<PublicRoute />}>
             <Route path={LOGIN_PAGE_ROUTE} element={<LoginPage />} />
             <Route
               path={REGISTRATION_PAGE_ROUTE}

@@ -1,0 +1,35 @@
+@import '../../../styles/index.scss';
+
+.wrapper {
+  width: vw($windowWidth);
+  height: vh(65);
+  background-color: $color-ldark;
+  display: flex;
+  align-items: center;
+
+  .timer {
+    margin-left: vw(30);
+    @include textStyleMixin;
+    font-weight: 600;
+  }
+
+  .score {
+    font-weight: 600;
+    margin-left: auto;
+    @include textStyleMixin;
+  }
+
+  .icon {
+    cursor: pointer;
+    width: vw(32);
+    height: vh(32);
+    margin: 0 vw(27) 0 vw(100);
+
+    svg {
+      width: vw(32);
+      height: vh(32);
+    }
+  }
+
+  border-radius: vh($borderRadius);
+}

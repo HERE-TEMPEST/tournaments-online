@@ -1,8 +1,9 @@
 /* eslint-disable eslint-comments/disable-enable-pair */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
+import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 import {
   HOME_PAGE_ROUTE,
@@ -19,11 +20,17 @@ interface HeaderProps {
 }
 
 export const Header = ({ isAuth }: HeaderProps) => {
+  const [iconsVisibility, setIconsVisibility] = useState(isAuth)
   const dispatch = useDispatch()
+  const location = useLocation()
 
   const handleClickSignOut = () => {
     dispatch(createSignOutUserAction())
   }
+
+  useEffect(() => {
+    setIconsVisibility(() => isAuth && location.pathname !== '/game')
+  }, [location, isAuth])
 
   return (
     <header className={scss.wrapper}>
@@ -33,7 +40,7 @@ export const Header = ({ isAuth }: HeaderProps) => {
             <Icon type="Logo" />
           </Link>
         </div>
-        {isAuth && (
+        {iconsVisibility && (
           <div className={scss.navigations}>
             <div className={scss.icon}>
               <Icon type="Plus" />
