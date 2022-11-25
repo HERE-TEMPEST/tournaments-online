@@ -1,10 +1,10 @@
 import { IUser } from '../../../models'
-import { LOGIN_USER_ACTION, UserActions } from './actions'
+import { LOGIN_USER_ACTION, SIGNOUT_USER_ACTION, UserActions } from './actions'
 
 const initialValue: IUser = {
   name: '',
   surname: '',
-  token: '',
+  token: 'ss',
   profileUri: null,
 }
 
@@ -18,6 +18,13 @@ export const userReducer = (
     case LOGIN_USER_ACTION: {
       const { token } = payload
       return { ...state, token }
+    }
+
+    case SIGNOUT_USER_ACTION: {
+      return {
+        ...initialValue,
+        token: '',
+      }
     }
 
     default:

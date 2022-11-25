@@ -1,13 +1,5 @@
-import React from 'react'
-import classNames from 'classnames'
-
-import scss from './TournamentsSlider.module.scss'
-import { Icon, Slider } from '../../../components'
 import { TournamentItem } from '../../../components/TournamentItem'
-
-interface TournamentsSliderProps {
-  className: string
-}
+import scss from './Tournaments.module.scss'
 
 const tournaments = [
   {
@@ -52,31 +44,50 @@ const tournaments = [
     capacity: 10,
     postUri: location.origin + '/1.jpg',
   },
+  {
+    id: 7,
+    title: 'Some asdasdasdasdasdasdasdadasdname',
+    currentAmount: 0,
+    capacity: 10,
+    postUri: location.origin + '/1.jpg',
+  },
+  {
+    id: 8,
+    title: 'Some name',
+    currentAmount: 0,
+    capacity: 10,
+    postUri: location.origin + '/1.jpg',
+  },
+  {
+    id: 9,
+    title: 'Some name',
+    currentAmount: 0,
+    capacity: 10,
+    postUri: location.origin + '/1.jpg',
+  },
+  {
+    id: 10,
+    title: 'Some name',
+    currentAmount: 0,
+    capacity: 10,
+    postUri: location.origin + '/1.jpg',
+  },
 ]
 
-export const TournamentsSlider = ({ className }: TournamentsSliderProps) => {
-  const handleClickChoiceTournament = (id: number) => {
-    return id
-  }
-
+export const Tournaments = () => {
   return (
-    <Slider oneByOne={true} className={classNames(scss.wrapper, className)}>
-      <Slider.Button className={scss.sliderButton}>
-        <Icon type="LeftArrow" />
-      </Slider.Button>
-      <Slider.Track windowClassName={scss.window}>
+    <div className={scss.wrapper}>
+      <div className={scss.content}>
         {tournaments.map((tournament) => (
           <TournamentItem
-            className={scss.item}
             {...tournament}
             key={tournament.id}
-            onClick={handleClickChoiceTournament}
+            onClick={() => {
+              return
+            }}
           />
         ))}
-      </Slider.Track>
-      <Slider.Button className={scss.sliderButton} right>
-        <Icon type="RightArrow" />
-      </Slider.Button>
-    </Slider>
+      </div>
+    </div>
   )
 }

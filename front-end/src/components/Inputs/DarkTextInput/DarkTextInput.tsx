@@ -1,31 +1,31 @@
 import classNames from 'classnames'
 import React from 'react'
 
-import scss from './DarkInput.module.scss'
+import scss from './DarkTextInput.module.scss'
 
-interface DarkInputProps {
-  type?: string
+interface DarkTextInputProps {
   placeholder?: string
   className?: string
   inputClassName?: string
   value: string
+  isPassword?: boolean
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-export const DarkInput = ({
+export const DarkTextInput = ({
   onChange,
-  type,
   className,
   placeholder,
+  isPassword,
   inputClassName,
   value,
-}: DarkInputProps) => {
+}: DarkTextInputProps) => {
   return (
     <div className={classNames(className, scss.wrapper)}>
       <input
-        className={inputClassName || ''}
+        className={inputClassName}
         onChange={onChange}
-        type={type}
+        type={isPassword ? 'password' : 'text'}
         placeholder={placeholder}
         value={value}
       />

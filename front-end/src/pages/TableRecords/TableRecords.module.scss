@@ -1,0 +1,111 @@
+@import '../../styles/index.scss';
+
+$marging: 15;
+
+@mixin tBox {
+  margin: 0 vw(5) 0 vw(5);
+  height: vh(33);
+  border-radius: vh($borderRadius);
+  background-color: $color-lldark;
+}
+
+@mixin tdBox {
+  @include tBox;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin textItem {
+  @include textStyleMixin;
+  opacity: 60%;
+  font-weight: vh(600);
+  font-size: vh(16);
+  line-height: vh(19);
+}
+
+.wrapper {
+  width: vw($windowWidth);
+  height: vh(1135);
+  margin: 0 auto;
+
+  .content {
+    margin-top: vh($marging);
+    display: flex;
+    flex-direction: column;
+
+    .tableRecords {
+      display: flex;
+      justify-content: center;
+      margin-top: vh($marging);
+      width: vw($windowWidth);
+      height: vh(1024);
+      background-color: $color-ldark;
+      border-radius: vh($borderRadius);
+      overflow-y: scroll;
+      scrollbar-width: none;
+
+      table {
+        margin-top: vh(40);
+        height: fit-content;
+        width: vw(860);
+        thead {
+          height: vh(33);
+          th {
+            @include tBox;
+            @include textItem;
+          }
+        }
+
+        tbody {
+          td {
+            padding: vh(10) 0;
+
+            .profile {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              img {
+                width: vh(74);
+                height: vh(74);
+                border-radius: vh(74);
+              }
+            }
+
+            .fio {
+              @include textItem;
+              @include tdBox;
+            }
+
+            .amountTours {
+              @include textItem;
+              @include tdBox;
+            }
+
+            .sr {
+              @include textItem;
+              @include tdBox;
+            }
+          }
+        }
+      }
+    }
+
+    .title {
+      width: vw($windowWidth);
+      height: vh(65);
+      background-color: $color-ldark;
+      display: flex;
+      align-items: center;
+      border-radius: vh($borderRadius);
+
+      .text {
+        margin-left: vw(30);
+        @include textStyleMixin;
+        font-weight: vw(600);
+        font-size: vh(24);
+        line-height: vh(29);
+      }
+    }
+  }
+}

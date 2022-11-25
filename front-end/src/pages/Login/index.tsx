@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { DarkInput } from '../../components'
+import { DarkTextInput } from '../../components'
 import { TransparentButton } from '../../components/Buttons'
 import { REGISTRATION_PAGE_ROUTE } from '../../constants'
 
@@ -24,18 +24,17 @@ export const LoginPage = () => {
   return (
     <div className={scss.wrapper}>
       <div className={scss.content}>
-        <DarkInput
+        <DarkTextInput
           className={scss.login}
           placeholder="Логин..."
-          type="text"
           value={login}
           onChange={onChangeLogin}
         />
-        <DarkInput
+        <DarkTextInput
           className={scss.password}
           placeholder="Пароль..."
           value={password}
-          type="password"
+          isPassword={true}
           onChange={onChangePassword}
         />
         <div className={scss.controls}>

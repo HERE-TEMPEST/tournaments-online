@@ -6,6 +6,7 @@
   display: flex;
   border-radius: vh($borderRadius);
   display: flex;
+  position: relative;
   align-items: center;
 
   align-items: center;
@@ -16,13 +17,18 @@
     background-color: transparent;
     border: none;
 
+    visibility: collapse;
+  }
+
+  .text {
+    cursor: pointer;
+    opacity: 50%;
     font-family: 'Helvetica Neue', Roboto, sans-serif;
     font-style: normal;
     color: $textColor;
     font-weight: vw(400);
     font-size: vw(14);
     line-height: vw(17);
-
     width: vw(370);
     padding: vw(12) vw(24);
   }

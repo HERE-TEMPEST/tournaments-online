@@ -36,7 +36,7 @@ export const Slider = ({
             context,
           }
         },
-        ['Button', 'Track']
+        [Button.name, Track.name]
       )}
     </div>
   )

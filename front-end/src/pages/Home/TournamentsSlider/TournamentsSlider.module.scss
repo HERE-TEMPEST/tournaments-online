@@ -16,5 +16,13 @@
 
   .window {
     width: vw(836);
+
+    .item {
+      margin-left: vw(16);
+
+      &:first-child {
+        margin-left: 0;
+      }
+    }
   }
 }

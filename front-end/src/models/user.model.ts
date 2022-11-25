@@ -1,4 +1,7 @@
-import { IProfile } from './profile.model'
+export interface IProfile {
+  key: string
+  uri: string
+}
 
 export interface IUser {
   name: string

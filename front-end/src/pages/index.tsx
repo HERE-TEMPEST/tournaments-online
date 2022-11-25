@@ -1,17 +1,21 @@
 import { Route, Routes } from 'react-router-dom'
 
-import { MainLayout, IsNotAuthRoute, PrivateRoute } from '../hoc'
 import { HomePage } from './Home'
 import { LoginPage } from './Login'
+import { ProfilePage } from './Profile'
+import { RegistrationPage } from './Registration'
 import {
   HOME_PAGE_ROUTE,
   LOGIN_PAGE_ROUTE,
+  PROFILE_PAGE_ROUTE,
   REGISTRATION_PAGE_ROUTE,
   ROOT,
+  TABLE_RECORDS_PAGE_ROUTE,
 } from '../constants'
-import { RegistrationPage } from './Registration'
+import { MainLayout, IsNotAuthRoute, PrivateRoute } from '../hoc'
 
 import scss from './index.module.scss'
+import { TableRecordsPage } from './TableRecords'
 
 export const TournamentsOnlineApp = () => {
   return (
@@ -20,10 +24,12 @@ export const TournamentsOnlineApp = () => {
         <Routes>
           <Route path={ROOT} element={<PrivateRoute />}>
             <Route path={HOME_PAGE_ROUTE} element={<HomePage />} />
-            <Route path="game" element={<div>Game</div>} />
             <Route path="tournament/:id" element={<div>Game</div>} />
-            <Route path="profile" element={<div>Profile</div>} />
-            <Route path="table-records" element={<div>Table Records</div>} />
+            <Route path={PROFILE_PAGE_ROUTE} element={<ProfilePage />} />
+            <Route
+              path={TABLE_RECORDS_PAGE_ROUTE}
+              element={<TableRecordsPage />}
+            />
           </Route>
           <Route path={ROOT} element={<IsNotAuthRoute />}>
             <Route path={LOGIN_PAGE_ROUTE} element={<LoginPage />} />

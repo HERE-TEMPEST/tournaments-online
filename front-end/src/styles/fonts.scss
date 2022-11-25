@@ -1,1 +1,10 @@
 $textColor: #ffffff;
+
+@mixin textStyleMixin {
+  font-family: 'Helvetica Neue', Roboto, sans-serif;
+  font-style: normal;
+  color: $textColor;
+  font-weight: vw(600);
+  font-size: vw(16);
+  line-height: vw(19);
+}

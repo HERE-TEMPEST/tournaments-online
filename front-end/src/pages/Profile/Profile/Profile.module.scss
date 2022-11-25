@@ -1,0 +1,68 @@
+@import '../../../styles/index.scss';
+
+.wrapper {
+  width: vw($windowWidth);
+  margin-top: vh(40);
+  margin-left: vw(40);
+
+  display: flex;
+  flex-direction: column;
+
+  .profile {
+    width: vw(480);
+    display: flex;
+    align-items: center;
+
+    .setProfileInput {
+      margin-left: vw(5);
+      height: vh(34);
+      display: flex;
+      flex-direction: column;
+      height: vh(112);
+      justify-content: space-between;
+
+      .btn {
+        width: vw(235);
+        height: vh(34);
+      }
+
+      .title {
+        opacity: 50%;
+        @include textStyleMixin;
+      }
+    }
+
+    .profileImage {
+      width: vh(110);
+      height: vh(110);
+      border-radius: 110px;
+      overflow: hidden;
+      img {
+        width: vh(110);
+        height: vh(110);
+      }
+    }
+  }
+
+  .name {
+    margin-top: vh(40);
+  }
+
+  .surname {
+    margin-top: vh(15);
+  }
+
+  .login {
+    margin-top: vh(15);
+  }
+
+  .password {
+    margin-top: vh(15);
+  }
+
+  .editBtn {
+    margin-top: vh(15);
+    margin-right: vw(25);
+    align-self: flex-end;
+  }
+}

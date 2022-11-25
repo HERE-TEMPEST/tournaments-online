@@ -15,10 +15,7 @@ export const TransparentButton = ({
   onClick,
 }: TransparentButtonProps) => {
   return (
-    <button
-      className={classNames(className, scss.wrapper)}
-      onClick={(e) => onClick(e)}
-    >
+    <button className={classNames(className, scss.wrapper)} onClick={onClick}>
       {title}
     </button>
   )

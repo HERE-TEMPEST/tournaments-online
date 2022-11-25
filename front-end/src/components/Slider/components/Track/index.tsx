@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import cn from 'classnames'
+import classNames from 'classnames'
 
 import css from './Track.module.scss'
 import { SliderContext } from '../../context.interface'
@@ -63,10 +63,13 @@ export const Track = (props: TrackProps) => {
   }, [])
 
   return (
-    <div className={cn(css.wrapper)}>
-      <div className={cn(css.window, windowClassName)} ref={windowClass}>
+    <div className={classNames(css.wrapper)}>
+      <div
+        className={classNames(css.window, windowClassName)}
+        ref={windowClass}
+      >
         <div
-          className={cn(css.pipeline, pipelineClassName)}
+          className={classNames(css.pipeline, pipelineClassName)}
           style={{
             flexDirection: direction || 'row',
             transform: `translateX(${shift}px)`,
