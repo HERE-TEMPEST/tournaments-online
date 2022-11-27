@@ -4,6 +4,7 @@
   background-color: $color-ldark;
   width: vw(1920);
   height: vh(50);
+  position: relative;
 
   .mainLayout {
     width: vw(900);
@@ -41,6 +42,53 @@
           height: vh(32);
         }
       }
+
+      .iconBottomArrow {
+        display: flex;
+        align-items: center;
+        height: vh(20);
+
+        .region {
+          @include textStyleMixin;
+
+          font-size: vh(16);
+          line-height: vh(19);
+          font-weight: 600;
+          opacity: 60%;
+        }
+
+        svg {
+          margin-left: vw(10);
+          width: vw(20);
+          height: vh(20);
+        }
+      }
+    }
+  }
+
+  .regionSelection {
+    z-index: 2;
+    margin-top: vh(50);
+    margin-left: vw(1100);
+    position: absolute;
+    background-color: $color-ldark;
+    box-sizing: border-box;
+    padding: vh(10) vh(20);
+    justify-content: center;
+    width: fit-content;
+    height: fit-content;
+    border-bottom: 1px solid white;
+    border-left: 1px solid white;
+    border-right: 1px solid white;
+
+    .region {
+      cursor: pointer;
+      @include textStyleMixin;
+
+      margin-top: vh(5);
+      font-size: vh(16);
+      line-height: vh(19);
+      font-weight: 600;
     }
   }
 }

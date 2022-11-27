@@ -30,7 +30,7 @@ export const DarkFileInput = ({
   return (
     <div className={classNames(className, scss.wrapper)}>
       <div className={scss.text} onClick={() => handleCliclSelectFile()}>
-        выберете файл...
+        select file...
       </div>
       <input
         ref={inputRef}

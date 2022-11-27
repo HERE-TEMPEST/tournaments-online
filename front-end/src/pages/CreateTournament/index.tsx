@@ -59,7 +59,7 @@ export const CreateTournamentPage = () => {
               <img src={tournament.fileUri} alt="" />
             </div>
             <div className={scss.setFileUri}>
-              <div className={scss.title}>Фото профиля</div>
+              <div className={scss.title}>Tournament profile</div>
               <DarkFileInput className={scss.btn} name={'fileUri'} />
             </div>
           </div>
@@ -77,7 +77,7 @@ export const CreateTournamentPage = () => {
           />
           <DarkNumberInput
             className={scss.duration}
-            placeholder="Duration..."
+            placeholder="Duration in seconds..."
             value={tournament.duration}
             name={'duration'}
           />
