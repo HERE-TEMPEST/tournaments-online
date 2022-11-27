@@ -1,36 +1,36 @@
 import classNames from 'classnames'
 import React from 'react'
 
-import scss from './DarkTextInput.module.scss'
+import scss from './DarkTextAreaInput.module.scss'
 
-interface DarkTextInputProps {
+interface DarkTextAreaInputProps {
   placeholder?: string
   className?: string
   inputClassName?: string
-  value: string
-  isPassword?: boolean
+  value: string | number
+  cols?: number
   name?: string
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
+  onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void
 }
 
-export const DarkTextInput = ({
+export const DarkTextAreaInput: React.FC<DarkTextAreaInputProps> = ({
   onChange,
   className,
   placeholder,
-  isPassword,
   inputClassName,
   value,
   name,
-}: DarkTextInputProps) => {
+  cols,
+}: DarkTextAreaInputProps) => {
   return (
     <div className={classNames(className, scss.wrapper)}>
-      <input
+      <textarea
         className={inputClassName}
         onChange={onChange}
-        type={isPassword ? 'password' : 'text'}
+        name={name}
+        cols={cols || 1}
         placeholder={placeholder}
         value={value}
-        name={name}
       />
     </div>
   )

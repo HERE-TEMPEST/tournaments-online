@@ -1,2 +1,99 @@
+@import '../../styles/index.scss';
+
 .wrapper {
+  width: vw($windowWidth);
+  height: vh(655);
+  margin: 0 auto;
+
+  .content {
+    width: vw(550);
+    height: vh(620);
+    margin: vh(270) auto 0 auto;
+    border-radius: vh($borderRadius);
+    background-color: $color-ldark;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .tournamentForm {
+      display: flex;
+      flex-direction: column;
+
+      .profile {
+        margin-top: vh(25);
+        width: vw(480);
+        display: flex;
+        align-items: center;
+
+        .setFileUri {
+          margin-left: vw(5);
+          height: vh(34);
+          display: flex;
+          flex-direction: column;
+          height: vh(112);
+          justify-content: space-between;
+
+          .btn {
+            width: vw(235);
+            height: vh(34);
+          }
+
+          .title {
+            opacity: 50%;
+            @include textStyleMixin;
+          }
+        }
+
+        .fileUri {
+          width: vh(110);
+          height: vh(110);
+          border-radius: 110px;
+          overflow: hidden;
+          img {
+            width: vh(110);
+            height: vh(110);
+          }
+        }
+      }
+
+      .title {
+        margin-top: vh(15);
+      }
+
+      .capacity {
+        margin-top: vh(15);
+      }
+
+      .duration {
+        margin-top: vh(15);
+      }
+
+      .description {
+        margin-top: vh(15);
+        height: vh(150);
+
+        .text {
+          scrollbar-width: none;
+        }
+      }
+
+      .region {
+        margin-top: vh(15);
+
+        @include textStyleMixin;
+        font-size: vh(20);
+        font-weight: 600;
+        opacity: 60%;
+        line-height: vh(24);
+      }
+    }
+
+    .createTournamentBtn {
+      margin-top: vw(15);
+
+      font-size: vh(24);
+      font-weight: 600;
+      line-height: vh(29);
+    }
+  }
 }

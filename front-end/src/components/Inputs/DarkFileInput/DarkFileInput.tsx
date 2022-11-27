@@ -10,7 +10,8 @@ interface DarkFileInputProps {
   className?: string
   inputClassName?: string
   value?: string
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  name?: string
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 export const DarkFileInput = ({
@@ -18,6 +19,7 @@ export const DarkFileInput = ({
   className,
   inputClassName,
   value,
+  name,
 }: DarkFileInputProps) => {
   const inputRef = useRef<any>(null)
 
@@ -35,6 +37,7 @@ export const DarkFileInput = ({
         className={inputClassName || ''}
         onChange={onChange}
         type="file"
+        name={name}
         value={value}
       />
     </div>
