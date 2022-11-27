@@ -50,7 +50,6 @@ const msgs = [
 const me = 1
 
 export const Chat = () => {
-  const refInput = useRef<any>(null)
   const re = useRef<any>(null)
   const [messages, setMessages] = useState(msgs)
   const [messageBody, setMessageBody] = useState('')
@@ -75,10 +74,6 @@ export const Chat = () => {
     re.current.scrollTop = re.current.scrollHeight
   }, [messages])
 
-  useEffect(() => {
-    refInput.current.focus()
-  }, [])
-
   return (
     <div className={scss.wrapper}>
       <div className={scss.chatPlace}>
@@ -94,7 +89,6 @@ export const Chat = () => {
       </div>
       <div className={scss.input}>
         <input
-          ref={refInput}
           placeholder="Напишите сообщение..."
           value={messageBody}
           onKeyDown={(e) => postMessage(e)}

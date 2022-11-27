@@ -7,6 +7,7 @@ import { TournamentItem } from '../../../components/TournamentItem'
 
 interface TournamentsSliderProps {
   className: string
+  setSelected: any
 }
 
 const tournaments = [
@@ -54,8 +55,12 @@ const tournaments = [
   },
 ]
 
-export const TournamentsSlider = ({ className }: TournamentsSliderProps) => {
+export const TournamentsSlider = ({
+  className,
+  setSelected,
+}: TournamentsSliderProps) => {
   const handleClickChoiceTournament = (id: number) => {
+    setSelected(true)
     return id
   }
 

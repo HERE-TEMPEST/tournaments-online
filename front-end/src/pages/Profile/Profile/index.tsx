@@ -28,38 +28,38 @@ export const Profile = () => {
           <img src={fileUri} alt="" />
         </div>
         <div className={scss.setProfileInput}>
-          <div className={scss.title}>Фото профиля</div>
+          <div className={scss.title}>Profile</div>
           <DarkFileInput className={scss.btn} onChange={onChangeFile} />
         </div>
       </div>
       <DarkTextInput
         className={scss.name}
-        placeholder="Имя..."
+        placeholder="Name..."
         value={name}
         onChange={onChangeName}
       />
       <DarkTextInput
         className={scss.surname}
-        placeholder="Фамилия..."
+        placeholder="Surname..."
         value={surname}
         onChange={onChangeSurname}
       />
       <DarkTextInput
         className={scss.login}
-        placeholder="Логин..."
+        placeholder="Login..."
         value={login}
         onChange={onChangeLogin}
       />
       <DarkTextInput
         className={scss.password}
-        placeholder="Пароль..."
+        placeholder="Password..."
         isPassword={true}
         value={password}
         onChange={onChangePassword}
       />
       <TransparentButton
         className={scss.editBtn}
-        title="Редактировать"
+        title="Edit"
         onClick={handleClickRegistration}
       />
     </div>

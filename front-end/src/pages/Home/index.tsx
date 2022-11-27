@@ -4,17 +4,22 @@ import scss from './Home.module.scss'
 import { Chat } from './Chat'
 import { SearchInput } from './SearchInput'
 import { TournamentsSlider } from './TournamentsSlider'
+import { SelectedTournament } from './SelectedTournament'
 
 export const HomePage = () => {
-  const [searchParam, setSearchParam] = useState('')
+  const [selectedTournament, setSelected] = useState(false)
 
   return (
     <div className={scss.wrapper}>
+      {selectedTournament && <SelectedTournament setSelected={setSelected} />}
       <div className={scss.content}>
         <div className={scss.searchPanel}>
-          <SearchInput value={searchParam} setValue={setSearchParam} />
+          <SearchInput />
         </div>
-        <TournamentsSlider className={scss.tournamentSliderPanel} />
+        <TournamentsSlider
+          setSelected={setSelected}
+          className={scss.tournamentSliderPanel}
+        />
         <div className={scss.chatPanel}>
           <Chat />
         </div>

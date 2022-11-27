@@ -1,0 +1,110 @@
+@import '../../../styles/index.scss';
+
+.wrapper {
+  z-index: 4;
+  position: absolute;
+  background: transparentize($color-dark, 0.2);
+  width: vw($windowWidth);
+  height: 100vh;
+  overflow: hidden;
+
+  .modal {
+    width: vw(600);
+    height: vh(460);
+    margin: vh(150) auto 0 auto;
+    display: flex;
+    flex-direction: column;
+
+    .title {
+      width: vw(600);
+      height: vh(50);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      @include textStyleMixin;
+      font-size: vh(24);
+      font-weight: 600;
+      line-height: vh(24);
+
+      background-color: $color-lldark;
+      border-top-left-radius: vw($borderRadius);
+      border-top-right-radius: vw($borderRadius);
+    }
+
+    .info {
+      margin-top: vh(10);
+      width: vw(600);
+      height: vh(400);
+      display: flex;
+      flex-direction: column;
+
+      background-color: $color-lldark;
+      border-bottom-left-radius: vw($borderRadius);
+      border-bottom-right-radius: vw($borderRadius);
+
+      .profile {
+        margin-top: vh(30);
+        margin-left: vw(30);
+        display: flex;
+
+        .description {
+          margin-left: vw(20);
+          margin-top: vh(10);
+
+          .tournamentDescription {
+            opacity: 50%;
+            @include textStyleMixin;
+            font-size: vh(24);
+            font-weight: 600;
+            line-height: vh(24);
+          }
+
+          .text {
+            scrollbar-width: none;
+            margin-top: vh(10);
+            width: vw(420);
+            height: vh(195);
+            overflow: scroll;
+            opacity: 50%;
+            @include textStyleMixin;
+            font-size: vh(16);
+            font-weight: 600;
+            line-height: vh(24);
+          }
+        }
+
+        .profileImage {
+          margin-top: vh(30);
+          width: vh(110);
+          height: vh(110);
+          border-radius: vh(110);
+          overflow: hidden;
+
+          img {
+            width: vh(110);
+            height: vh(110);
+          }
+        }
+      }
+
+      .property {
+        margin-top: vh(10);
+        margin-left: vw(30);
+        @include textStyleMixin;
+        font-size: vh(20);
+        font-weight: 600;
+        line-height: vh(24);
+        opacity: 50%;
+      }
+
+      .btn {
+        align-self: flex-end;
+        margin-right: vw(30);
+        font-size: vh(30);
+        font-weight: 600;
+        line-height: vh(32);
+      }
+    }
+  }
+}

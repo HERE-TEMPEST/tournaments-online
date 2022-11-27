@@ -1,17 +1,20 @@
+import { useState } from 'react'
 import { Icon } from '../../../components'
 import scss from './SearchInput.module.scss'
 
-interface SearchInputProps {
-  setValue: (line: string) => void
-  value: any
-}
+// interface SearchInputProps {
+//   setValue: (line: string) => void
+//   value: any
+// }
 
-export const SearchInput = ({ value, setValue }: SearchInputProps) => {
+export const SearchInput = () => {
+  const [searchParam, setSearchParam] = useState('')
+
   return (
     <div className={scss.wrapper}>
       <input
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
+        value={searchParam}
+        onChange={(e) => setSearchParam(e.target.value)}
         placeholder={'Введите название турнира...'}
       />
 
