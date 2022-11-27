@@ -1,0 +1,58 @@
+@import '../../../styles/index.scss';
+
+$marging: 15;
+
+.wrapper {
+  position: relative;
+  width: vw(660);
+  height: vh(660);
+  margin: vh(140) auto 0 auto;
+  background-color: $color-ldark;
+
+  border-radius: vh($borderRadius);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .title {
+    margin-top: vh(80);
+    @include textStyleMixin;
+    font-size: vh(36);
+    font-weight: 600;
+    line-height: vh(44);
+  }
+
+  .info {
+    margin-top: vh(100);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .name {
+      @include textStyleMixin;
+      font-size: vh(24);
+      font-weight: 600;
+      line-height: vh(24);
+    }
+  }
+  .gameInfo {
+    margin-top: vh(20);
+    margin-left: vw(100);
+    align-self: flex-start;
+
+    .text {
+      margin-top: vh(20);
+      @include textStyleMixin;
+      font-size: vh(20);
+      font-weight: 600;
+      line-height: vh(24);
+    }
+  }
+
+  .exitBtn {
+    margin-top: vh(80);
+    font-size: vh(32);
+    font-weight: 600;
+    line-height: vh(39);
+  }
+}

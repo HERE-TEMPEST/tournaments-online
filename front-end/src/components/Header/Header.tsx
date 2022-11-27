@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux'
 import { Link, useLocation } from 'react-router-dom'
 
 import {
+  CREATE_TOURNAMENT_PAGE_ROUTE,
   HOME_PAGE_ROUTE,
   PROFILE_PAGE_ROUTE,
   TABLE_RECORDS_PAGE_ROUTE,
@@ -43,7 +44,9 @@ export const Header = ({ isAuth }: HeaderProps) => {
         {iconsVisibility && (
           <div className={scss.navigations}>
             <div className={scss.icon}>
-              <Icon type="Plus" />
+              <Link to={CREATE_TOURNAMENT_PAGE_ROUTE} replace={true}>
+                <Icon type="Plus" />
+              </Link>
             </div>
             <div className={scss.icon}>
               <Link to={TABLE_RECORDS_PAGE_ROUTE} replace={true}>

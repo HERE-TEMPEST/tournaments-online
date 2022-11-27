@@ -1,0 +1,12 @@
+@import '../../../../styles/index.scss';
+
+.wrapper {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: red;
+  font-weight: 600;
+
+  @include textStyleMixin;
+}
