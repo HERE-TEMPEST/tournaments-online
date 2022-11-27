@@ -1,2 +1,126 @@
+@import '../../styles/index.scss';
+
+$marging: 15;
+
 .wrapper {
+  position: relative;
+  width: vw($windowWidth);
+  height: vh(1135);
+  margin: 0 auto;
+
+  .content {
+    display: flex;
+    flex-direction: column;
+
+    .tournamentInfoPanel {
+      margin-top: vh($marging);
+      width: vw($windowWidth);
+      height: vh(305);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .info {
+        background-color: $color-ldark;
+        width: vw(645);
+        height: vh(305);
+
+        border-top-left-radius: vw($borderRadius);
+
+        .profile {
+          margin-top: vh(30);
+          margin-left: vw(30);
+          display: flex;
+
+          .description {
+            margin-left: vw(20);
+            margin-top: vh(10);
+
+            .tournamentDescription {
+              opacity: 50%;
+              @include textStyleMixin;
+              font-size: vh(24);
+              font-weight: 600;
+              line-height: vh(24);
+            }
+
+            .text {
+              scrollbar-width: none;
+              margin-top: vh(10);
+              width: vw(420);
+              height: vh(195);
+              overflow: scroll;
+              opacity: 50%;
+              @include textStyleMixin;
+              font-size: vh(16);
+              font-weight: 600;
+              line-height: vh(24);
+            }
+          }
+
+          .profileImage {
+            margin-top: vh(30);
+            width: vh(110);
+            height: vh(110);
+            border-radius: vh(110);
+            overflow: hidden;
+
+            img {
+              width: vh(110);
+              height: vh(110);
+            }
+          }
+        }
+      }
+
+      .exit {
+        background-color: $color-ldark;
+        width: vw(240);
+        height: vh(305);
+        display: flex;
+        flex-direction: column;
+
+        border-top-right-radius: vw($borderRadius);
+
+        .duration {
+          @include textStyleMixin;
+          font-weight: 600;
+          opacity: 50%;
+          margin-top: vh(30);
+          margin-left: vh(30);
+          font-size: vh(20);
+          line-height: vh(24);
+        }
+
+        .capacity {
+          @include textStyleMixin;
+          font-weight: 600;
+          opacity: 50%;
+          margin-top: vh(70);
+          align-self: center;
+          font-size: vh(60);
+          line-height: vh(60);
+        }
+
+        .btn {
+          align-self: flex-end;
+          margin-right: vw(30);
+          margin-top: vh(50);
+          font-size: vh(30);
+          line-height: vh(24);
+          font-weight: 600;
+        }
+      }
+    }
+
+    .chatPanel {
+      margin-top: vh($marging);
+      width: vw($windowWidth);
+      height: vh(795);
+      background-color: $color-ldark;
+
+      border-bottom-left-radius: vh($borderRadius);
+      border-bottom-right-radius: vh($borderRadius);
+    }
+  }
 }

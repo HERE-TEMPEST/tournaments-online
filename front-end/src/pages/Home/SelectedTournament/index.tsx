@@ -2,7 +2,9 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import { TransparentButton } from '../../../components/Buttons'
+import { createTournamentWaitingPageUri } from '../../../constants'
 import { toString } from '../../../hooks'
 
 import scss from './SelectedTournament.module.scss'
@@ -18,6 +20,7 @@ export const SelectedTournament: React.FC = ({ setSelected }: any) => {
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemocumque quae atque velit dolores neque iure, sapiente modi ipsasunt sed rem molestiae, quaerat vitae a et dolorem incidunt sintratione doloremque. Lorem ipsum dolor sit amet consecteturadipisicing elit. Nemo cumque quae atque velit dolores nequeiure, sapiente modi ipsa sunt sed rem molestiae, quaerat vitae aet dolorem incidunt sint ratione doloremque.Lorem ipsum dolorsit amet consectetur adipisicing elit. Nemo cumque quae atquevelit dolores neque iure, sapiente modi ipsa sunt sed remmolestiae, quaerat vitae a et dolorem incidunt sint rationedoloremque. Lorem ipsum dolor sit amet consectetur adipisicingelit. Nemo cumque quae atque velit dolores neque iure, sapientemodi ipsa sunt sed rem molestiae',
     postUri: location.origin + '/1.jpg',
   }
+  const navigation = useNavigate()
 
   return (
     <div className={scss.wrapper} onClick={() => setSelected(false)}>
@@ -43,7 +46,7 @@ export const SelectedTournament: React.FC = ({ setSelected }: any) => {
             title="Join"
             className={scss.btn}
             onClick={() => {
-              return
+              navigation(createTournamentWaitingPageUri(tournament.id))
             }}
           />
         </div>
