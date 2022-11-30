@@ -2,7 +2,6 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
 import { Link, useLocation } from 'react-router-dom'
 
 import {
@@ -11,7 +10,7 @@ import {
   PROFILE_PAGE_ROUTE,
   TABLE_RECORDS_PAGE_ROUTE,
 } from '../../constants'
-import { createSignOutUserAction } from '../../redux'
+import { createSignOutUserAction, useAppDispatch } from '../../redux'
 import { Icon } from '../Icon'
 
 import scss from './Header.module.scss'
@@ -27,7 +26,7 @@ export const Header = ({ isAuth }: HeaderProps) => {
   const [isOpenedregionSelector, openCloseRegionSelector] = useState(false)
   const [region, setRegion] = useState('eu-east')
 
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const location = useLocation()
 
   const handleClickSignOut = () => {

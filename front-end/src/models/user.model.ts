@@ -5,7 +5,14 @@ export interface IProfile {
 
 export interface IUser {
   name: string
+  login: string
+  password: string
   surname: string
+  email: string
+  profile: IProfile | null
+}
+
+export interface IAuth {
+  isAuth: boolean
   token: string
-  profileUri: IProfile | null
 }

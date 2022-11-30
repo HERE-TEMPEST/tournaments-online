@@ -1,12 +1,11 @@
-import { useSelector } from 'react-redux'
 import { Navigate, Outlet } from 'react-router-dom'
 import { HOME_PAGE_ROUTE } from '../constants'
-import { IStore } from '../redux/store'
+import { useAppSelector } from '../redux'
 
 export const PublicRoute = () => {
-  const token = useSelector<IStore>((state) => state.user.token)
+  const isAuth = useAppSelector((state) => state.auth.auth?.isAuth || false)
 
-  if (token) {
+  if (isAuth) {
     return <Navigate to={HOME_PAGE_ROUTE} replace={true} />
   }
 

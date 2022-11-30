@@ -3,11 +3,14 @@ import { Link } from 'react-router-dom'
 import { DarkFileInput, DarkTextInput } from '../../components'
 import { TransparentButton } from '../../components/Buttons'
 import { LOGIN_PAGE_ROUTE } from '../../constants'
+import { fetchRegisterUser, useAppDispatch } from '../../redux'
 import { useLogic } from './logic'
 
 import scss from './Registration.module.scss'
 
 export const RegistrationPage = () => {
+  const dispatch = useAppDispatch()
+
   const {
     name,
     file,
@@ -15,6 +18,8 @@ export const RegistrationPage = () => {
     login,
     password,
     fileUri,
+    email,
+    onChangeEmail,
     onChangePassword,
     onChangeName,
     onChangeSurname,
@@ -23,7 +28,7 @@ export const RegistrationPage = () => {
   } = useLogic()
 
   const handleClickRegistration = () => {
-    console.log(file)
+    dispatch(fetchRegisterUser({ email, file, login, name, password, surname }))
   }
 
   return (
@@ -34,31 +39,37 @@ export const RegistrationPage = () => {
             <img src={fileUri} alt="" />
           </div>
           <div className={scss.setProfileInput}>
-            <div className={scss.title}>Фото профиля</div>
+            <div className={scss.title}>Profile</div>
             <DarkFileInput className={scss.btn} onChange={onChangeFile} />
           </div>
         </div>
         <DarkTextInput
           className={scss.name}
-          placeholder="Имя..."
+          placeholder="Name..."
           value={name}
           onChange={onChangeName}
         />
         <DarkTextInput
           className={scss.surname}
-          placeholder="Фамилия..."
+          placeholder="Surname..."
           value={surname}
           onChange={onChangeSurname}
         />
         <DarkTextInput
+          className={scss.surname}
+          placeholder="Email..."
+          value={email}
+          onChange={onChangeEmail}
+        />
+        <DarkTextInput
           className={scss.login}
-          placeholder="Логин..."
+          placeholder="Login..."
           value={login}
           onChange={onChangeLogin}
         />
         <DarkTextInput
           className={scss.password}
-          placeholder="Пароль..."
+          placeholder="Password..."
           isPassword={true}
           value={password}
           onChange={onChangePassword}
@@ -66,7 +77,7 @@ export const RegistrationPage = () => {
         <div className={scss.controls}>
           <TransparentButton
             className={scss.registrationBtn}
-            title="Регистрация"
+            title="Registration"
             onClick={handleClickRegistration}
           />
           <div className={scss.createAccount}>

@@ -23,6 +23,16 @@ module.exports = {
   ],
   rules: {
     'no-unused-vars': 'off',
+    'no-restricted-imports': 'off',
+    '@typescript-eslint/no-restricted-imports': [
+      'error',
+      {
+        name: 'react-redux',
+        importNames: ['useSelector', 'useDispatch'],
+        message:
+          'Use typed hooks `useAppDispatch` and `useAppSelector` instead.',
+      },
+    ],
     '@typescript-eslint/no-unused-vars': ['error'],
     '@typescript-eslint/no-var-requires': 'off',
     'react/prop-types': 'off',

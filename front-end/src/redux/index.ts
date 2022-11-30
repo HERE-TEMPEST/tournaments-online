@@ -1,2 +1,8 @@
 export { store } from './store'
-export { createSignOutUserAction } from './reducers'
+export {
+  fetchRegisterUser,
+  createSignOutUserAction,
+  fetchLoginUser,
+  fetchUserInfo,
+} from './reducers'
+export * from './typings'

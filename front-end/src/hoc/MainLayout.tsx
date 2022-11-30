@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
-import { useSelector } from 'react-redux'
 import { Header } from '../components'
-import { IStore } from '../redux/store'
+import { useAppSelector } from '../redux'
 
 interface MainLayoutProps {
   children:
@@ -12,7 +11,7 @@ interface MainLayoutProps {
 }
 
 export const MainLayout = ({ children }: MainLayoutProps) => {
-  const isAuth = useSelector((state: IStore) => !!state.user.token)
+  const isAuth = useAppSelector((state) => state.auth.auth?.isAuth || false)
 
   return (
     <>

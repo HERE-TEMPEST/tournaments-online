@@ -1,4 +1,10 @@
-import { LoginUserAction } from './login-user.action'
-import { SignOutUserAction } from './sign-out.action'
+import {
+  ErrorInFetchingUserCredentialsAction,
+  IsFetchingUserCredentialsAction,
+  UserCredentialsFetchedAction,
+} from './user.actions'
 
-export type UserActions = LoginUserAction | SignOutUserAction
+export type UserActions =
+  | IsFetchingUserCredentialsAction
+  | UserCredentialsFetchedAction
+  | ErrorInFetchingUserCredentialsAction

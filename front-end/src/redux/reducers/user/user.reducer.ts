@@ -1,33 +1,34 @@
-import { IUser } from '../../../models'
-import { LOGIN_USER_ACTION, SIGNOUT_USER_ACTION, UserActions } from './actions'
+import { UserActions } from './actions'
+import { UserActionsTypes, UserState } from './types'
 
-const initialValue: IUser = {
-  name: '',
-  surname: '',
-  token: 'ss',
-  profileUri: null,
+const initialValue: UserState = {
+  loading: false,
+  error: '',
+  user: null,
 }
 
 export const userReducer = (
-  state: IUser = initialValue,
+  state: UserState = initialValue,
   action: UserActions
-) => {
-  const { type, payload } = action
+): UserState => {
+  const { payload, type } = action
 
   switch (type) {
-    case LOGIN_USER_ACTION: {
-      const { token } = payload
-      return { ...state, token }
+    case UserActionsTypes.LOADING_USER_INFO_ACTION: {
+      payload
+      return { loading: true, error: '', user: null }
     }
 
-    case SIGNOUT_USER_ACTION: {
-      return {
-        ...initialValue,
-        token: '',
-      }
+    case UserActionsTypes.USER_INFO_WAS_LOADED_ACTION: {
+      return { loading: false, error: '', user: payload }
     }
 
-    default:
+    case UserActionsTypes.ERROR_IN_FETCHING_USER_CRED: {
+      return { loading: false, error: payload, user: null }
+    }
+
+    default: {
       return state
+    }
   }
 }

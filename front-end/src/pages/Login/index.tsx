@@ -3,12 +3,15 @@ import { Link } from 'react-router-dom'
 import { DarkTextInput } from '../../components'
 import { TransparentButton } from '../../components/Buttons'
 import { REGISTRATION_PAGE_ROUTE } from '../../constants'
+import { fetchLoginUser, useAppDispatch } from '../../redux'
 
 import scss from './Login.module.scss'
 
 export const LoginPage = () => {
   const [login, setLogin] = useState('')
   const [password, setPassword] = useState('')
+
+  const dispatch = useAppDispatch()
 
   const onChangePassword = (e: any) => {
     setPassword(() => e.target.value)
@@ -18,7 +21,7 @@ export const LoginPage = () => {
   }
 
   const handleClickLogin = () => {
-    return
+    dispatch(fetchLoginUser({ login, password }))
   }
 
   return (

@@ -5,6 +5,7 @@ export const useLogic = () => {
   const [file, setFile] = useState<any>('')
   const [surname, setSurname] = useState('')
   const [login, setLogin] = useState('')
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [fileUri, setFileRef] = useState(
     location.origin + '/default-profile.png'
@@ -16,6 +17,11 @@ export const useLogic = () => {
   const onChangeName = (e: any) => {
     setName(() => e.target.value)
   }
+
+  const onChangeEmail = (e: any) => {
+    setEmail(() => e.target.value)
+  }
+
   const onChangeSurname = (e: any) => {
     setSurname(() => e.target.value)
   }
@@ -43,6 +49,8 @@ export const useLogic = () => {
     login,
     password,
     fileUri,
+    email,
+    onChangeEmail,
     onChangePassword,
     onChangeName,
     onChangeSurname,

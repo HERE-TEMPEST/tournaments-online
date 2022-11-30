@@ -1,10 +1,7 @@
+/* eslint-disable eslint-comments/disable-enable-pair */
+/* eslint-disable @typescript-eslint/no-restricted-imports */
 import { configureStore } from '@reduxjs/toolkit'
-import { IUser } from '../models'
 
 import { rootReducer } from './reducers'
 
 export const store = configureStore({ reducer: rootReducer })
-
-export interface IStore {
-  user: IUser
-}
