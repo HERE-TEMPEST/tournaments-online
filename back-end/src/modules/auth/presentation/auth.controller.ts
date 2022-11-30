@@ -4,21 +4,21 @@ import {
   Body,
   UsePipes,
   ValidationPipe,
-} from '@nestjs/common';
-import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
+} from "@nestjs/common";
+import { ApiOkResponse, ApiTags } from "@nestjs/swagger";
 
-import { AuthService } from '../application';
-import { LocalLoginInput, LocalRegisterUserInput } from './inputs';
-import { LocalLoginResult, LocalRegisterResult } from './results';
+import { AuthService } from "../application";
+import { LocalLoginInput, LocalRegisterUserInput } from "./inputs";
+import { LocalLoginResult, LocalRegisterResult } from "./results";
 
-@ApiTags('Auth')
+@ApiTags("Auth")
 @Controller()
 @UsePipes(ValidationPipe)
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @ApiOkResponse({ type: LocalLoginResult })
-  @Post('/login')
+  @Post("/login")
   async login(@Body() input: LocalLoginInput): Promise<LocalLoginResult> {
     const { accessToken } = await this.authService.login(input);
 
@@ -30,9 +30,9 @@ export class AuthController {
   }
 
   @ApiOkResponse({ type: LocalRegisterResult })
-  @Post('/registeruser')
+  @Post("/registeruser")
   async registerUser(
-    @Body() input: LocalRegisterUserInput,
+    @Body() input: LocalRegisterUserInput
   ): Promise<LocalRegisterResult> {
     const { accessToken } = await this.authService.registerUser(input);
 

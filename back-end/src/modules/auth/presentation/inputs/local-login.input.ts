@@ -1,9 +1,14 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsEmail } from 'class-validator';
+import { ApiProperty } from "@nestjs/swagger";
+import { IsNotEmpty, IsEmail, IsString } from "class-validator";
 
 export class LocalLoginInput {
   @ApiProperty({ nullable: false, type: String })
-  @IsEmail()
+  @IsString()
   @IsNotEmpty()
-  email: string;
+  login: string;
+
+  @ApiProperty({ nullable: false, type: String })
+  @IsString()
+  @IsNotEmpty()
+  password: string;
 }

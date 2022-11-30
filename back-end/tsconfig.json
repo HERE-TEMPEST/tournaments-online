@@ -22,7 +22,8 @@
       "@tournaments/aws/*": ["libs/aws/src/*"],
       "@tournaments/typeorm": ["libs/typeorm/src"],
       "@typings": ["typings"],
-      "@tournaments/auth": ["libs/auth/src"]
+      "@tournaments/auth": ["libs/auth/src"],
+      "@tournaments/utils": ["libs/utils/src"]
     }
   }
 }

@@ -1,7 +1,7 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty } from "@nestjs/swagger";
 
-import { Types } from 'mongoose';
-import { ProfileDto } from './file.dto';
+import { Types } from "mongoose";
+import { ProfileDto } from "./file.dto";
 
 export class UserDto {
   @ApiProperty({ nullable: false, type: String })
@@ -11,14 +11,11 @@ export class UserDto {
   email: string;
 
   @ApiProperty({ nullable: false, type: String })
-  firstName: string;
+  name: string;
 
   @ApiProperty({ nullable: false, type: String })
-  lastName: string;
+  surname: string;
 
   @ApiProperty({ nullable: true, type: ProfileDto })
   profile?: ProfileDto;
-
-  @ApiProperty({ nullable: false, type: String })
-  nickName: string;
 }

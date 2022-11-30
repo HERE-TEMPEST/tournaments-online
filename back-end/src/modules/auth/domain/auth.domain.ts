@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable } from "@nestjs/common";
 
-import { UserModel, UsersService } from '../../users';
+import { UserModel, UsersService } from "../../users";
 import {
   GoogleLoginParams,
   GoogleLoginResult,
@@ -8,36 +8,35 @@ import {
   LocalLoginResult,
   LocalRegistUserParams,
   LocalRegistUserResult,
-} from './auth-domain.type';
+} from "./auth-domain.type";
 
 @Injectable()
 export class AuthDomain {
   constructor(private readonly usersService: UsersService) {}
 
-  async loginUser(loginDto: LocalLoginParams): Promise<LocalLoginResult> {
-    const { email } = loginDto;
+  async loginUser(
+    loginDto: LocalLoginParams
+  ): Promise<LocalLoginResult | null> {
+    const { login, password } = loginDto;
 
-    const user = await this.usersService.getByEmail({ email });
+    const user = await this.usersService.getByLogin({ login });
 
-    if (user) {
+    if (user && password === user.password) {
       return user;
     }
 
-    return this.usersService.createUser(loginDto);
+    return null;
   }
 
   async registUser(
-    params: LocalRegistUserParams,
+    params: LocalRegistUserParams
   ): Promise<LocalRegistUserResult> {
-    const { email } = params;
+    const { login } = params;
 
-    const user = await this.usersService.getByEmail({ email });
+    const user = await this.usersService.getByLogin({ login });
 
     if (user) {
-      return this.usersService.updateUser({
-        userId: user._id,
-        properties: params,
-      });
+      return null;
     }
 
     return this.usersService.createUser(params);

@@ -1,22 +1,23 @@
-import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model, Types } from 'mongoose';
+import { Injectable } from "@nestjs/common";
+import { InjectModel } from "@nestjs/mongoose";
+import { Model, Types } from "mongoose";
 
-import { AwsS3Service } from '@tournaments/aws/s3';
+import { AwsS3Service } from "@tournaments/aws/s3";
 
-import { UserDomain, UserModel } from '../domain';
-import { UserDocument, UserEntity } from '../infrastructure';
+import { UserDomain, UserModel } from "../domain";
+import { UserDocument, UserEntity } from "../infrastructure";
 import {
   CreateUserParams,
   GetByEmailParams,
   GetByIdParams,
+  GetByLoginParams,
   GetProfileParams,
   GetProfileResult,
   GetUserInfoParams,
   UpdateProfileParams,
   UpdateProfileResult,
   UpdateUserParams,
-} from './user-service.type';
+} from "./user-service.type";
 
 @Injectable()
 export class UsersService {
@@ -24,7 +25,7 @@ export class UsersService {
     private readonly awsS3Service: AwsS3Service,
     private readonly userDomain: UserDomain,
     @InjectModel(UserEntity.name)
-    private readonly userRepository: Model<UserDocument>,
+    private readonly userRepository: Model<UserDocument>
   ) {}
 
   async createUser(createUserDto: CreateUserParams): Promise<UserModel> {
@@ -38,7 +39,7 @@ export class UsersService {
 
     const newUser = await this.userRepository.findOneAndUpdate(
       { _id: new Types.ObjectId(userId) },
-      { $set: { ...properties } },
+      { $set: { ...properties } }
     );
 
     return newUser;
@@ -47,6 +48,13 @@ export class UsersService {
   async getByEmail(params: GetByEmailParams): Promise<UserModel> {
     const { email } = params;
     const user = await this.userRepository.findOne({ email });
+
+    return user;
+  }
+
+  async getByLogin(params: GetByLoginParams): Promise<UserModel> {
+    const { login } = params;
+    const user = await this.userRepository.findOne({ login });
 
     return user;
   }
@@ -70,14 +78,14 @@ export class UsersService {
   }
 
   async updateProfile(
-    params: UpdateProfileParams,
+    params: UpdateProfileParams
   ): Promise<UpdateProfileResult> {
     const { profile, userId } = params;
 
     const uploadedProfile = await this.awsS3Service.putFile({
       file: profile,
       name: userId,
-      subPath: 'profiles/',
+      subPath: "profiles/",
     });
 
     const { key, uri } = await this.awsS3Service.getFileUri(uploadedProfile);
@@ -91,7 +99,7 @@ export class UsersService {
             uri,
           },
         },
-      },
+      }
     );
 
     return {
@@ -104,6 +112,8 @@ export class UsersService {
     const { userId } = params;
 
     const user = await this.userRepository.findById(new Types.ObjectId(userId));
+
+    console.log(user);
 
     return user.profile;
   }

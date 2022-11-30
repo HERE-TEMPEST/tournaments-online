@@ -1,10 +1,10 @@
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
-import { MongooseModule } from '@nestjs/mongoose';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { JwtModule } from '@nestjs/jwt';
+import { MiddlewareConsumer, Module, NestModule } from "@nestjs/common";
+import { ConfigModule } from "@nestjs/config";
+import { MongooseModule } from "@nestjs/mongoose";
+import { TypeOrmModule } from "@nestjs/typeorm";
+import { JwtModule } from "@nestjs/jwt";
 
-import { AuthMiddleware } from '@tournaments/auth';
+import { AuthMiddleware } from "@tournaments/auth";
 import {
   MongooseConfigService,
   PostgresConfigService,
@@ -12,16 +12,18 @@ import {
   validateConfig,
   configLoad,
   JwtConfigService,
-} from '@tournaments/config';
+} from "@tournaments/config";
 
-import { UsersModule } from './users';
-import { AuthModule } from './auth';
+import { UsersModule } from "./users";
+import { AuthModule } from "./auth";
 import {
   TournamentsModule,
   TOURNAMENT_RELATIONS_CONNECTION,
   TournamentEntity,
   TournamentMemberEntity,
-} from './tournaments';
+} from "./tournaments";
+
+import { LoggerMiddleware } from "@tournaments/utils";
 
 @Module({
   imports: [
@@ -52,6 +54,6 @@ import {
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(AuthMiddleware).forRoutes('/');
+    consumer.apply(LoggerMiddleware, AuthMiddleware).forRoutes("/");
   }
 }

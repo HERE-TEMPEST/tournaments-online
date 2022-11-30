@@ -1,11 +1,11 @@
-import { Injectable } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
-import { ConfigService } from '@nestjs/config';
+import { BadRequestException, Injectable } from "@nestjs/common";
+import { JwtService } from "@nestjs/jwt";
+import { ConfigService } from "@nestjs/config";
 
-import { Configuration } from '@tournaments/config';
-import { JwtPayload } from '@tournaments/auth';
+import { Configuration } from "@tournaments/config";
+import { JwtPayload } from "@tournaments/auth";
 
-import { AuthDomain } from '../domain';
+import { AuthDomain } from "../domain";
 import {
   GenerateTokenParams,
   GoogleLoginParams,
@@ -14,36 +14,44 @@ import {
   LocalLoginResult,
   LocalRegisterParams,
   LocalRegisterResult,
-} from './auth-service.type';
+} from "./auth-service.type";
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly authDomainModel: AuthDomain,
     private readonly configService: ConfigService<Configuration>,
-    private readonly jwtService: JwtService,
+    private readonly jwtService: JwtService
   ) {}
 
   async login(params: LocalLoginParams): Promise<LocalLoginResult> {
     const user = await this.authDomainModel.loginUser(params);
 
-    const accessToken = await this.generateToken(user);
+    if (user) {
+      const accessToken = await this.generateToken(user);
 
-    return {
-      accessToken,
-    };
+      return {
+        accessToken,
+      };
+    }
+
+    throw new BadRequestException();
   }
 
   async registerUser(
-    params: LocalRegisterParams,
+    params: LocalRegisterParams
   ): Promise<LocalRegisterResult> {
     const user = await this.authDomainModel.registUser(params);
 
-    const accessToken = await this.generateToken(user);
+    if (user) {
+      const accessToken = await this.generateToken(user);
 
-    return {
-      accessToken,
-    };
+      return {
+        accessToken,
+      };
+    }
+
+    throw new BadRequestException();
   }
 
   async googleLogin(params: GoogleLoginParams): Promise<GoogleLoginResult> {
@@ -59,7 +67,7 @@ export class AuthService {
   private async generateToken(params: GenerateTokenParams): Promise<string> {
     const { _id } = params;
 
-    const { accessTokenExpiresIn } = this.configService.get('jwt');
+    const { accessTokenExpiresIn } = this.configService.get("jwt");
 
     const payload: JwtPayload = { userId: String(_id) };
 

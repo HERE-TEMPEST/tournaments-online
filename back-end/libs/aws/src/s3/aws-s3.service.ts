@@ -2,18 +2,18 @@ import {
   GetObjectCommand,
   PutObjectCommand,
   S3Client,
-} from '@aws-sdk/client-s3';
-import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
-import { Inject, Injectable } from '@nestjs/common';
+} from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import { Inject, Injectable } from "@nestjs/common";
 
-import { AwsS3ModuleOptions } from './options/aws-s3-module.options';
-import { AWS_S3_MODULE_TOKEN } from './tokens';
+import { AwsS3ModuleOptions } from "./options/aws-s3-module.options";
+import { AWS_S3_MODULE_TOKEN } from "./tokens";
 import {
   GetFileUriParams,
   GetFileUriResult,
   PutFileParams,
   PutFileResult,
-} from './types/aws-s3-service.type';
+} from "./types/aws-s3-service.type";
 
 @Injectable()
 export class AwsS3Service {
@@ -39,7 +39,7 @@ export class AwsS3Service {
   }: PutFileParams): Promise<PutFileResult> {
     const { buffer, mimetype, originalname } = file;
 
-    const extention = originalname.split('.').pop() || '';
+    const extention = originalname.split(".").pop() || "";
 
     const key = `${subPath}${name}-${Date.now()}.${extention}`;
 
@@ -64,9 +64,10 @@ export class AwsS3Service {
       Key: key,
     });
 
-    const signedUri = await getSignedUrl(this.s3, command, {
-      expiresIn: this.expiresIn,
-    });
+    // const signedUri = await getSignedUrl(this.s3, command, {
+    //   expiresIn: this.expiresIn,
+    // });
+    const signedUri = await getSignedUrl(this.s3, command);
 
     return {
       key,

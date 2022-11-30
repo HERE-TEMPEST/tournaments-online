@@ -1,29 +1,31 @@
-import { UserModel } from '../../users';
+import { UserModel } from "../../users";
 
 export interface GoogleLoginParams {
   email: string;
-  firstName: string;
-  lastName: string;
+  name: string;
+  surname: string;
   profileUri: string;
 }
 export interface GoogleLoginResult {
   accessToken: string;
 }
 
-export type GenerateTokenParams = Pick<UserModel, '_id'>;
+export type GenerateTokenParams = Pick<UserModel, "_id">;
 
 export interface LocalRegisterParams {
   email: string;
-  firstName: string;
-  lastName: string;
-  nickName: string;
+  name: string;
+  surname: string;
+  login: string;
+  password: string;
 }
 export interface LocalRegisterResult {
   accessToken: string;
 }
 
 export interface LocalLoginParams {
-  email: string;
+  login: string;
+  password: string;
 }
 export interface LocalLoginResult {
   accessToken: string;

@@ -1,22 +1,24 @@
-import { UserModel } from '../../users/domain';
+import { UserModel } from "../../users/domain";
 
 export interface GoogleLoginParams {
   email: string;
-  firstName: string;
-  lastName: string;
+  name: string;
+  surname: string;
   profileUri: string;
 }
 export type GoogleLoginResult = UserModel;
 
 export interface LocalRegistUserParams {
   email: string;
-  firstName: string;
-  lastName: string;
-  nickName: string;
+  name: string;
+  surname: string;
+  login: string;
+  password: string;
 }
 export type LocalRegistUserResult = UserModel;
 
 export interface LocalLoginParams {
-  email: string;
+  login: string;
+  password: string;
 }
 export type LocalLoginResult = UserModel;

@@ -1,22 +1,25 @@
-import { Schema, Prop, ModelDefinition, SchemaFactory } from '@nestjs/mongoose';
-import { Types } from 'mongoose';
-import { UserModel } from '../../domain';
+import { Schema, Prop, ModelDefinition, SchemaFactory } from "@nestjs/mongoose";
+import { Types } from "mongoose";
+import { UserModel } from "../../domain";
 
-@Schema({ collection: 'users', versionKey: false })
+@Schema({ collection: "users", versionKey: false })
 export class UserEntity implements UserModel {
   readonly _id: Types.ObjectId;
 
   @Prop({ required: true, unique: true, index: 1 })
   email: string;
 
-  @Prop()
-  firstName: string;
+  @Prop({ required: true, unique: true, index: 2 })
+  login: string;
+
+  @Prop({ required: true, index: 3 })
+  password: string;
 
   @Prop()
-  lastName: string;
+  name: string;
 
   @Prop()
-  nickName: string;
+  surname: string;
 
   @Prop({ type: Object })
   profile: {
@@ -30,5 +33,5 @@ export type UserDocument = UserEntity & Document;
 export const UserModelDefinition: ModelDefinition = {
   name: UserEntity.name,
   schema: SchemaFactory.createForClass(UserEntity),
-  collection: 'users',
+  collection: "users",
 };

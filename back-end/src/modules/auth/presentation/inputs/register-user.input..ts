@@ -1,16 +1,16 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { ApiProperty } from "@nestjs/swagger";
+import { IsEmail, IsNotEmpty, IsString } from "class-validator";
 
 export class LocalRegisterUserInput {
   @ApiProperty({ nullable: false, type: String })
   @IsString()
   @IsNotEmpty()
-  firstName: string;
+  name: string;
 
   @ApiProperty({ nullable: false, type: String })
   @IsString()
   @IsNotEmpty()
-  lastName: string;
+  surname: string;
 
   @ApiProperty({ nullable: false, type: String })
   @IsEmail()
@@ -20,5 +20,10 @@ export class LocalRegisterUserInput {
   @ApiProperty({ nullable: false, type: String })
   @IsString()
   @IsNotEmpty()
-  nickName: string;
+  login: string;
+
+  @ApiProperty({ nullable: false, type: String })
+  @IsString()
+  @IsNotEmpty()
+  password: string;
 }

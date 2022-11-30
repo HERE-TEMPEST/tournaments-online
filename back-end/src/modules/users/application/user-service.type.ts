@@ -1,7 +1,7 @@
-import { Types } from 'mongoose';
-import { UserModel } from '../domain';
+import { Types } from "mongoose";
+import { UserModel } from "../domain";
 
-export type CreateUserParams = Partial<Omit<UserModel, '_id'>>;
+export type CreateUserParams = Partial<Omit<UserModel, "_id">>;
 
 export interface UpdateUserParams {
   userId: string | Types.ObjectId;
@@ -32,6 +32,10 @@ export interface GetProfileResult {
 
 export interface GetByEmailParams {
   email: string;
+}
+
+export interface GetByLoginParams {
+  login: string;
 }
 
 export interface GetByIdParams {

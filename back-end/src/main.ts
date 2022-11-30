@@ -1,25 +1,27 @@
-import { ValidationPipe } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { NestFactory } from '@nestjs/core';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { ValidationPipe } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
+import { NestFactory } from "@nestjs/core";
+import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 
-import { Configuration } from '@tournaments/config';
+import { Configuration } from "@tournaments/config";
 
-import { AppModule } from './modules';
+import { AppModule } from "./modules";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  app.enableCors();
+
   const builder = new DocumentBuilder()
     .addBearerAuth()
-    .setTitle('Test-Game api')
-    .setDescription('Some description')
-    .setVersion('1.0')
+    .setTitle("Test-Game api")
+    .setDescription("Some description")
+    .setVersion("1.0")
     .build();
 
   const document = SwaggerModule.createDocument(app, builder);
 
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup("api", app, document);
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -27,11 +29,11 @@ async function bootstrap() {
       whitelist: true,
       transform: true,
       forbidNonWhitelisted: true,
-    }),
+    })
   );
 
   const configService = app.get<ConfigService<Configuration>>(ConfigService);
-  const { port, host } = configService.get('app');
+  const { port, host } = configService.get("app");
 
   await app.listen(port, host);
 
