@@ -39,16 +39,18 @@ export function fetchRegisterUser({
 
       dispath(createRegisterUserAction({ token }))
 
-      const formData = new FormData()
+      if (file) {
+        const formData = new FormData()
 
-      formData.append('profile', file)
+        formData.append('profile', file)
 
-      await axios.post(FETCH_POST_UPLOAD_PROFILE, formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'multipart/form-data',
-        },
-      })
+        await axios.post(FETCH_POST_UPLOAD_PROFILE, formData, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'multipart/form-data',
+          },
+        })
+      }
     } catch (error) {
       console.log(error)
     }

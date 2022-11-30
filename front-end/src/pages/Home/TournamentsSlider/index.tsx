@@ -1,77 +1,53 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import classNames from 'classnames'
 
 import scss from './TournamentsSlider.module.scss'
-import { Icon, Slider } from '../../../components'
+import { Icon, Loader, Slider } from '../../../components'
 import { TournamentItem } from '../../../components/TournamentItem'
+import {
+  fetchAllTournamentsByRegion,
+  useAppDispatch,
+  useAppSelector,
+} from '../../../redux'
 
 interface TournamentsSliderProps {
-  className: string
   setSelected: any
 }
 
-const tournaments = [
-  {
-    id: 1,
-    title: 'Some name',
-    currentAmount: 0,
-    capacity: 10,
-    postUri: location.origin + '/1.jpg',
-  },
-  {
-    id: 2,
-    title: 'Some name',
-    currentAmount: 0,
-    capacity: 10,
-    postUri: location.origin + '/1.jpg',
-  },
-  {
-    id: 3,
-    title: 'Some asdasdasdasdasdasdasdadasdname',
-    currentAmount: 0,
-    capacity: 10,
-    postUri: location.origin + '/1.jpg',
-  },
-  {
-    id: 4,
-    title: 'Some name',
-    currentAmount: 0,
-    capacity: 10,
-    postUri: location.origin + '/1.jpg',
-  },
-  {
-    id: 5,
-    title: 'Some name',
-    currentAmount: 0,
-    capacity: 10,
-    postUri: location.origin + '/1.jpg',
-  },
-  {
-    id: 6,
-    title: 'Some name',
-    currentAmount: 0,
-    capacity: 10,
-    postUri: location.origin + '/1.jpg',
-  },
-]
+export const TournamentsSlider = ({ setSelected }: TournamentsSliderProps) => {
+  const region = useAppSelector((state) => state.tournaments.region)
+  const tournaments = useAppSelector(
+    (state) => state.tournaments.filteredTournaments
+  )
+  const isLoading = useAppSelector((state) => state.tournaments.loading)
+  const dispath = useAppDispatch()
 
-export const TournamentsSlider = ({
-  className,
-  setSelected,
-}: TournamentsSliderProps) => {
+  useEffect(() => {
+    dispath(fetchAllTournamentsByRegion())
+  }, [region])
+
   const handleClickChoiceTournament = (id: number) => {
     setSelected(true)
     return id
   }
 
+  if (isLoading) {
+    return (
+      <div className={scss.wrapper}>
+        <Loader />
+      </div>
+    )
+  }
+
   return (
-    <Slider oneByOne={true} className={classNames(scss.wrapper, className)}>
+    <Slider oneByOne={true} className={classNames(scss.wrapper)}>
       <Slider.Button className={scss.sliderButton}>
         <Icon type="LeftArrow" />
       </Slider.Button>
       <Slider.Track windowClassName={scss.window}>
         {tournaments.map((tournament) => (
           <TournamentItem
+            postUri={location.origin + '/1.jpg'}
             className={scss.item}
             {...tournament}
             key={tournament.id}

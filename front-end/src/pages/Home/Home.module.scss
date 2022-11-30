@@ -25,17 +25,6 @@ $marging: 15;
       border-top-right-radius: vh($borderRadius);
     }
 
-    .tournamentSliderPanel {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-top: vh($marging);
-      height: vh(220);
-      width: vw($windowWidth);
-
-      background-color: $color-ldark;
-    }
-
     .chatPanel {
       margin-top: vh($marging);
       width: vw($windowWidth);

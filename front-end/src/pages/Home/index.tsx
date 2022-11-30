@@ -16,10 +16,7 @@ export const HomePage = () => {
         <div className={scss.searchPanel}>
           <SearchInput />
         </div>
-        <TournamentsSlider
-          setSelected={setSelected}
-          className={scss.tournamentSliderPanel}
-        />
+        <TournamentsSlider setSelected={setSelected} />
         <div className={scss.chatPanel}>
           <Chat />
         </div>

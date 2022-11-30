@@ -7,18 +7,27 @@ import {
   createFetchingUserCredentialsAction,
   createUserCredentialsWasLoadedAction,
 } from '../actions'
-import { URI_FETCH_GET_USER_CREDENTIALS } from './constants'
+import {
+  URI_FETCH_GET_USER_CREDENTIALS,
+  URI_FETCH_GET_USER_PROFILE,
+} from './constants'
 
-interface FetchUserInfoParams {
-  token: string
-}
+// interface FetchUserInfoParams {
+// }
 
-export function fetchUserInfo({
-  token,
-}: FetchUserInfoParams): ThunkAction<void, RootState, unknown, AnyAction> {
-  return async (dispath) => {
+export function fetchUserInfo(): ThunkAction<
+  void,
+  RootState,
+  unknown,
+  AnyAction
+> {
+  return async (dispath, getState) => {
     try {
+      const token = getState().auth.auth.token
+
       dispath(createFetchingUserCredentialsAction())
+
+      await new Promise((r) => setTimeout(r, 3000))
 
       const response = await axios.get(URI_FETCH_GET_USER_CREDENTIALS, {
         headers: {
@@ -28,9 +37,18 @@ export function fetchUserInfo({
 
       const credentials = response.data.data
 
-      console.log(credentials)
+      const responseProfile = await axios.get(URI_FETCH_GET_USER_PROFILE, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
 
-      dispath(createUserCredentialsWasLoadedAction({ ...credentials }))
+      dispath(
+        createUserCredentialsWasLoadedAction({
+          ...credentials,
+          profile: responseProfile.data.data,
+        })
+      )
     } catch (error: any) {
       console.log(error)
       dispath(

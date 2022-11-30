@@ -1,7 +1,7 @@
 import { IAuth } from '../../../models'
 
 export interface AuthState {
-  auth: IAuth | null
+  auth: IAuth
   loading: boolean
   error: string
 }

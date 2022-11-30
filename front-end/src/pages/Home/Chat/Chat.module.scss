@@ -17,6 +17,7 @@
       scrollbar-width: none;
       display: flex;
       flex-direction: column;
+      justify-content: flex-end;
       width: vw(800);
       height: vh(685);
       overflow-y: scroll;
@@ -30,10 +31,11 @@
         }
 
         .profile {
-          width: vw(40);
+          width: vh(40);
           width: vh(40);
           img {
-            width: vw(40);
+            border-radius: vh(40);
+            width: vh(40);
             width: vh(40);
           }
         }

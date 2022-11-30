@@ -11,7 +11,7 @@ export const Profile = () => {
     // surname,
     // login,
     // password,
-    fileUri,
+    // fileUri,
     onChangePassword,
     onChangeName,
     onChangeSurname,

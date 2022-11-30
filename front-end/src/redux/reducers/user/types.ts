@@ -3,7 +3,7 @@ import { IUser } from '../../../models'
 export interface UserState {
   user: IUser | null
   loading: boolean
-  error: string
+  error?: string
 }
 
 export enum UserActionsTypes {

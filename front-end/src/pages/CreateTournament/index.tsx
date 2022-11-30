@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   DarkFileInput,
   DarkNumberInput,
@@ -6,9 +6,12 @@ import {
   DarkTextInput,
 } from '../../components'
 import { TransparentButton } from '../../components/Buttons'
+import { useAppSelector } from '../../redux'
 import scss from './CreateTournament.module.scss'
 
 export const CreateTournamentPage = () => {
+  const region = useAppSelector((state) => state.tournaments.region)
+
   const [tournament, setTournament] = useState({
     fileUri: location.origin + '/default-profile.png',
     file: '',
@@ -16,8 +19,12 @@ export const CreateTournamentPage = () => {
     capacity: '',
     duration: '',
     description: '',
-    region: 'eu-east',
+    region,
   })
+
+  useEffect(() => {
+    setTournament((state) => ({ ...state, region }))
+  }, [region])
 
   const onFormChange = (event: any) => {
     if (event.target.name === 'fileUri') {

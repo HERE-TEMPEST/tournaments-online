@@ -28,15 +28,17 @@ export const Track = (props: TrackProps) => {
   const [move, setMove] = useState(context.shift || 0)
 
   context.move = (value: number) => {
-    const amountMove = shift + value * move
+    if (pipeline.current.clientWidth > windowClass.current.clientWidth) {
+      const amountMove = shift + value * move
 
-    if (value < 0) {
-      const width =
-        pipeline.current?.clientWidth - windowClass.current?.clientWidth
+      if (value < 0) {
+        const width =
+          pipeline.current?.clientWidth - windowClass.current?.clientWidth
 
-      setShift(Math.max(amountMove, -width))
-    } else {
-      setShift(Math.min(amountMove, 0))
+        setShift(Math.max(amountMove, -width))
+      } else {
+        setShift(Math.min(amountMove, 0))
+      }
     }
   }
 

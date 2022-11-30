@@ -10,21 +10,36 @@ import {
   PROFILE_PAGE_ROUTE,
   TABLE_RECORDS_PAGE_ROUTE,
 } from '../../constants'
-import { createSignOutUserAction, useAppDispatch } from '../../redux'
+import {
+  createSignOutUserAction,
+  useAppDispatch,
+  useAppSelector,
+  createChangeRegionAction,
+} from '../../redux'
+import { Region } from '../../types'
 import { Icon } from '../Icon'
 
 import scss from './Header.module.scss'
 
-interface HeaderProps {
-  isAuth: boolean
-}
+const regions: Array<Region> = [
+  'eu-east',
+  'eu-central',
+  'ca-central',
+  'us-west',
+  'us-west',
+  'global',
+]
 
-const regions = ['eu-east', 'eu-central', 'ca-central', 'us-west', 'us-west']
-
-export const Header = ({ isAuth }: HeaderProps) => {
+export const Header = () => {
+  const isAuth = useAppSelector((state) => state.auth.auth.isAuth)
   const [iconsVisibility, setIconsVisibility] = useState(isAuth)
   const [isOpenedregionSelector, openCloseRegionSelector] = useState(false)
-  const [region, setRegion] = useState('eu-east')
+  const dispath = useAppDispatch()
+
+  const region = useAppSelector((state) => state.tournaments.region)
+  const onChangeRegion = (reg: Region) => {
+    dispath(createChangeRegionAction(reg))
+  }
 
   const dispatch = useAppDispatch()
   const location = useLocation()
@@ -41,11 +56,13 @@ export const Header = ({ isAuth }: HeaderProps) => {
     <header className={scss.wrapper}>
       {isOpenedregionSelector && (
         <div className={scss.regionSelection}>
-          {regions.map((reg, index) => (
+          {regions.map((reg: Region, index) => (
             <div
               key={index}
               className={scss.region}
-              onClick={() => (setRegion(reg), openCloseRegionSelector(false))}
+              onClick={() => (
+                openCloseRegionSelector(false), onChangeRegion(reg)
+              )}
             >
               {reg}
             </div>

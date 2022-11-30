@@ -1,6 +1,17 @@
 @import '../../../styles/index.scss';
 
+$marging: 15;
+
 .wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: vh($marging);
+  height: vh(220);
+  width: vw($windowWidth);
+
+  background-color: $color-ldark;
+
   .sliderButton {
     display: flex;
     justify-content: center;

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 
 export const useLogic = () => {
   const [name, setName] = useState('')
-  const [file, setFile] = useState<any>('')
+  const [file, setFile] = useState<any>(null)
   const [surname, setSurname] = useState('')
   const [login, setLogin] = useState('')
   const [email, setEmail] = useState('')
