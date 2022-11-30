@@ -1,14 +1,14 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { SchedulerRegistry } from '@nestjs/schedule';
-import { CronJob } from 'cron';
+import { Inject, Injectable } from "@nestjs/common";
+import { SchedulerRegistry } from "@nestjs/schedule";
+import { CronJob } from "cron";
 
-import { TournamentDomain, TournamentMemberModel } from '../domain';
+import { TournamentDomain, TournamentMemberModel } from "../domain";
 import {
   TournamentMemberRepository,
   TournamentRepository,
   TOURNAMENTS_REPOSITORY_TOKEN,
   TOURNAMENTS_MEMBERS_REPOSITORY_TOKEN,
-} from '../infrastructure';
+} from "../infrastructure";
 import {
   CreateTournamentParams,
   CreateTournamentResult,
@@ -21,8 +21,9 @@ import {
   GetTournamentWinnerParams,
   RemoveUserFromTournamentParams,
   CheckTournamentEndParams,
-} from './tournament-service.type';
-import { UserModel, UsersService } from '../../users';
+  GetAllTournamentsParams,
+} from "./tournament-service.type";
+import { UserModel, UsersService } from "../../users";
 
 @Injectable()
 export class TournamentsService {
@@ -33,11 +34,11 @@ export class TournamentsService {
     @Inject(TOURNAMENTS_MEMBERS_REPOSITORY_TOKEN)
     private readonly tournamentMembersRepository: TournamentMemberRepository,
     private readonly scheduleService: SchedulerRegistry,
-    private readonly usersService: UsersService,
+    private readonly usersService: UsersService
   ) {}
 
   async createTournament(
-    params: CreateTournamentParams,
+    params: CreateTournamentParams
   ): Promise<CreateTournamentResult> {
     const newTournament = await this.tournamentDomain.createTournament(params);
 
@@ -56,8 +57,24 @@ export class TournamentsService {
     };
   }
 
+  async allByRegion(
+    params: GetAllTournamentsParams
+  ): Promise<GetAllTournamentsResult> {
+    const { region } = params;
+
+    const tournaments = await this.tournamentRepository.find({
+      where: {
+        region,
+      },
+    });
+
+    return {
+      tournaments,
+    };
+  }
+
   async addUserToTournament(
-    params: AddUserToTournamentParams,
+    params: AddUserToTournamentParams
   ): Promise<AddUserToTournamentResult> {
     const { tournamentId, userId } = params;
 
@@ -81,12 +98,12 @@ export class TournamentsService {
   }
 
   async startTournament(
-    params: StartTournamentParams,
+    params: StartTournamentParams
   ): Promise<StartTournamentResult> {
     let { tournament } = params;
     const { endedTournamentCallback } = params;
 
-    if (typeof tournament === 'number') {
+    if (typeof tournament === "number") {
       tournament = await this.tournamentRepository.findOneBy({
         id: tournament,
       });
@@ -96,7 +113,7 @@ export class TournamentsService {
 
     await this.tournamentRepository.update(
       { id: tournament.id },
-      { isStarted: isStartedGame },
+      { isStarted: isStartedGame }
     );
 
     // Cron
@@ -116,7 +133,7 @@ export class TournamentsService {
   }
 
   async removeUserFromTournament(
-    params: RemoveUserFromTournamentParams,
+    params: RemoveUserFromTournamentParams
   ): Promise<boolean> {
     const { tournamentId, userId } = params;
 
@@ -143,12 +160,12 @@ export class TournamentsService {
       },
       {
         score,
-      },
+      }
     );
   }
 
   async checkTournamentEnd(
-    params: CheckTournamentEndParams,
+    params: CheckTournamentEndParams
   ): Promise<TournamentMemberModel | null> {
     const { tournamentId } = params;
 
@@ -159,7 +176,7 @@ export class TournamentsService {
     if (winner) {
       // if everyone left the tournament ahead of schedule
       const cron = this.scheduleService.getCronJob(
-        `tournament:${tournamentId}`,
+        `tournament:${tournamentId}`
       );
       cron.stop();
       this.scheduleService.deleteCronJob(`tournament:${tournamentId}`);
@@ -169,7 +186,7 @@ export class TournamentsService {
   }
 
   async getTournamentWinner(
-    params: GetTournamentWinnerParams,
+    params: GetTournamentWinnerParams
   ): Promise<UserModel | null> {
     const { tournamentId } = params;
 

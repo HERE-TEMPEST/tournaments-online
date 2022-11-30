@@ -1,11 +1,15 @@
-import { TournamentModel } from '../domain';
+import { TournamentModel } from "../domain";
 
 export type CreateTournamentParams = Omit<
   TournamentModel,
-  'id' | 'currentAmount' | 'members' | 'isStarted'
+  "id" | "currentAmount" | "members" | "isStarted"
 >;
 export interface CreateTournamentResult {
   tournament: TournamentModel;
+}
+
+export interface GetAllTournamentsParams {
+  region: string;
 }
 
 export interface GetAllTournamentsResult {

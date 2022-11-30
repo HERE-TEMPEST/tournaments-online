@@ -113,8 +113,25 @@ export class UsersService {
 
     const user = await this.userRepository.findById(new Types.ObjectId(userId));
 
-    console.log(user);
+    if (user.profile && user.profile.key) {
+      const { key, uri } = await this.awsS3Service.getFileUri({
+        key: user.profile.key,
+      });
 
-    return user.profile;
+      await this.userRepository.findByIdAndUpdate(
+        { _id: new Types.ObjectId(userId) },
+        {
+          $set: {
+            profile: {
+              key,
+              uri,
+            },
+          },
+        }
+      );
+      return { key, uri };
+    }
+
+    return { key: null, uri: null };
   }
 }

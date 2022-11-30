@@ -24,6 +24,7 @@ import {
 } from "./tournaments";
 
 import { LoggerMiddleware } from "@tournaments/utils";
+import { ChatModule } from "./chat/chat.module";
 
 @Module({
   imports: [
@@ -47,6 +48,7 @@ import { LoggerMiddleware } from "@tournaments/utils";
       ],
       inject: [ENTITY_TOKEN],
     }),
+    ChatModule,
     UsersModule,
     AuthModule,
     TournamentsModule,

@@ -1,21 +1,34 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
-import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Get, Param, Post, UseGuards } from "@nestjs/common";
+import { ApiBearerAuth, ApiOkResponse, ApiTags } from "@nestjs/swagger";
 
-import { AuthGuard } from '@tournaments/auth';
+import { AuthGuard } from "@tournaments/auth";
 
-import { CreateTournamentInput } from './inputs';
-import { TournamentsService } from '../application';
+import { CreateTournamentInput } from "./inputs";
+import { TournamentsService } from "../application";
 import {
   CreateTournamentResult,
   GetAllTournamentsResult,
   GetTournamentWinnerResult,
-} from './results';
+} from "./results";
 
-@ApiTags('Tournaments')
+@ApiTags("Tournaments")
 @UseGuards(AuthGuard)
-@Controller('tournaments')
+@Controller("tournaments")
 export class TournamentsController {
   constructor(private readonly tournamentService: TournamentsService) {}
+
+  @ApiOkResponse({ type: GetAllTournamentsResult })
+  @ApiBearerAuth()
+  @Get("/:region")
+  async getAllByRegion(
+    @Param("region") region: string
+  ): Promise<GetAllTournamentsResult> {
+    const { tournaments } = await this.tournamentService.allByRegion({
+      region,
+    });
+
+    return { data: tournaments };
+  }
 
   @ApiOkResponse({ type: GetAllTournamentsResult })
   @ApiBearerAuth()
@@ -28,9 +41,9 @@ export class TournamentsController {
 
   @ApiOkResponse({ type: GetTournamentWinnerResult })
   @ApiBearerAuth()
-  @Get('/:id')
+  @Get("/:id")
   async getTournamentWinner(
-    @Param('id') id: string,
+    @Param("id") id: string
   ): Promise<GetTournamentWinnerResult> {
     const winner = await this.tournamentService.getTournamentWinner({
       tournamentId: +id,
@@ -43,7 +56,7 @@ export class TournamentsController {
   @ApiBearerAuth()
   @Post()
   async create(
-    @Body() input: CreateTournamentInput,
+    @Body() input: CreateTournamentInput
   ): Promise<CreateTournamentResult> {
     const { tournament } = await this.tournamentService.createTournament(input);
 
