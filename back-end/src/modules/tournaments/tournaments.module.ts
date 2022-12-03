@@ -17,6 +17,9 @@ import {
   TournamentMemberRepository,
   TOURNAMENTS_REPOSITORY_TOKEN,
   TOURNAMENTS_MEMBERS_REPOSITORY_TOKEN,
+  TournamentsProfile,
+  TournamentProfileRepository,
+  TOURNAMENTS_PROFILE_REPOSITORY_TOKEN,
 } from "./infrastructure";
 import { UsersModule } from "../users";
 
@@ -25,7 +28,7 @@ import { UsersModule } from "../users";
     UsersModule,
     ScheduleModule.forRoot(),
     TypeOrmModule.forFeature(
-      [TournamentEntity, TournamentMemberEntity],
+      [TournamentEntity, TournamentMemberEntity, TournamentsProfile],
       TOURNAMENT_RELATIONS_CONNECTION
     ),
     JwtModule.registerAsync({ useClass: JwtConfigService }),
@@ -39,6 +42,10 @@ import { UsersModule } from "../users";
     {
       provide: TOURNAMENTS_MEMBERS_REPOSITORY_TOKEN,
       useClass: TournamentMemberRepository,
+    },
+    {
+      provide: TOURNAMENTS_PROFILE_REPOSITORY_TOKEN,
+      useClass: TournamentProfileRepository,
     },
     WsAuthGuard,
     TournamentDomain,

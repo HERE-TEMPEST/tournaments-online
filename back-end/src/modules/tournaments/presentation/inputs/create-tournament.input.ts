@@ -1,5 +1,5 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsNumber, IsString, Min } from 'class-validator';
+import { ApiProperty } from "@nestjs/swagger";
+import { IsNotEmpty, IsNumber, IsString, Min } from "class-validator";
 
 export class CreateTournamentInput {
   @ApiProperty({ nullable: false, type: String })
@@ -17,6 +17,11 @@ export class CreateTournamentInput {
   @IsString()
   @IsNotEmpty()
   region: string;
+
+  @ApiProperty({ nullable: false, type: String })
+  @IsString()
+  @IsNotEmpty()
+  description: string;
 
   @ApiProperty({ nullable: false, type: Number })
   @IsNumber()

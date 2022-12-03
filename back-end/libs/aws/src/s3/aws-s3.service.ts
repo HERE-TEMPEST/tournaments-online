@@ -4,7 +4,7 @@ import {
   S3Client,
 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-import { Inject, Injectable } from "@nestjs/common";
+import { Inject, Injectable, Scope } from "@nestjs/common";
 
 import { AwsS3ModuleOptions } from "./options/aws-s3-module.options";
 import { AWS_S3_MODULE_TOKEN } from "./tokens";
@@ -21,13 +21,14 @@ export class AwsS3Service {
   private readonly acl: string;
   private readonly bucketName: string;
   private readonly expiresIn: number;
+  private readonly endpoint?: string;
 
   constructor(@Inject(AWS_S3_MODULE_TOKEN) options: AwsS3ModuleOptions) {
     const { acl, bucketName, expiresIn, ...s3Options } = options;
 
     this.acl = acl;
     this.bucketName = bucketName;
-    this.expiresIn = expiresIn;
+    (this.endpoint = s3Options.endpoint), (this.expiresIn = expiresIn);
 
     this.s3 = new S3Client(s3Options);
   }
@@ -58,9 +59,22 @@ export class AwsS3Service {
     };
   }
 
-  async getFileUri({ key }: GetFileUriParams): Promise<GetFileUriResult> {
+  async getPublicFileUri({
+    key,
+    bucket,
+  }: GetFileUriParams): Promise<GetFileUriResult> {
+    return {
+      key,
+      uri: `${this.endpoint}${bucket || this.bucketName}/${key}`,
+    };
+  }
+
+  async getSignedFileUri({
+    key,
+    bucket,
+  }: GetFileUriParams): Promise<GetFileUriResult> {
     const command = new GetObjectCommand({
-      Bucket: this.bucketName,
+      Bucket: bucket || this.bucketName,
       Key: key,
     });
 

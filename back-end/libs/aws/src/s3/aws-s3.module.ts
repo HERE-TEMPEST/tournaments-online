@@ -1,17 +1,18 @@
-import { Provider } from '@nestjs/common';
-import { DynamicModule, Module } from '@nestjs/common';
+import { Global, Provider } from "@nestjs/common";
+import { DynamicModule, Module } from "@nestjs/common";
 
-import { AwsS3Service } from './aws-s3.service';
-import { AwsS3ModuleAsyncOptions } from './options/aws-s3-module-async.options';
-import { AwsS3ModuleOptions } from './options/aws-s3-module.options';
-import { AWS_S3_MODULE_TOKEN } from './tokens';
-import { AwsS3ModuleOptionsFactory } from './types';
+import { AwsS3Service } from "./aws-s3.service";
+import { AwsS3ModuleAsyncOptions } from "./options/aws-s3-module-async.options";
+import { AwsS3ModuleOptions } from "./options/aws-s3-module.options";
+import { AWS_S3_MODULE_TOKEN } from "./tokens";
+import { AwsS3ModuleOptionsFactory } from "./types";
 
 @Module({
   providers: [AwsS3Service],
   imports: [],
   exports: [AwsS3Service],
 })
+@Global()
 export class AwsS3Module {
   static forRoot(options: AwsS3ModuleOptions): DynamicModule {
     return {

@@ -4,6 +4,24 @@ export type CreateTournamentParams = Omit<
   TournamentModel,
   "id" | "currentAmount" | "members" | "isStarted"
 >;
+
+export interface UpdateProfileParams {
+  tournamentId: number;
+  profile: Express.Multer.File;
+}
+export interface UpdateProfileResult {
+  key: string;
+  uri: string;
+}
+
+export interface GetProfileParams {
+  tournamentId: number;
+}
+export interface GetProfileResult {
+  key: string;
+  uri: string;
+}
+
 export interface CreateTournamentResult {
   tournament: TournamentModel;
 }

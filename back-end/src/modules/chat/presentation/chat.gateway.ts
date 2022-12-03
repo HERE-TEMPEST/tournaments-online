@@ -37,6 +37,19 @@ export class ChatGateway
     @ConnectedSocket() client: Socket,
     @MessageBody() message: JoinEvent
   ) {
+    if (client.chat) {
+      const { region, profileUri, username } = client.chat;
+      const { userId } = client.user;
+
+      client.leave(region);
+      client.emit("leave", { id: userId });
+
+      this.chatNamespace
+        .to(region)
+        .emit("user.leave", { userId, profileUri, username });
+      client.chat = null;
+    }
+
     const { region, profileUri, username } = message;
     const { userId } = client.user;
     client.join(region);
@@ -47,22 +60,11 @@ export class ChatGateway
       username,
     };
 
-    client.emit("joined", { id: userId });
+    client.emit("join", { id: userId });
 
     this.chatNamespace
       .to(region)
-      .emit("user.joined", { region, profileUri, username, userId });
-  }
-
-  @SubscribeMessage("leave")
-  async leaveFromChat(@ConnectedSocket() client: Socket) {
-    const { region } = client.chat;
-    const { userId } = client.user;
-
-    client.leave(region);
-    client.emit("leaved");
-
-    this.chatNamespace.to(region).emit("user.leaved", { userId });
+      .emit("user.join", { region, profileUri, username, userId });
   }
 
   @SubscribeMessage("message")
@@ -82,9 +84,18 @@ export class ChatGateway
   }
 
   async handleDisconnect(client: Socket) {
+    console.log("disconnection");
+
     if (client.chat) {
-      await this.leaveFromChat(client);
+      const { profileUri, region, username } = client.chat;
+      const { userId } = client.user;
+
+      this.chatNamespace
+        .to(region)
+        .emit("user.leave", { userId, profileUri, username });
     }
+    client.removeAllListeners();
+    client.disconnect();
   }
 
   async handleConnection(client: Socket) {

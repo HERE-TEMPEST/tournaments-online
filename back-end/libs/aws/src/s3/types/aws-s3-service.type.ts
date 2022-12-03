@@ -8,6 +8,7 @@ export interface PutFileResult {
 }
 
 export interface GetFileUriParams {
+  bucket?: string;
   key: string;
 }
 export interface GetFileUriResult {

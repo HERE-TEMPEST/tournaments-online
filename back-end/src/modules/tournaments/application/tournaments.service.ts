@@ -2,12 +2,16 @@ import { Inject, Injectable } from "@nestjs/common";
 import { SchedulerRegistry } from "@nestjs/schedule";
 import { CronJob } from "cron";
 
+import { AwsS3Service } from "@tournaments/aws/s3";
+
 import { TournamentDomain, TournamentMemberModel } from "../domain";
 import {
   TournamentMemberRepository,
   TournamentRepository,
   TOURNAMENTS_REPOSITORY_TOKEN,
   TOURNAMENTS_MEMBERS_REPOSITORY_TOKEN,
+  TOURNAMENTS_PROFILE_REPOSITORY_TOKEN,
+  TournamentProfileRepository,
 } from "../infrastructure";
 import {
   CreateTournamentParams,
@@ -22,6 +26,10 @@ import {
   RemoveUserFromTournamentParams,
   CheckTournamentEndParams,
   GetAllTournamentsParams,
+  UpdateProfileParams,
+  UpdateProfileResult,
+  GetProfileParams,
+  GetProfileResult,
 } from "./tournament-service.type";
 import { UserModel, UsersService } from "../../users";
 
@@ -33,7 +41,10 @@ export class TournamentsService {
     private readonly tournamentRepository: TournamentRepository,
     @Inject(TOURNAMENTS_MEMBERS_REPOSITORY_TOKEN)
     private readonly tournamentMembersRepository: TournamentMemberRepository,
+    @Inject(TOURNAMENTS_PROFILE_REPOSITORY_TOKEN)
+    private readonly tournamentsProfileRepository: TournamentProfileRepository,
     private readonly scheduleService: SchedulerRegistry,
+    private readonly awsS3Service: AwsS3Service,
     private readonly usersService: UsersService
   ) {}
 
@@ -50,7 +61,11 @@ export class TournamentsService {
   }
 
   async all(): Promise<GetAllTournamentsResult> {
-    const tournaments = await this.tournamentRepository.find();
+    const tournaments = await this.tournamentRepository.find({
+      relations: {
+        profile: true,
+      },
+    });
 
     return {
       tournaments,
@@ -65,6 +80,9 @@ export class TournamentsService {
     const tournaments = await this.tournamentRepository.find({
       where: {
         region,
+      },
+      relations: {
+        profile: true,
       },
     });
 
@@ -201,5 +219,68 @@ export class TournamentsService {
     }
 
     return null;
+  }
+
+  async updateProfile(
+    params: UpdateProfileParams
+  ): Promise<UpdateProfileResult> {
+    const { profile, tournamentId } = params;
+
+    const uploadedProfile = await this.awsS3Service.putFile({
+      file: profile,
+      name: `tournament-${tournamentId}`,
+      subPath: "tournaments-profiles/",
+    });
+
+    const { key, uri } = await this.awsS3Service.getPublicFileUri({
+      ...uploadedProfile,
+    });
+
+    const tournamentProfile = await this.tournamentsProfileRepository.save({
+      key,
+      uri,
+    });
+
+    await this.tournamentRepository.update(
+      { id: tournamentId },
+      { profile: tournamentProfile }
+    );
+
+    return {
+      key,
+      uri,
+    };
+  }
+
+  async getTournamentProfile(
+    params: GetProfileParams
+  ): Promise<GetProfileResult> {
+    const { tournamentId } = params;
+
+    const tournament = await this.tournamentRepository.findOne({
+      where: {
+        id: tournamentId,
+      },
+      relations: {
+        profile: true,
+      },
+    });
+
+    if (tournament.profile && tournament.profile.key) {
+      const { key, uri } = await this.awsS3Service.getPublicFileUri({
+        key: tournament.profile.key,
+      });
+
+      await this.tournamentsProfileRepository.update(
+        { id: tournament.profile.id },
+        {
+          key,
+          uri,
+        }
+      );
+      return { key, uri };
+    }
+
+    return { key: null, uri: null };
   }
 }

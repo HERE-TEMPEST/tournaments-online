@@ -1,1 +1,2 @@
-export * from './tournament.dto';
+export * from "./tournament.dto";
+export * from "./file.dto";

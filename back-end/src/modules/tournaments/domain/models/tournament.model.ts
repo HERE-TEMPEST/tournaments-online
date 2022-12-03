@@ -1,4 +1,4 @@
-import { TournamentMemberModel } from './tournament-member.model';
+import { TournamentMemberModel } from "./tournament-member.model";
 
 export interface TournamentModel {
   id: number;
@@ -6,7 +6,12 @@ export interface TournamentModel {
   name: string;
   duration: number;
   currentAmount: number;
+  description: string;
   capacity: number;
   region: string;
+  profile?: {
+    key: string;
+    uri: string;
+  };
   members: Array<TournamentMemberModel>;
 }

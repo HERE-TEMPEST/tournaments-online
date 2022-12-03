@@ -14,6 +14,9 @@ import {
   JwtConfigService,
 } from "@tournaments/config";
 
+import { AwsS3Module } from "@tournaments/aws/s3";
+import { AwsS3ConfigService } from "@tournaments/config";
+
 import { UsersModule } from "./users";
 import { AuthModule } from "./auth";
 import {
@@ -21,6 +24,7 @@ import {
   TOURNAMENT_RELATIONS_CONNECTION,
   TournamentEntity,
   TournamentMemberEntity,
+  TournamentsProfile,
 } from "./tournaments";
 
 import { LoggerMiddleware } from "@tournaments/utils";
@@ -28,6 +32,9 @@ import { ChatModule } from "./chat/chat.module";
 
 @Module({
   imports: [
+    AwsS3Module.forRootAsync({
+      useClass: AwsS3ConfigService,
+    }),
     ConfigModule.forRoot({
       isGlobal: true,
       load: configLoad,
@@ -43,7 +50,11 @@ import { ChatModule } from "./chat/chat.module";
       extraProviders: [
         {
           provide: ENTITY_TOKEN,
-          useValue: [TournamentEntity, TournamentMemberEntity],
+          useValue: [
+            TournamentEntity,
+            TournamentMemberEntity,
+            TournamentsProfile,
+          ],
         },
       ],
       inject: [ENTITY_TOKEN],

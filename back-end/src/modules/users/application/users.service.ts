@@ -88,7 +88,9 @@ export class UsersService {
       subPath: "profiles/",
     });
 
-    const { key, uri } = await this.awsS3Service.getFileUri(uploadedProfile);
+    const { key, uri } = await this.awsS3Service.getPublicFileUri(
+      uploadedProfile
+    );
 
     await this.userRepository.findByIdAndUpdate(
       { _id: new Types.ObjectId(userId) },
@@ -114,7 +116,7 @@ export class UsersService {
     const user = await this.userRepository.findById(new Types.ObjectId(userId));
 
     if (user.profile && user.profile.key) {
-      const { key, uri } = await this.awsS3Service.getFileUri({
+      const { key, uri } = await this.awsS3Service.getPublicFileUri({
         key: user.profile.key,
       });
 
