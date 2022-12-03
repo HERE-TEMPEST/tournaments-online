@@ -4,3 +4,4 @@ export {
   createInitTournamentProfileAction,
   createLeaveFromTournamentAction,
 } from './actions'
+export * from './fetch'

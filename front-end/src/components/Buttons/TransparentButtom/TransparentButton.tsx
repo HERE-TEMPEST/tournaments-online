@@ -6,7 +6,7 @@ import scss from './TransparentButton.module.scss'
 interface TransparentButtonProps {
   title: string
   className?: string
-  onClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
+  onClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
 }
 
 export const TransparentButton = ({

@@ -1,21 +1,40 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { Link, useParams } from 'react-router-dom'
+import { Loader } from '../../components'
 import { TransparentButton } from '../../components/Buttons'
+import { HOME_PAGE_ROUTE } from '../../constants'
 
 import { toString } from '../../hooks'
+import {
+  createLeaveFromTournamentAction,
+  fetchTournamentInfo,
+  useAppDispatch,
+  useAppSelector,
+} from '../../redux'
 import { Chat } from './Chat'
 
 import scss from './GameWaiting.module.scss'
 
 export const GameWaitingPage = () => {
-  const tournament = {
-    id: 1,
-    title: 'Some name',
-    currentAmount: 3,
-    capacity: 10,
-    duration: 5,
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemocumque quae atque velit dolores neque iure, sapiente modi ipsasunt sed rem molestiae, quaerat vitae a et dolorem incidunt sintratione doloremque. Lorem ipsum dolor sit amet consecteturadipisicing elit. Nemo cumque quae atque velit dolores nequeiure, sapiente modi ipsa sunt sed rem molestiae, quaerat vitae aet dolorem incidunt sint ratione doloremque.Lorem ipsum dolorsit amet consectetur adipisicing elit. Nemo cumque quae atquevelit dolores neque iure, sapiente modi ipsa sunt sed remmolestiae, quaerat vitae a et dolorem incidunt sint rationedoloremque. Lorem ipsum dolor sit amet consectetur adipisicingelit. Nemo cumque quae atque velit dolores neque iure, sapientemodi ipsa sunt sed rem molestiae',
-    postUri: location.origin + '/1.jpg',
+  const params = useParams()
+  const tournament = useAppSelector((state) => state.game.tournament)
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    const { id } = params
+    dispatch(fetchTournamentInfo({ tournamentId: Number(id) }))
+
+    return () => {
+      dispatch(createLeaveFromTournamentAction(undefined))
+    }
+  }, [])
+
+  if (!tournament) {
+    return (
+      <div className={scss.wrapper}>
+        <Loader />
+      </div>
+    )
   }
 
   return (
@@ -25,7 +44,7 @@ export const GameWaitingPage = () => {
           <div className={scss.info}>
             <div className={scss.profile}>
               <div className={scss.profileImage}>
-                <img src={tournament.postUri} alt="" />
+                <img src={tournament.profile.uri} alt="" />
               </div>
               <div className={scss.description}>
                 <div className={scss.tournamentDescription}>Description</div>
@@ -41,14 +60,9 @@ export const GameWaitingPage = () => {
             <div
               className={scss.capacity}
             >{`${tournament.currentAmount}/${tournament.capacity}`}</div>
-
-            <TransparentButton
-              title="Exit"
-              className={scss.btn}
-              onClick={() => {
-                return
-              }}
-            />
+            <Link to={HOME_PAGE_ROUTE} className={scss.leaveBtn} replace={true}>
+              <TransparentButton title="Exit" className={scss.btn} />
+            </Link>
           </div>
         </div>
         <div className={scss.chatPanel}>

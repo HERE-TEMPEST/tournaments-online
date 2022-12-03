@@ -1,16 +1,26 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import {
   DarkFileInput,
   DarkNumberInput,
   DarkTextAreaInput,
   DarkTextInput,
+  TransparentButton,
 } from '../../components'
-import { TransparentButton } from '../../components/Buttons'
-import { useAppSelector } from '../../redux'
+import { createTournamentWaitingPageUri } from '../../constants'
+
+import {
+  fetchCreateNewTournament,
+  useAppDispatch,
+  useAppSelector,
+} from '../../redux'
+
 import scss from './CreateTournament.module.scss'
 
 export const CreateTournamentPage = () => {
   const region = useAppSelector((state) => state.tournaments.region)
+  const dispatch = useAppDispatch()
+  const navigate = useNavigate()
 
   const [tournament, setTournament] = useState({
     fileUri: location.origin + '/default-profile.png',
@@ -45,7 +55,27 @@ export const CreateTournamentPage = () => {
   }
 
   const createTournament = () => {
-    console.log('create tournament')
+    dispatch(
+      fetchCreateNewTournament({
+        payload: {
+          profile: tournament.file,
+          tournament: {
+            capacity: Number(tournament.capacity),
+            duration: Number(tournament.duration),
+            description: tournament.description,
+            name: tournament.title,
+            region,
+          },
+        },
+        callback: (error, data) => {
+          if (!error && data) {
+            navigate(createTournamentWaitingPageUri(data.id), {
+              replace: true,
+            })
+          }
+        },
+      })
+    )
   }
 
   const onFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {

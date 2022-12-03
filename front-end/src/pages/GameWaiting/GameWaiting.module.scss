@@ -102,13 +102,16 @@ $marging: 15;
           line-height: vh(60);
         }
 
-        .btn {
+        .leaveBtn {
           align-self: flex-end;
           margin-right: vw(30);
           margin-top: vh(50);
-          font-size: vh(30);
-          line-height: vh(24);
-          font-weight: 600;
+
+          .btn {
+            font-size: vh(30);
+            line-height: vh(24);
+            font-weight: 600;
+          }
         }
       }
     }

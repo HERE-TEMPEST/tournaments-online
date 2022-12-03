@@ -14,6 +14,14 @@
   height: vh(880);
   margin: 0 auto;
 
+  @include screen('mobile') {
+    width: 100%;
+  }
+
+  // @include screen('media-tablet-max') {
+  //   width: vw(1000);
+  // }
+
   .content {
     width: vw(550);
     height: vh(245);
@@ -23,6 +31,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    @include screen('mobile') {
+      width: vw_m(700);
+    }
 
     .login {
       margin-top: vh(32);

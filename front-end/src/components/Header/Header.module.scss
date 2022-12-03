@@ -6,6 +6,10 @@
   height: vh(50);
   position: relative;
 
+  @include screen('mobile') {
+    height: vh_m(100);
+  }
+
   .mainLayout {
     width: vw(900);
     height: vh(50);
@@ -14,6 +18,11 @@
     align-items: center;
     justify-content: space-between;
 
+    @include screen('mobile') {
+      width: 100%;
+      height: vh_m(100);
+    }
+
     .logo {
       width: vw(168);
       height: vh(50);
@@ -21,6 +30,17 @@
       svg {
         width: vw(168);
         height: vh(50);
+
+        @include screen('mobile') {
+          width: vw_m(268);
+          height: vh_m(100);
+        }
+      }
+
+      @include screen('mobile') {
+        margin-left: vw_m(20);
+        width: vw_m(268);
+        height: vh_m(100);
       }
     }
 
