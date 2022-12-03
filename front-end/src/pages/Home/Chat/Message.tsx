@@ -1,17 +1,20 @@
+import { IChatMessage } from '../../../models'
 import scss from './Chat.module.scss'
 
 interface ChatMessageProps {
   isOwner: boolean
-  message: {
-    userId: number
-    id: number
-    body: string
-    username: string
-    profileUri: string
-  }
+  message: IChatMessage
 }
 
 export const ChatMessage = ({ message, isOwner }: ChatMessageProps) => {
+  if (message.type !== 'message') {
+    return (
+      <div className={scss.message} style={{ alignSelf: 'center' }}>
+        <div className={scss.notification}>{message.body}</div>
+      </div>
+    )
+  }
+
   return (
     <div
       className={scss.message}

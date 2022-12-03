@@ -11,6 +11,10 @@ const initialValue: TournamentsState = {
   filters: {
     name: '',
   },
+  newTournamentAction: {
+    error: '',
+    loading: false,
+  },
 }
 
 export const tournamentsReducer = (
@@ -59,6 +63,36 @@ export const tournamentsReducer = (
             .toLowerCase()
             .includes(state.filters.name.toLowerCase())
         ),
+      }
+    }
+
+    case TournamentsActionsTypes.CREATE_NEW_TOURNAMENT_ACTION: {
+      return {
+        ...state,
+        newTournamentAction: {
+          error: '',
+          loading: true,
+        },
+      }
+    }
+
+    case TournamentsActionsTypes.CREATE_NEW_TOURNAMENT_SUCCESS_ACTION: {
+      return {
+        ...state,
+        newTournamentAction: {
+          error: '',
+          loading: false,
+        },
+      }
+    }
+
+    case TournamentsActionsTypes.CREATE_NEW_TOURNAMENT_ERROR_ACTION: {
+      return {
+        ...state,
+        newTournamentAction: {
+          error: payload,
+          loading: false,
+        },
       }
     }
 

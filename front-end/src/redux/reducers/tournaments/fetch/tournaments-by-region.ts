@@ -36,7 +36,7 @@ export function fetchAllTournamentsByRegion(): ThunkAction<
           }
         )
 
-        await new Promise((r) => setTimeout(r, 2000))
+        // await new Promise((r) => setTimeout(r, 2000))
 
         dispath(createSetTournamentsAction(response.data.data))
         dispath(createFilterTournamentsByNameAction())

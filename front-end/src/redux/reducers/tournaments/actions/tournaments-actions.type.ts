@@ -1,10 +1,13 @@
 import { ChangeRegionAction } from './region.actions'
 import {
   ChangeFilterNameAction,
+  CreateErrorInCreatingNewTournamentAction,
+  CreateNewTournamentAction,
   ErrorInFetchingTournamentsAction,
   FilterTournamentsByNameAction,
   LoadingTournamentsAction,
   SetTournamentsAction,
+  SuccessCreatingNewTournamentAction,
 } from './tournaments.actions'
 
 export type TournamentsActions =
@@ -14,3 +17,6 @@ export type TournamentsActions =
   | ErrorInFetchingTournamentsAction
   | FilterTournamentsByNameAction
   | ChangeFilterNameAction
+  | CreateNewTournamentAction
+  | CreateErrorInCreatingNewTournamentAction
+  | SuccessCreatingNewTournamentAction

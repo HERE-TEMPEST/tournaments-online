@@ -15,6 +15,8 @@ import {
   useAppDispatch,
   useAppSelector,
   createChangeRegionAction,
+  connectToChatAction,
+  createDisconnectChatSocketAction,
 } from '../../redux'
 import { Region } from '../../types'
 import { Icon } from '../Icon'
@@ -25,7 +27,6 @@ const regions: Array<Region> = [
   'eu-east',
   'eu-central',
   'ca-central',
-  'us-west',
   'us-west',
   'global',
 ]
@@ -38,7 +39,9 @@ export const Header = () => {
 
   const region = useAppSelector((state) => state.tournaments.region)
   const onChangeRegion = (reg: Region) => {
+    openCloseRegionSelector(false)
     dispath(createChangeRegionAction(reg))
+    dispatch(connectToChatAction())
   }
 
   const dispatch = useAppDispatch()
@@ -46,6 +49,7 @@ export const Header = () => {
 
   const handleClickSignOut = () => {
     dispatch(createSignOutUserAction())
+    dispatch(createDisconnectChatSocketAction(undefined))
   }
 
   useEffect(() => {
@@ -60,9 +64,7 @@ export const Header = () => {
             <div
               key={index}
               className={scss.region}
-              onClick={() => (
-                openCloseRegionSelector(false), onChangeRegion(reg)
-              )}
+              onClick={() => onChangeRegion(reg)}
             >
               {reg}
             </div>

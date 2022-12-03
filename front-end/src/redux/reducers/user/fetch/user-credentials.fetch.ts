@@ -27,7 +27,7 @@ export function fetchUserInfo(): ThunkAction<
 
       dispath(createFetchingUserCredentialsAction())
 
-      await new Promise((r) => setTimeout(r, 3000))
+      // await new Promise((r) => setTimeout(r, 3000))
 
       const response = await axios.get(URI_FETCH_GET_USER_CREDENTIALS, {
         headers: {

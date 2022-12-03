@@ -67,3 +67,45 @@ export const createChangeFilterName = (
     payload,
   }
 }
+
+export interface CreateNewTournamentAction {
+  type: `${TournamentsActionsTypes.CREATE_NEW_TOURNAMENT_ACTION}`
+  payload: undefined
+}
+
+export const createCreateNewTournamentAction = (
+  payload: undefined
+): CreateNewTournamentAction => {
+  return {
+    type: `${TournamentsActionsTypes.CREATE_NEW_TOURNAMENT_ACTION}`,
+    payload,
+  }
+}
+
+export interface CreateErrorInCreatingNewTournamentAction {
+  type: `${TournamentsActionsTypes.CREATE_NEW_TOURNAMENT_ERROR_ACTION}`
+  payload: string
+}
+
+export const createErrorInCreatingNewTournamentAction = (
+  payload: string
+): CreateErrorInCreatingNewTournamentAction => {
+  return {
+    type: `${TournamentsActionsTypes.CREATE_NEW_TOURNAMENT_ERROR_ACTION}`,
+    payload,
+  }
+}
+
+export interface SuccessCreatingNewTournamentAction {
+  type: `${TournamentsActionsTypes.CREATE_NEW_TOURNAMENT_SUCCESS_ACTION}`
+  payload: undefined
+}
+
+export const createSuccessCreatingNewTournamentAction = (
+  payload: undefined
+): SuccessCreatingNewTournamentAction => {
+  return {
+    type: `${TournamentsActionsTypes.CREATE_NEW_TOURNAMENT_SUCCESS_ACTION}`,
+    payload,
+  }
+}

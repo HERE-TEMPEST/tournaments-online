@@ -9,12 +9,19 @@ import {
   useAppDispatch,
   useAppSelector,
 } from '../../../redux'
+import { ITournament } from '../../../models'
 
 interface TournamentsSliderProps {
-  setSelected: any
+  isOpen: React.Dispatch<React.SetStateAction<boolean>>
+  setSelectedTournament: React.Dispatch<
+    React.SetStateAction<ITournament | undefined>
+  >
 }
 
-export const TournamentsSlider = ({ setSelected }: TournamentsSliderProps) => {
+export const TournamentsSlider = ({
+  isOpen,
+  setSelectedTournament,
+}: TournamentsSliderProps) => {
   const region = useAppSelector((state) => state.tournaments.region)
   const tournaments = useAppSelector(
     (state) => state.tournaments.filteredTournaments
@@ -27,8 +34,8 @@ export const TournamentsSlider = ({ setSelected }: TournamentsSliderProps) => {
   }, [region])
 
   const handleClickChoiceTournament = (id: number) => {
-    setSelected(true)
-    return id
+    isOpen(true)
+    setSelectedTournament(tournaments.find((tour) => tour.id === id))
   }
 
   if (isLoading) {
@@ -47,7 +54,6 @@ export const TournamentsSlider = ({ setSelected }: TournamentsSliderProps) => {
       <Slider.Track windowClassName={scss.window}>
         {tournaments.map((tournament) => (
           <TournamentItem
-            postUri={location.origin + '/1.jpg'}
             className={scss.item}
             {...tournament}
             key={tournament.id}

@@ -7,5 +7,11 @@ export {
   fetchUserInfo,
   createChangeFilterName,
   fetchAllTournamentsByRegion,
+  createConnectToChatAction,
+  createCreateChatSocketAction,
+  createDisconnectChatSocketAction,
+  createSendMessageToChatAction,
+  connectToChatAction,
+  createChatSocketAction,
 } from './reducers'
 export * from './typings'

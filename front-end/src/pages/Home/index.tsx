@@ -5,18 +5,27 @@ import { Chat } from './Chat'
 import { SearchInput } from './SearchInput'
 import { TournamentsSlider } from './TournamentsSlider'
 import { SelectedTournament } from './SelectedTournament'
+import { ITournament } from '../../models'
 
 export const HomePage = () => {
-  const [selectedTournament, setSelected] = useState(false)
+  const [isopen, isOpen] = useState(false)
+  const [selectedTournament, setSelectedTournament] = useState<
+    ITournament | undefined
+  >(undefined)
 
   return (
     <div className={scss.wrapper}>
-      {selectedTournament && <SelectedTournament setSelected={setSelected} />}
+      {isopen && selectedTournament && (
+        <SelectedTournament tournament={selectedTournament} isOpen={isOpen} />
+      )}
       <div className={scss.content}>
         <div className={scss.searchPanel}>
           <SearchInput />
         </div>
-        <TournamentsSlider setSelected={setSelected} />
+        <TournamentsSlider
+          setSelectedTournament={setSelectedTournament}
+          isOpen={isOpen}
+        />
         <div className={scss.chatPanel}>
           <Chat />
         </div>

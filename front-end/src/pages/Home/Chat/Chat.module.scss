@@ -26,6 +26,15 @@
         display: flex;
         margin-top: vh(20);
 
+        .notification {
+          font-style: normal;
+          font-family: 'Helvetica Neue', Roboto, sans-serif;
+          font-weight: vw(400);
+          font-size: vw(15);
+          line-height: vh(25);
+          color: $textColor;
+        }
+
         &:first-child {
           margin-top: 0;
         }

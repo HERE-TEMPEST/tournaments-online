@@ -2,20 +2,12 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import classNames from 'classnames'
-import { Region } from '../../types'
+import { ITournament } from '../../models'
 import scss from './TournamentItem.module.scss'
 
-interface TournamentItemProps {
+interface TournamentItemProps extends ITournament {
   onClick: (id: number) => void
-  id: number
   className?: string
-  postUri: string
-  name: string
-  currentAmount: number
-  capacity: number
-  region: Region
-  duration: number
-  isStarted: boolean
 }
 
 export const TournamentItem = ({
@@ -25,14 +17,14 @@ export const TournamentItem = ({
   currentAmount,
   capacity,
   className,
-  postUri,
+  profile,
 }: TournamentItemProps) => {
   return (
     <div
       className={classNames(className || '', scss.wrapper)}
       onClick={() => onClick(id)}
     >
-      <img src={postUri} alt="" />
+      <img src={profile?.uri || location.origin + '/1.jpg'} alt="" />
       <div className={scss.info}>
         <div className={scss.title}>{name}</div>
         <div className={scss.capacity}>
