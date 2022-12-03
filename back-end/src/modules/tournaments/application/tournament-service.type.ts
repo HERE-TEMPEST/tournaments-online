@@ -63,6 +63,10 @@ export interface GetTournamentWinnerParams {
   tournamentId: number;
 }
 
+export interface GetTournamentInfoParams {
+  tournamentId: number;
+}
+
 export interface RemoveUserFromTournamentParams {
   userId: string;
   tournamentId: number;

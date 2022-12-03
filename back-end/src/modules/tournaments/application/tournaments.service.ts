@@ -4,7 +4,11 @@ import { CronJob } from "cron";
 
 import { AwsS3Service } from "@tournaments/aws/s3";
 
-import { TournamentDomain, TournamentMemberModel } from "../domain";
+import {
+  TournamentDomain,
+  TournamentMemberModel,
+  TournamentModel,
+} from "../domain";
 import {
   TournamentMemberRepository,
   TournamentRepository,
@@ -30,6 +34,7 @@ import {
   UpdateProfileResult,
   GetProfileParams,
   GetProfileResult,
+  GetTournamentInfoParams,
 } from "./tournament-service.type";
 import { UserModel, UsersService } from "../../users";
 
@@ -201,6 +206,18 @@ export class TournamentsService {
     }
 
     return winner;
+  }
+
+  async getTournamentInfo(
+    params: GetTournamentInfoParams
+  ): Promise<TournamentModel | null> {
+    const { tournamentId } = params;
+
+    const info = await this.tournamentRepository.getTournamentById({
+      id: tournamentId,
+    });
+
+    return info;
   }
 
   async getTournamentWinner(

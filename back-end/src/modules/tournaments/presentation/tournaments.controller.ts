@@ -26,6 +26,7 @@ import {
   CreateTournamentResult,
   GetAllTournamentsResult,
   GetProfileResult,
+  GetTournamentInfoResult,
   GetTournamentWinnerResult,
   UploadProfileResult,
 } from "./results";
@@ -58,6 +59,19 @@ export class TournamentsController {
     const { tournaments } = await this.tournamentService.all();
 
     return { data: tournaments };
+  }
+
+  @ApiOkResponse({ type: GetTournamentInfoResult })
+  @ApiBearerAuth()
+  @Get("/:id/info")
+  async getTournamentInfo(
+    @Param("id") id: string
+  ): Promise<GetTournamentInfoResult> {
+    const info = await this.tournamentService.getTournamentInfo({
+      tournamentId: +id,
+    });
+
+    return { data: info };
   }
 
   @ApiOkResponse({ type: GetTournamentWinnerResult })
