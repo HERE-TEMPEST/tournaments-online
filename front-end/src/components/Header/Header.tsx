@@ -10,6 +10,7 @@ import {
   PROFILE_PAGE_ROUTE,
   TABLE_RECORDS_PAGE_ROUTE,
 } from '../../constants'
+import { useSignOut } from '../../hooks'
 import {
   createSignOutUserAction,
   useAppDispatch,
@@ -36,6 +37,7 @@ export const Header = () => {
   const [iconsVisibility, setIconsVisibility] = useState(isAuth)
   const [isOpenedregionSelector, openCloseRegionSelector] = useState(false)
   const dispath = useAppDispatch()
+  const signOut = useSignOut()
 
   const region = useAppSelector((state) => state.tournaments.region)
   const onChangeRegion = (reg: Region) => {
@@ -46,11 +48,6 @@ export const Header = () => {
 
   const dispatch = useAppDispatch()
   const location = useLocation()
-
-  const handleClickSignOut = () => {
-    dispatch(createSignOutUserAction())
-    dispatch(createDisconnectChatSocketAction(undefined))
-  }
 
   useEffect(() => {
     setIconsVisibility(() => isAuth && location.pathname !== '/game')
@@ -100,7 +97,7 @@ export const Header = () => {
                 <Icon type="Profile" />
               </Link>
             </div>
-            <div className={scss.icon} onClick={handleClickSignOut}>
+            <div className={scss.icon} onClick={signOut}>
               <Icon type="Exit" />
             </div>
           </div>

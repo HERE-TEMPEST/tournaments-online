@@ -1,3 +1,4 @@
+import { SignOutUserAction } from '../../auth/actions/sign-out.action'
 import { ConnectToChatAction } from './connect-to-chat.action'
 import { CreateChatSocketAction } from './create-socket.action'
 import { DisconnectChatSocketAction } from './disconnect-socket.action'
@@ -10,3 +11,4 @@ export type ChatActions =
   | DisconnectChatSocketAction
   | OnMessageToChatAction
   | SendMessageToChatAction
+  | SignOutUserAction

@@ -10,6 +10,7 @@ interface DarkTextInputProps {
   value: string
   isPassword?: boolean
   name?: string
+  disabled?: boolean
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
@@ -21,10 +22,12 @@ export const DarkTextInput = ({
   inputClassName,
   value,
   name,
+  disabled,
 }: DarkTextInputProps) => {
   return (
     <div className={classNames(className, scss.wrapper)}>
       <input
+        disabled={disabled}
         className={inputClassName}
         onChange={onChange}
         type={isPassword ? 'password' : 'text'}

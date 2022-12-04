@@ -1,80 +1,132 @@
-import { DarkFileInput, DarkTextInput } from '../../../components'
-import { TransparentButton } from '../../../components/Buttons'
-import { useAppSelector } from '../../../redux'
-import { useLogic } from './logic'
+import { useEffect, useState } from 'react'
+import {
+  DarkFileInput,
+  DarkTextInput,
+  TransparentButton,
+} from '../../../components'
+import {
+  updateUserInfoFetch,
+  useAppDispatch,
+  useAppSelector,
+} from '../../../redux'
+
 import scss from './Profile.module.scss'
 
 export const Profile = () => {
-  const {
-    // name,
-    file,
-    // surname,
-    // login,
-    // password,
-    // fileUri,
-    onChangePassword,
-    onChangeName,
-    onChangeSurname,
-    onChangeFile,
-    onChangeLogin,
-  } = useLogic()
+  const dispatch = useAppDispatch()
+  const loadedUser = useAppSelector((state) => state.user.user)
 
-  const handleClickEditAccount = () => {
-    console.log(file)
-  }
+  const [user, setUser] = useState({
+    fileUri: location.origin + '/default-profile.png',
+    file: null,
+    email: '',
+    login: '',
+    password: '',
+    name: '',
+    surname: '',
+  })
 
-  const user = useAppSelector((state) => state.user.user)
+  useEffect(() => {
+    if (loadedUser) {
+      setUser({
+        fileUri:
+          loadedUser?.profile?.uri || location.origin + '/default-profile.png',
+        email: loadedUser?.email || '',
+        login: loadedUser?.login || '',
+        password: loadedUser?.password || '',
+        name: loadedUser?.name || '',
+        surname: loadedUser?.surname || '',
+        file: null,
+      })
+    }
+  }, [loadedUser])
 
-  if (user) {
-    return (
-      <div className={scss.wrapper}>
-        <div className={scss.profile}>
-          <div className={scss.profileImage}>
-            <img
-              src={
-                user.profile?.uri || location.origin + '/default-profile.png'
-              }
-              alt=""
-            />
-          </div>
-          <div className={scss.setProfileInput}>
-            <div className={scss.title}>Profile</div>
-            <DarkFileInput className={scss.btn} onChange={onChangeFile} />
-          </div>
-        </div>
-        <DarkTextInput
-          className={scss.name}
-          placeholder="Name..."
-          value={user.name}
-          onChange={onChangeName}
-        />
-        <DarkTextInput
-          className={scss.surname}
-          placeholder="Surname..."
-          value={user.surname}
-          onChange={onChangeSurname}
-        />
-        <DarkTextInput
-          className={scss.login}
-          placeholder="Login..."
-          value={user.login}
-          onChange={onChangeLogin}
-        />
-        <DarkTextInput
-          className={scss.password}
-          placeholder="Password..."
-          isPassword={true}
-          value={user.password}
-          onChange={onChangePassword}
-        />
-        <TransparentButton
-          className={scss.editBtn}
-          title="Edit"
-          onClick={handleClickEditAccount}
-        />
-      </div>
+  const updateUser = () => {
+    dispatch(
+      updateUserInfoFetch({
+        profile: user.file,
+        properties: {
+          email: user.email,
+          name: user.name,
+          password: user.password,
+          surname: user.surname,
+        },
+      })
     )
-  } else {
-    return <div>Идёт загрузка...</div>
   }
+
+  const onFormChange = (event: any) => {
+    if (event.target.name === 'profile') {
+      const file = event.target.files[0]
+      const uri = URL.createObjectURL(file)
+
+      setUser((prev) => ({
+        ...prev,
+        fileUri: uri,
+        file,
+      }))
+    } else {
+      setUser((prev) => ({
+        ...prev,
+        [event.target.name]: event.target.value,
+      }))
+    }
+  }
+
+  const onFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    updateUser()
+  }
+
+  return (
+    <form
+      className={scss.wrapper}
+      onChange={onFormChange}
+      onSubmit={onFormSubmit}
+    >
+      <div className={scss.profile}>
+        <div className={scss.profileImage}>
+          <img
+            src={user.fileUri || location.origin + '/default-profile.png'}
+            alt=""
+          />
+        </div>
+        <div className={scss.setProfileInput}>
+          <div className={scss.title}>Profile</div>
+          <DarkFileInput className={scss.btn} name={'profile'} />
+        </div>
+      </div>
+      <DarkTextInput
+        className={scss.name}
+        placeholder="Name..."
+        name="name"
+        value={user.name}
+      />
+      <DarkTextInput
+        className={scss.surname}
+        placeholder="Surname..."
+        name="surname"
+        value={user.surname}
+      />
+      <DarkTextInput
+        disabled
+        className={scss.login}
+        placeholder="Login..."
+        name="login"
+        value={user.login}
+      />
+      <DarkTextInput
+        className={scss.password}
+        placeholder="Password..."
+        isPassword={true}
+        name="password"
+        value={user.password}
+      />
+      <TransparentButton
+        className={scss.editBtn}
+        title="Edit"
+        onClick={updateUser}
+      />
+    </form>
+  )
 }

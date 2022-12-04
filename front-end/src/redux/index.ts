@@ -4,6 +4,7 @@ export {
   fetchUserInfo,
   fetchAllTournamentsByRegion,
   fetchLoginUser,
+  updateUserInfoFetch,
   fetchTournamentInfo,
   createLeaveFromTournamentAction,
   fetchCreateNewTournament,

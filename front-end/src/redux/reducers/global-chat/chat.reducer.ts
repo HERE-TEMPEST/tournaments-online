@@ -109,13 +109,22 @@ export const chatReducer = (
       return { ...state, region: payload.region, messages }
     }
 
+    case 'SIGNOUT_USER_ACTION': {
+      if (globalChatSocket) {
+        globalChatSocket.disconnect()
+        globalChatSocket = null
+      }
+
+      return { ...state, messages: [], error: '', region: '' as any }
+    }
+
     case ChatActionsTypes.DISCONNECT_CHAT_ACTION: {
       if (globalChatSocket && globalChatSocket.connected) {
         globalChatSocket.disconnect()
         globalChatSocket = null
       }
 
-      return { ...state, messages: [], error: '' }
+      return { ...state, messages: [], error: '', region: '' as any }
     }
 
     case ChatActionsTypes.ON_MESSAGE_TO_CHAT_ACTION: {

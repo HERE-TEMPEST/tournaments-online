@@ -1,4 +1,5 @@
-// import {  } from './actions'
+import { io, Socket } from 'socket.io-client'
+import { store } from '../../store'
 import { GameActions } from './actions'
 import { GameActionsTypes, GameState } from './types'
 
@@ -8,6 +9,8 @@ const initialValue: GameState = {
   loading: false,
 }
 
+let gameSocket: Socket | null = null
+
 export const gameReducer = (
   state: GameState = initialValue,
   action: GameActions
@@ -16,6 +19,69 @@ export const gameReducer = (
 
   switch (type) {
     case GameActionsTypes.JOIN_TO_TOURNAMENT_ACTION: {
+      if (!gameSocket) {
+        gameSocket = io('ws://127.0.0.1:3000/tournaments', {
+          autoConnect: false,
+          extraHeaders: {
+            authorization: `Bearer ${token}`,
+          },
+        })
+
+        gameSocket.on('connect', () => {
+          console.log('connect to chat')
+        })
+
+        gameSocket.on('disconnect', () => {
+          console.log('disconnect from chat')
+        })
+
+        gameSocket.on('user.join', ({ profileUri, username, userId }) => {
+          // store.dispatch(
+          //   createOnMessageToChatAction({
+          //     body: `User ${username} joined`,
+          //     profileUri,
+          //     type: 'join',
+          //     userId,
+          //     username,
+          //   })
+          // )
+        })
+
+        gameSocket.on('user.leave', ({ userId, profileUri, username }) => {
+          // store.dispatch(
+          //   createOnMessageToChatAction({
+          //     body: `User ${username} left`,
+          //     profileUri,
+          //     type: 'left',
+          //     userId,
+          //     username,
+          //   })
+          // )
+        })
+
+        gameSocket.on('join', ({ id }) => {
+          console.log('join', id)
+        })
+
+        gameSocket.on('leave', ({ id }) => {
+          console.log('leave', id)
+        })
+
+        gameSocket.on('message', ({ userId, body, profileUri, username }) => {
+          // store.dispatch(
+          //   createOnMessageToChatAction({
+          //     body: body,
+          //     profileUri,
+          //     type: 'message',
+          //     userId,
+          //     username,
+          //   })
+          // )
+        })
+
+        gameSocket.connect()
+      }
+
       return {
         error: '',
         loading: false,

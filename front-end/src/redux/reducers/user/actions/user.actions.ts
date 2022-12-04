@@ -41,3 +41,31 @@ export const createErrorInFetchingUserCredentialsAction = (
     payload: message,
   }
 }
+
+export interface UpdateUserCredentialsAction {
+  type: `${UserActionsTypes.UPDATE_USER_CREDENTIALS_ACTION}`
+  payload: Omit<IUser, '_id' | 'profile'>
+}
+
+export const createUpdateUserCredentialsAction = (
+  payload: Omit<IUser, '_id' | 'profile'>
+): UpdateUserCredentialsAction => {
+  return {
+    type: `${UserActionsTypes.UPDATE_USER_CREDENTIALS_ACTION}`,
+    payload: payload,
+  }
+}
+
+export interface ErrorInUpdatingUserCredentialsAction {
+  type: `${UserActionsTypes.ERROR_IN_UPDATING_USER_CRED}`
+  payload: string
+}
+
+export const createErrorInUpdatingUserCredentialsAction = (
+  message: string
+): ErrorInUpdatingUserCredentialsAction => {
+  return {
+    type: `${UserActionsTypes.ERROR_IN_UPDATING_USER_CRED}`,
+    payload: message,
+  }
+}
