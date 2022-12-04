@@ -1,7 +1,9 @@
 import {
   BadRequestException,
+  Body,
   Controller,
   Get,
+  Patch,
   Post,
   Req,
   UploadedFile,
@@ -25,7 +27,9 @@ import {
   GetUserInfoResult,
   GetProfileResult,
   UploadProfileResult,
+  UpdateUserInfoResult,
 } from "./results";
+import { UpdateUserInfoInput } from "./inputs";
 
 @ApiTags("User")
 @Controller()
@@ -40,6 +44,25 @@ export class UsersController {
     const { userId } = request.userCredentials;
 
     const userInfo = await this.usersService.getUserInfo({ userId });
+
+    return {
+      data: userInfo,
+    };
+  }
+
+  @ApiOkResponse({ type: UpdateUserInfoResult })
+  @ApiBearerAuth()
+  @Patch("/update-user")
+  async updateUserInfo(
+    @Req() request: Request,
+    @Body() dto: UpdateUserInfoInput
+  ): Promise<UpdateUserInfoResult> {
+    const { userId } = request.userCredentials;
+
+    const userInfo = await this.usersService.updateUser({
+      userId,
+      properties: dto,
+    });
 
     return {
       data: userInfo,

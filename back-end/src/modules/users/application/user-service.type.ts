@@ -7,9 +7,9 @@ export interface UpdateUserParams {
   userId: string | Types.ObjectId;
   properties: {
     email?: string;
-    firstName?: string;
-    lastName?: string;
-    nickName?: string;
+    name?: string;
+    surname?: string;
+    password?: string;
   };
 }
 
