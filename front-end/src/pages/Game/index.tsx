@@ -1,38 +1,39 @@
 import React, { useEffect } from 'react'
-import { useGameLogic } from './hooks'
 
 import scss from './Game.module.scss'
 import { GameNavBar } from './NavBar'
 import { GameArea } from './Area'
 import { GameOver } from './GameOver'
+import {
+  createLeaveFromTournamentAction,
+  createSendTournamentResultAction,
+  useAppDispatch,
+  useAppSelector,
+} from '../../redux'
 
 export const GamePage = () => {
-  const { game, time } = useGameLogic()
+  const dispatch = useAppDispatch()
+  const gameIsOver = useAppSelector(
+    (state) => state.game.gameState.gameIsFinished
+  )
 
   useEffect(() => {
-    time.startTimer()
+    return () => {
+      dispatch(createSendTournamentResultAction(undefined))
+      dispatch(createLeaveFromTournamentAction(undefined))
+    }
   }, [])
 
   return (
     <div className={scss.wrapper}>
-      {time.timeInSeconds > 0 ? (
+      {!gameIsOver ? (
         <div className={scss.content}>
-          <GameNavBar score={game.score} time={time.timeInSeconds} />
-          <GameArea
-            addScore={game.addScore}
-            addDowned={game.incrementDowned}
-            addMissing={game.incrementMissed}
-          />
+          <GameNavBar />
+          <GameArea />
         </div>
       ) : (
         <div className={scss.content}>
-          <GameOver
-            name={game.tournament}
-            time={time.totalTime}
-            downed={game.downed}
-            missed={game.missed}
-            score={game.score}
-          />
+          <GameOver />
         </div>
       )}
     </div>

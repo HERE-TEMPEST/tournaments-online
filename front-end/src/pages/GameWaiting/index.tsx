@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { Loader } from '../../components'
 import { TransparentButton } from '../../components/Buttons'
-import { HOME_PAGE_ROUTE } from '../../constants'
+import { createTournamentPageUri, HOME_PAGE_ROUTE } from '../../constants'
 
 import { toString } from '../../hooks'
 import {
@@ -14,10 +14,17 @@ import {
 import { Chat } from './Chat'
 
 import scss from './GameWaiting.module.scss'
+import { NotConnectedToTournament } from './NotConnectedToTournament'
 
 export const GameWaitingPage = () => {
   const params = useParams()
+  const navigate = useNavigate()
   const tournament = useAppSelector((state) => state.game.tournament)
+  const notJoined = useAppSelector((state) => state.game.gameState.notJoined)
+  const gameIsStarted = useAppSelector(
+    (state) => state.game.gameState.gameIsStarted
+  )
+
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -29,10 +36,26 @@ export const GameWaitingPage = () => {
     }
   }, [])
 
+  useEffect(() => {
+    if (gameIsStarted) {
+      const { id } = params
+
+      navigate(createTournamentPageUri(id!))
+    }
+  }, [gameIsStarted])
+
   if (!tournament) {
     return (
       <div className={scss.wrapper}>
         <Loader />
+      </div>
+    )
+  }
+
+  if (notJoined) {
+    return (
+      <div className={scss.wrapper}>
+        <NotConnectedToTournament />
       </div>
     )
   }

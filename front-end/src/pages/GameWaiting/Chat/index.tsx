@@ -1,78 +1,40 @@
 import { useEffect, useRef, useState } from 'react'
+import { ChatMessage } from '../../../components'
+import {
+  createSendMessageToTournamentAction,
+  useAppDispatch,
+  useAppSelector,
+} from '../../../redux'
 import scss from './Chat.module.scss'
-import { ChatMessage } from './Message'
-
-const msgs = [
-  {
-    userId: 2,
-    id: 1,
-    body: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quaerat dolorem similique excepturi. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quaerat dolorem similique excepturi. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quaerat dolorem similique excepturi.',
-    username: 'Ivan Ivanov',
-    profileUri: location.origin + '/profile.png',
-  },
-  {
-    userId: 1,
-    id: 1,
-    body: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quaerat dolorem similique excepturi. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quaerat dolorem similique excepturi. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quaerat dolorem similique excepturi.',
-    username: 'Ivan Ivanov',
-    profileUri: location.origin + '/profile.png',
-  },
-  {
-    userId: 1,
-    id: 1,
-    body: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quaerat dolorem similique excepturi. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quaerat dolorem similique excepturi. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quaerat dolorem similique excepturi.',
-    username: 'Ivan Ivanov',
-    profileUri: location.origin + '/profile.png',
-  },
-  {
-    userId: 22,
-    id: 3,
-    body: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quaerat dolorem similique excepturi.',
-    username: 'Ivan Ivanov',
-    profileUri: location.origin + '/profile.png',
-  },
-  {
-    userId: 11,
-    id: 2,
-    body: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quaerat dolorem similique excepturi. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quaerat dolorem similique excepturi. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quaerat dolorem similique excepturi.',
-    username: 'Ivan Ivanov',
-    profileUri: location.origin + '/profile.png',
-  },
-  {
-    userId: 12,
-    id: 1,
-    body: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quaerat dolorem similique excepturi. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quaerat dolorem similique excepturi. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quaerat dolorem similique excepturi.',
-    username: 'Ivan Ivanov',
-    profileUri: location.origin + '/profile.png',
-  },
-]
-
-const me = 1
 
 export const Chat = () => {
   const re = useRef<any>(null)
-  const [messages, setMessages] = useState(msgs)
+  const messages = useAppSelector((state) => state.game.messages)
   const [messageBody, setMessageBody] = useState('')
+  const user = useAppSelector((state) => state.user.user)
+  const dispath = useAppDispatch()
+
+  useEffect(() => {
+    if (re.current) {
+      re.current.scrollTop = re.current.scrollHeight
+    }
+  }, [messages])
 
   const postMessage = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === 'Enter') {
-      setMessages((currentMessages: Array<any>) => [
-        ...currentMessages,
-        {
-          userId: 1,
-          id: 1,
-          body: messageBody,
-          username: 'Ivan Ivanov',
-          profileUri: location.origin + '/profile.png',
-        },
-      ])
+      if (user) {
+        dispath(
+          createSendMessageToTournamentAction({
+            body: messageBody,
+            profileUri:
+              user.profile?.uri || location.origin + '/default-profile.png',
+            username: user?.surname,
+          })
+        )
+      }
       setMessageBody('')
     }
   }
-
-  useEffect(() => {
-    re.current.scrollTop = re.current.scrollHeight
-  }, [messages])
 
   return (
     <div className={scss.wrapper}>
@@ -82,7 +44,7 @@ export const Chat = () => {
             <ChatMessage
               message={message}
               key={message.id}
-              isOwner={me === message.userId}
+              isOwner={user?._id === message.userId}
             />
           ))}
         </div>

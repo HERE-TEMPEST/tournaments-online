@@ -1,4 +1,5 @@
 import { Navigate, Outlet } from 'react-router-dom'
+import { Portal, TournamentsEvents } from '../components'
 import { HOME_PAGE_ROUTE } from '../constants'
 import { useAppSelector } from '../redux'
 

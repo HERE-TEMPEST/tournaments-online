@@ -1,4 +1,5 @@
 import { io, Socket } from 'socket.io-client'
+import { serverConfig } from '../../config'
 import { store } from '../../store'
 import { ChatActions } from './actions/chat-actions.type'
 import { createOnMessageToChatAction } from './actions/on-message.action'
@@ -23,12 +24,15 @@ export const chatReducer = (
       const { token } = payload
 
       if (!globalChatSocket) {
-        globalChatSocket = io('ws://127.0.0.1:3000/chat', {
-          autoConnect: false,
-          extraHeaders: {
-            authorization: `Bearer ${token}`,
-          },
-        })
+        globalChatSocket = io(
+          `ws://${serverConfig.host}:${serverConfig.port}/chat`,
+          {
+            autoConnect: false,
+            extraHeaders: {
+              authorization: `Bearer ${token}`,
+            },
+          }
+        )
 
         globalChatSocket.on('connect', () => {
           console.log('connect to chat')

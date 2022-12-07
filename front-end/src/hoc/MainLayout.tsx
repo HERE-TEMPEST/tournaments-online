@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Header } from '../components'
+import { Header, Portal, TournamentsEvents } from '../components'
 
 interface MainLayoutProps {
   children:
@@ -14,6 +14,9 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
     <>
       <Header />
 
+      <Portal>
+        <TournamentsEvents />
+      </Portal>
       {children}
     </>
   )

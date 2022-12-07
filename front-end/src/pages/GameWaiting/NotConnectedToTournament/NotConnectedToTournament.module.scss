@@ -1,0 +1,77 @@
+@import '../../../styles/index.scss';
+
+.wrapper {
+  width: vw(600);
+  height: vh(460);
+  margin: vh(150) auto 0 auto;
+  display: flex;
+  flex-direction: column;
+
+  .title {
+    width: vw(600);
+    height: vh(50);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    @include textStyleMixin;
+    font-size: vh(24);
+    font-weight: 600;
+    line-height: vh(24);
+
+    background-color: $color-lldark;
+    border-top-left-radius: vw($borderRadius);
+    border-top-right-radius: vw($borderRadius);
+  }
+
+  .info {
+    margin-top: vh(10);
+    width: vw(600);
+    height: vh(400);
+    display: flex;
+    flex-direction: column;
+
+    background-color: $color-lldark;
+    border-bottom-left-radius: vw($borderRadius);
+    border-bottom-right-radius: vw($borderRadius);
+
+    .icon {
+      margin-top: vh(30);
+      align-self: center;
+      width: vw(136);
+      height: vh(136);
+
+      svg {
+        width: vw(136);
+        height: vh(136);
+      }
+    }
+
+    .text {
+      margin-top: vh(30);
+      align-self: center;
+      @include textStyleMixin;
+      font-size: vh(24);
+      font-weight: 600;
+      line-height: vh(24);
+    }
+
+    .description {
+      width: vw(400);
+      margin-top: vh(30);
+      align-self: center;
+      @include textStyleMixin;
+      font-size: vh(16);
+      font-weight: 600;
+      line-height: vh(24);
+    }
+
+    .btn {
+      align-self: center;
+      margin-top: vh(20);
+      font-size: vh(30);
+      font-weight: 600;
+      line-height: vh(32);
+    }
+  }
+}

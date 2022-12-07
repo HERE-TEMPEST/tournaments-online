@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { Loader } from '../../../components'
+import { ChatMessage, Loader } from '../../../components'
 import {
   createSendMessageToChatAction,
   connectToChatAction,
@@ -9,7 +9,6 @@ import {
   useAppSelector,
 } from '../../../redux'
 import scss from './Chat.module.scss'
-import { ChatMessage } from './Message'
 
 export const Chat = () => {
   const re = useRef<any>(null)

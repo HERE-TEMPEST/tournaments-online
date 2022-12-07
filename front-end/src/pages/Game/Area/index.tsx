@@ -1,22 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { v4 } from 'uuid'
+import {
+  createAddMissedElementToTournamentGameAction,
+  createAddScoreToTournamentGameAction,
+  useAppDispatch,
+} from '../../../redux'
 
 import { randomIntRange } from '../../../utils'
 import scss from './Area.module.scss'
 import { GameElement } from './Element'
 
-interface GameAreaProps {
-  addScore: (value: number) => void
-  addMissing: () => void
-  addDowned: () => void
-}
-
-export const GameArea: React.FC<GameAreaProps> = ({
-  addScore,
-  addMissing,
-  addDowned,
-}: GameAreaProps) => {
+export const GameArea: React.FC = () => {
   const area = useRef<any>()
+  const dispatch = useAppDispatch()
+
   const [items, setItems] = useState<Array<JSX.Element>>([])
   const [flag, setFlag] = useState(0)
 
@@ -26,22 +23,21 @@ export const GameArea: React.FC<GameAreaProps> = ({
       const areaWidth = area.current.clientWidth
 
       const onClick = (value: number, key: React.Key) => {
-        addScore(value)
+        dispatch(createAddScoreToTournamentGameAction({ score: value }))
         setItems((currentValue) => [
           ...currentValue.filter((value) => value.key !== key),
         ])
 
         setFlag((prev) => prev + 1)
-        addDowned()
       }
 
       const onSuicide = (key: React.Key) => {
+        dispatch(createAddMissedElementToTournamentGameAction(undefined))
         setItems((currentValue) => [
           ...currentValue.filter((value) => value.key !== key),
         ])
 
         setFlag((prev) => prev + 1)
-        addMissing()
       }
 
       const id = v4()

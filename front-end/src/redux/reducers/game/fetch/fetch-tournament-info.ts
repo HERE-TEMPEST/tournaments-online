@@ -27,7 +27,8 @@ export function fetchTournamentInfo({
       dispath(createFetchTournamentInfoAction(undefined))
       const state = getState()
 
-      const token = state.auth.auth?.token
+      const token = state.auth.auth.token
+      const user = state.user.user
 
       const response = await axios.get(
         createUriFetchTournamentById(tournamentId),
@@ -40,7 +41,17 @@ export function fetchTournamentInfo({
 
       const tournament: ITournament = response.data.data
 
-      dispath(createJoinToTournamentAction(tournament))
+      dispath(
+        createJoinToTournamentAction({
+          tournament,
+          token,
+          user: {
+            username: `${user?.name || ''} ${user?.surname || ''}`.trim(),
+            profileUri:
+              user?.profile?.uri || location.origin + '/default-profile.png',
+          },
+        })
+      )
       // try {
       //   const profile = await axios.get(createUriFetchGetTournamentProfile(tournament.id), {
       //     headers: {
@@ -51,7 +62,7 @@ export function fetchTournamentInfo({
       //   console.log(error)
       // }
     } catch (error: any) {
-      console.log(error)
+      console.log('Error in fetching: ', error)
       dispath(createErrorFetchTournamentInfoAction(error.message))
     }
   }

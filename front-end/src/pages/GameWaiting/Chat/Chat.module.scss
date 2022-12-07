@@ -17,56 +17,10 @@
       scrollbar-width: none;
       display: flex;
       flex-direction: column;
+      justify-content: flex-end;
       width: vw(800);
       height: vh(685);
       overflow-y: scroll;
-
-      .message {
-        display: flex;
-        margin-top: vh(20);
-
-        &:first-child {
-          margin-top: 0;
-        }
-
-        .profile {
-          width: vw(40);
-          width: vh(40);
-          img {
-            width: vw(40);
-            width: vh(40);
-          }
-        }
-        .info {
-          margin-left: vw(5);
-          margin-right: vw(5);
-          display: flex;
-          flex-direction: column;
-
-          .username {
-            font-family: 'Helvetica Neue', Roboto, sans-serif;
-            font-style: normal;
-            font-weight: vw(400);
-            font-size: vw(15);
-            line-height: vh(18);
-            color: #71aaeb;
-          }
-
-          .messageBody {
-            width: vw(400);
-            overflow: hidden;
-            margin-top: vh(8);
-
-            word-wrap: break-word;
-            font-style: normal;
-            font-family: 'Helvetica Neue', Roboto, sans-serif;
-            font-weight: vw(400);
-            font-size: vw(15);
-            line-height: vh(25);
-            color: $textColor;
-          }
-        }
-      }
     }
   }
 
