@@ -83,6 +83,10 @@ export class ChatGateway
     }
   }
 
+  async sendEvent(name: string, body?: any) {
+    this.chatNamespace.emit(name, body);
+  }
+
   async handleDisconnect(client: Socket) {
     console.log("disconnection");
 

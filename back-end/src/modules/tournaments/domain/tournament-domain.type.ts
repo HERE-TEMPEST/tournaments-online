@@ -1,4 +1,4 @@
-import { TournamentMemberModel, TournamentModel } from './models';
+import { TournamentMemberModel, TournamentModel } from "./models";
 
 export interface AddUserToTournamentsParams {
   userId: string;
@@ -7,7 +7,7 @@ export interface AddUserToTournamentsParams {
 
 export type CreateTournamentParams = Omit<
   TournamentModel,
-  'id' | 'currentAmount' | 'members' | 'isStarted'
+  "id" | "currentAmount" | "members" | "isStarted" | "isFinished"
 >;
 
 export interface GetTournamentWinnerParams {

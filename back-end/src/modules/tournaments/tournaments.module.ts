@@ -22,9 +22,11 @@ import {
   TOURNAMENTS_PROFILE_REPOSITORY_TOKEN,
 } from "./infrastructure";
 import { UsersModule } from "../users";
+import { ChatModule } from "../chat/chat.module";
 
 @Module({
   imports: [
+    ChatModule,
     UsersModule,
     ScheduleModule.forRoot(),
     TypeOrmModule.forFeature(

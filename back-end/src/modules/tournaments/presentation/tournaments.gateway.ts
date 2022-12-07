@@ -8,17 +8,19 @@ import {
   ConnectedSocket,
   WsResponse,
   OnGatewayInit,
-} from '@nestjs/websockets';
-import { Namespace, Socket } from 'socket.io';
-import { Logger, UsePipes, ValidationPipe } from '@nestjs/common';
+} from "@nestjs/websockets";
+import { Namespace, Socket } from "socket.io";
+import { Logger, UsePipes, ValidationPipe } from "@nestjs/common";
 
-import { WsAuthGuard } from '@tournaments/auth';
+import { WsAuthGuard } from "@tournaments/auth";
 
-import { TournamentsService } from '../application';
-import { JoinEvent, ResultEvent } from './events';
+import { TournamentsService } from "../application";
+import { JoinEvent, ResultEvent } from "./events";
+import { Message } from "../../chat/presentation/events";
+import { ChatGateway } from "../../chat";
 
 @UsePipes(ValidationPipe)
-@WebSocketGateway({ namespace: 'tournaments' })
+@WebSocketGateway({ namespace: "tournaments" })
 export class TournamentsGateway
   implements OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit
 {
@@ -27,17 +29,18 @@ export class TournamentsGateway
 
   constructor(
     private readonly tournamentsService: TournamentsService,
-    private readonly wsAuthGuard: WsAuthGuard,
+    private readonly chatGateway: ChatGateway,
+    private readonly wsAuthGuard: WsAuthGuard
   ) {
-    this.logger = new Logger('Tournaments');
+    this.logger = new Logger("Tournaments");
   }
 
-  @SubscribeMessage('join')
+  @SubscribeMessage("join")
   async joinToTournament(
     @ConnectedSocket() client: Socket,
-    @MessageBody() message: JoinEvent,
+    @MessageBody() message: JoinEvent
   ): Promise<WsResponse> {
-    const { tournamentId } = message;
+    const { tournamentId, profileUri, username } = message;
     const { userId } = client.user;
 
     const { isConnected, tournament } =
@@ -48,37 +51,55 @@ export class TournamentsGateway
 
     if (isConnected) {
       client.currentTournament = {
+        profileUri,
+        username,
         tournamentId,
       };
 
       client.join(String(tournamentId));
-      client.emit('joined');
+      client.emit("join");
 
-      this.tournamentsNamespace.to(String(tournamentId)).emit('user_connected');
+      this.tournamentsNamespace
+        .to(String(tournamentId))
+        .emit("user.join", { profileUri, username, userId });
 
       const { isStartedGame } = await this.tournamentsService.startTournament({
         tournament,
         endedTournamentCallback: async () => {
-          this.tournamentsNamespace.to(String(tournamentId)).emit('finish');
+          this.tournamentsNamespace.to(String(tournamentId)).emit("finish");
         },
       });
 
       if (isStartedGame) {
-        this.tournamentsNamespace.to(String(tournamentId)).emit('start');
+        this.tournamentsNamespace.to(String(tournamentId)).emit("start");
       }
       return;
     }
 
-    client.emit('not_joined');
+    client.emit("not_join");
   }
 
-  @SubscribeMessage('leave')
-  async leaveFromTournament(
+  @SubscribeMessage("message")
+  async onMessage(
     @ConnectedSocket() client: Socket,
-  ): Promise<WsResponse> {
+    @MessageBody() message: Message
+  ) {
+    if (client.currentTournament) {
+      const { profileUri, username, tournamentId } = client.currentTournament;
+      const { userId } = client.user;
+      const { body } = message;
+
+      this.tournamentsNamespace
+        .to(String(tournamentId))
+        .emit("message", { userId, body, profileUri, username });
+    }
+  }
+
+  @SubscribeMessage("leave")
+  async leaveFromTournament(@ConnectedSocket() client: Socket) {
     if (client.currentTournament) {
       const { userId } = client.user;
-      const { tournamentId } = client.currentTournament;
+      const { tournamentId, profileUri, username } = client.currentTournament;
 
       const isDeleted = await this.tournamentsService.removeUserFromTournament({
         tournamentId,
@@ -87,26 +108,22 @@ export class TournamentsGateway
 
       this.tournamentsNamespace
         .to(String(tournamentId))
-        .emit('user_disconnected');
+        .emit("user.left", { profileUri, username, userId });
 
-      if (!isDeleted) {
-        this.result(client, { score: 0 });
-      }
-
+      client.emit("leave");
       client.leave(String(tournamentId));
 
+      if (!isDeleted) {
+        await this.result(client, { score: 0 });
+      }
       client.currentTournament = null;
     }
-    return {
-      data: null,
-      event: 'leaved',
-    };
   }
 
-  @SubscribeMessage('result')
+  @SubscribeMessage("result")
   async result(
     @ConnectedSocket() client: Socket,
-    @MessageBody() message: ResultEvent,
+    @MessageBody() message: ResultEvent
   ) {
     if (client.currentTournament) {
       const { tournamentId } = client.currentTournament;
@@ -119,19 +136,20 @@ export class TournamentsGateway
         tournamentId,
       });
 
-      const winner = await this.tournamentsService.checkTournamentEnd({
-        tournamentId,
-      });
+      const { tournament, winner } =
+        await this.tournamentsService.checkTournamentEnd({
+          tournamentId,
+        });
 
       if (winner) {
-        this.tournamentsNamespace
-          .to(String(tournamentId))
-          .emit('winner', winner);
+        this.chatGateway.sendEvent("winner", { tournament, winner });
       }
     }
   }
 
   async handleDisconnect(client: Socket) {
+    console.log("tournament disconnection");
+
     if (client.currentTournament) {
       await this.leaveFromTournament(client);
     }
@@ -145,9 +163,11 @@ export class TournamentsGateway
       client.disconnect();
       return;
     }
+
+    console.log("tournament connection");
   }
 
   afterInit() {
-    this.logger.log('Tournaments namespace is initialized...');
+    this.logger.log("Tournaments namespace is initialized...");
   }
 }

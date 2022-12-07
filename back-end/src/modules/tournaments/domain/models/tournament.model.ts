@@ -13,5 +13,6 @@ export interface TournamentModel {
     key: string;
     uri: string;
   };
+  isFinished: boolean;
   members: Array<TournamentMemberModel>;
 }

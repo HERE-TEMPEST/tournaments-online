@@ -8,5 +8,6 @@ import { ChatGateway } from "./presentation";
 @Module({
   imports: [JwtModule.registerAsync({ useClass: JwtConfigService })],
   providers: [ChatGateway, WsAuthGuard],
+  exports: [ChatGateway],
 })
 export class ChatModule {}

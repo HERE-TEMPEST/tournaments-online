@@ -134,20 +134,24 @@ export class TournamentsService {
 
     const isStartedGame = this.tournamentDomain.checkStartGame(tournament);
 
-    await this.tournamentRepository.update(
-      { id: tournament.id },
-      { isStarted: isStartedGame }
-    );
-
     // Cron
     if (isStartedGame) {
-      const cron = new CronJob(`*/${tournament.duration} * * * *`, async () => {
-        cron.stop();
-        await endedTournamentCallback();
-      });
-      this.scheduleService.addCronJob(`tournament:${tournament.id}`, cron);
+      await this.tournamentRepository.update(
+        { id: tournament.id },
+        { isStarted: isStartedGame }
+      );
 
-      cron.start();
+      const timeoutId = setTimeout(async () => {
+        const { id } = tournament as TournamentModel;
+        await this.tournamentRepository.update(
+          { id: id },
+          { isFinished: true }
+        );
+
+        await endedTournamentCallback();
+      }, tournament.duration * 1000 + 500);
+
+      this.scheduleService.addTimeout(`tournament:${tournament.id}`, timeoutId);
     }
 
     return {
@@ -187,25 +191,27 @@ export class TournamentsService {
     );
   }
 
-  async checkTournamentEnd(
-    params: CheckTournamentEndParams
-  ): Promise<TournamentMemberModel | null> {
+  async checkTournamentEnd(params: CheckTournamentEndParams): Promise<{
+    winner: TournamentMemberModel | undefined;
+    tournament: TournamentModel;
+  }> {
     const { tournamentId } = params;
 
-    const { winner } = await this.tournamentDomain.getTournamentWinner({
-      tournamentId,
-    });
+    const { winner, tournament } =
+      await this.tournamentDomain.getTournamentWinner({
+        tournamentId,
+      });
 
     if (winner) {
-      // if everyone left the tournament ahead of schedule
-      const cron = this.scheduleService.getCronJob(
+      const timeoutId = this.scheduleService.getTimeout(
         `tournament:${tournamentId}`
       );
-      cron.stop();
-      this.scheduleService.deleteCronJob(`tournament:${tournamentId}`);
+      clearTimeout(timeoutId);
+
+      return { winner, tournament };
     }
 
-    return winner;
+    return { winner: undefined, tournament };
   }
 
   async getTournamentInfo(

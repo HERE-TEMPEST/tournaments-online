@@ -2,7 +2,7 @@ import { TournamentModel } from "../domain";
 
 export type CreateTournamentParams = Omit<
   TournamentModel,
-  "id" | "currentAmount" | "members" | "isStarted"
+  "id" | "currentAmount" | "members" | "isStarted" | "isFinished"
 >;
 
 export interface UpdateProfileParams {

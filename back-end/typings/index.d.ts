@@ -12,6 +12,8 @@ declare module "socket.io" {
   interface Socket {
     user: JwtPayload;
     currentTournament?: {
+      profileUri: string;
+      username: string;
       tournamentId: number;
     };
     chat?: {

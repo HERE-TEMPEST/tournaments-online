@@ -57,4 +57,7 @@ export class TournamentEntity implements TournamentModel {
 
   @Column({ default: false, name: "is_started" })
   isStarted: boolean;
+
+  @Column({ default: false, name: "is_finished" })
+  isFinished: boolean;
 }

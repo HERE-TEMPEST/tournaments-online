@@ -1,21 +1,21 @@
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from "@nestjs/common";
 
 import {
   TOURNAMENTS_MEMBERS_REPOSITORY_TOKEN,
   TOURNAMENTS_REPOSITORY_TOKEN,
-} from '../infrastructure';
+} from "../infrastructure";
 import {
   ITournamentMembersRepository,
   ITournamentRepository,
-} from './interfaces';
-import { TournamentMemberModel, TournamentModel } from './models';
+} from "./interfaces";
+import { TournamentMemberModel, TournamentModel } from "./models";
 import {
   AddUserToTournamentsParams,
   GetTournamentWinnerParams,
   RemoveUserToTournamentParams,
   CreateTournamentParams,
   GetTournamentWinnerResult,
-} from './tournament-domain.type';
+} from "./tournament-domain.type";
 
 @Injectable()
 export class TournamentDomain {
@@ -23,14 +23,15 @@ export class TournamentDomain {
     @Inject(TOURNAMENTS_REPOSITORY_TOKEN)
     private readonly tournamentsRepository: ITournamentRepository,
     @Inject(TOURNAMENTS_MEMBERS_REPOSITORY_TOKEN)
-    private readonly tournamentsMembersRepository: ITournamentMembersRepository,
+    private readonly tournamentsMembersRepository: ITournamentMembersRepository
   ) {}
 
   createTournament(
-    params: CreateTournamentParams,
-  ): Omit<TournamentModel, 'id' | 'members'> {
+    params: CreateTournamentParams
+  ): Omit<TournamentModel, "id" | "members"> {
     return {
       ...params,
+      isFinished: false,
       currentAmount: 0,
       isStarted: false,
     };
@@ -41,7 +42,7 @@ export class TournamentDomain {
   }
 
   async addUserToTournament(
-    params: AddUserToTournamentsParams,
+    params: AddUserToTournamentsParams
   ): Promise<TournamentMemberModel | null> {
     const { tournamentId, userId } = params;
 
@@ -79,7 +80,7 @@ export class TournamentDomain {
   }
 
   async removeUserFromTournament(
-    params: RemoveUserToTournamentParams,
+    params: RemoveUserToTournamentParams
   ): Promise<boolean> {
     const { tournamentId } = params;
 
@@ -89,7 +90,7 @@ export class TournamentDomain {
   }
 
   async getTournamentWinner(
-    params: GetTournamentWinnerParams,
+    params: GetTournamentWinnerParams
   ): Promise<GetTournamentWinnerResult> {
     const { tournamentId } = params;
 
@@ -114,7 +115,7 @@ export class TournamentDomain {
     }
 
     const res = members.every(
-      (member: TournamentMemberModel) => member.score !== -1,
+      (member: TournamentMemberModel) => member.score !== -1
     );
 
     if (res) {
