@@ -127,6 +127,7 @@ export class TournamentsGateway
   ) {
     if (client.currentTournament) {
       const { tournamentId } = client.currentTournament;
+      client.currentTournament = null;
       const { userId } = client.user;
       const { score } = message;
 

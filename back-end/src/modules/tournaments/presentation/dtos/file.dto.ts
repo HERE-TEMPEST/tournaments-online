@@ -1,8 +1,8 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty } from "@nestjs/swagger";
 
 export class ProfileDto {
   @ApiProperty({ nullable: true, type: String })
-  key?: string;
-  @ApiProperty({ type: String })
+  key: string;
+  @ApiProperty({ nullable: true, type: String })
   uri: string;
 }

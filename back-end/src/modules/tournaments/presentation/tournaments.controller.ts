@@ -32,6 +32,7 @@ import {
 } from "./results";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { Request } from "express";
+import { GetAllTournamentsByMemberIdResult } from "./results/get-all-tournaments-by-member.results";
 
 @ApiTags("Tournaments")
 @UseGuards(AuthGuard)
@@ -41,7 +42,7 @@ export class TournamentsController {
 
   @ApiOkResponse({ type: GetAllTournamentsResult })
   @ApiBearerAuth()
-  @Get("/:region")
+  @Get("/by-region/:region")
   async getAllByRegion(
     @Param("region") region: string
   ): Promise<GetAllTournamentsResult> {
@@ -57,6 +58,21 @@ export class TournamentsController {
   @Get()
   async getAll(): Promise<GetAllTournamentsResult> {
     const { tournaments } = await this.tournamentService.all();
+
+    return { data: tournaments };
+  }
+
+  @ApiOkResponse({ type: GetAllTournamentsByMemberIdResult })
+  @ApiBearerAuth()
+  @Get("/member")
+  async getTournamentsByMember(
+    @Req() request: Request
+  ): Promise<GetAllTournamentsByMemberIdResult> {
+    const { userId } = request.userCredentials;
+    const { tournaments } =
+      await this.tournamentService.getTournamentsByMemberId({
+        memberId: userId,
+      });
 
     return { data: tournaments };
   }
@@ -87,7 +103,7 @@ export class TournamentsController {
     return { data: winner };
   }
 
-  @ApiOkResponse({ type: CreateTournamentResult })
+  @ApiOkResponse({ type: GetAllTournamentsByMemberIdResult })
   @ApiBearerAuth()
   @Post()
   async create(

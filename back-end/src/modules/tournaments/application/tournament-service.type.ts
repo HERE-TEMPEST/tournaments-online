@@ -75,3 +75,11 @@ export interface RemoveUserFromTournamentParams {
 export interface CheckTournamentEndParams {
   tournamentId: number;
 }
+
+export interface GetTournamentsByMemberIdParams {
+  memberId: string;
+}
+
+export interface GetTournamentsByMemberIdResult {
+  tournaments: Array<TournamentModel>;
+}

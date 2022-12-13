@@ -1,0 +1,8 @@
+-- SELECT
+--   *
+-- FROM tournaments
+-- JOIN tournaments_members
+--   ON tournamentId.tournament_id = tournaments.id
+-- WHERE tournaments.id=36
+
+SELECT * FROM tournaments_members;

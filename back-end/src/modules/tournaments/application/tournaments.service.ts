@@ -1,6 +1,5 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { SchedulerRegistry } from "@nestjs/schedule";
-import { CronJob } from "cron";
 
 import { AwsS3Service } from "@tournaments/aws/s3";
 
@@ -35,8 +34,11 @@ import {
   GetProfileParams,
   GetProfileResult,
   GetTournamentInfoParams,
+  GetTournamentsByMemberIdParams,
+  GetTournamentsByMemberIdResult,
 } from "./tournament-service.type";
 import { UserModel, UsersService } from "../../users";
+import { In } from "typeorm";
 
 @Injectable()
 export class TournamentsService {
@@ -67,6 +69,9 @@ export class TournamentsService {
 
   async all(): Promise<GetAllTournamentsResult> {
     const tournaments = await this.tournamentRepository.find({
+      where: {
+        isStarted: false,
+      },
       relations: {
         profile: true,
       },
@@ -85,9 +90,41 @@ export class TournamentsService {
     const tournaments = await this.tournamentRepository.find({
       where: {
         region,
+        isStarted: false,
       },
       relations: {
         profile: true,
+      },
+    });
+
+    return {
+      tournaments,
+    };
+  }
+
+  async getTournamentsByMemberId(
+    props: GetTournamentsByMemberIdParams
+  ): Promise<GetTournamentsByMemberIdResult> {
+    const { memberId } = props;
+
+    const trs = await this.tournamentRepository.find({
+      where: {
+        members: {
+          memberId,
+        },
+        isFinished: true,
+      },
+      select: {
+        id: true,
+      },
+    });
+
+    const tournaments = await this.tournamentRepository.find({
+      where: {
+        id: In(trs.map((tr) => tr.id)),
+      },
+      relations: {
+        members: true,
       },
     });
 
