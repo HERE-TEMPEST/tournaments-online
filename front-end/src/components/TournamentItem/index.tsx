@@ -5,30 +5,29 @@ import classNames from 'classnames'
 import { ITournament } from '../../models'
 import scss from './TournamentItem.module.scss'
 
-interface TournamentItemProps extends ITournament {
+interface TournamentItemProps {
   onClick: (id: number) => void
   className?: string
+  tournament: ITournament
 }
 
 export const TournamentItem = ({
   onClick,
-  id,
-  name,
-  currentAmount,
-  capacity,
   className,
-  profile,
+  tournament,
 }: TournamentItemProps) => {
+  console.log({ tournament })
+
   return (
     <div
       className={classNames(className || '', scss.wrapper)}
-      onClick={() => onClick(id)}
+      onClick={() => onClick(tournament.id)}
     >
-      <img src={profile?.uri || location.origin + '/1.jpg'} alt="" />
+      <img src={tournament.profile?.uri || location.origin + '/1.jpg'} alt="" />
       <div className={scss.info}>
-        <div className={scss.title}>{name}</div>
+        <div className={scss.title}>{tournament.name}</div>
         <div className={scss.capacity}>
-          {currentAmount}/{capacity}
+          {tournament.currentAmount}/{tournament.capacity}
         </div>
       </div>
     </div>

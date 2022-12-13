@@ -1,93 +1,67 @@
+import { useEffect, useState } from 'react'
+import { Loader, Portal } from '../../../components'
 import { TournamentItem } from '../../../components/TournamentItem'
+import { ITournament } from '../../../models'
+import {
+  fetchUserTournaments,
+  useAppDispatch,
+  useAppSelector,
+} from '../../../redux'
+import { SelectedTournament } from './SelectedTournament'
 import scss from './Tournaments.module.scss'
 
-const tournaments = [
-  {
-    id: 1,
-    title: 'Some name',
-    currentAmount: 0,
-    capacity: 10,
-    postUri: location.origin + '/1.jpg',
-  },
-  {
-    id: 2,
-    title: 'Some name',
-    currentAmount: 0,
-    capacity: 10,
-    postUri: location.origin + '/1.jpg',
-  },
-  {
-    id: 3,
-    title: 'Some asdasdasdasdasdasdasdadasdname',
-    currentAmount: 0,
-    capacity: 10,
-    postUri: location.origin + '/1.jpg',
-  },
-  {
-    id: 4,
-    title: 'Some name',
-    currentAmount: 0,
-    capacity: 10,
-    postUri: location.origin + '/1.jpg',
-  },
-  {
-    id: 5,
-    title: 'Some name',
-    currentAmount: 0,
-    capacity: 10,
-    postUri: location.origin + '/1.jpg',
-  },
-  {
-    id: 6,
-    title: 'Some name',
-    currentAmount: 0,
-    capacity: 10,
-    postUri: location.origin + '/1.jpg',
-  },
-  {
-    id: 7,
-    title: 'Some asdasdasdasdasdasdasdadasdname',
-    currentAmount: 0,
-    capacity: 10,
-    postUri: location.origin + '/1.jpg',
-  },
-  {
-    id: 8,
-    title: 'Some name',
-    currentAmount: 0,
-    capacity: 10,
-    postUri: location.origin + '/1.jpg',
-  },
-  {
-    id: 9,
-    title: 'Some name',
-    currentAmount: 0,
-    capacity: 10,
-    postUri: location.origin + '/1.jpg',
-  },
-  {
-    id: 10,
-    title: 'Some name',
-    currentAmount: 0,
-    capacity: 10,
-    postUri: location.origin + '/1.jpg',
-  },
-]
+export const WinninedTournaments = () => {
+  const dispatch = useAppDispatch()
+  const tournaments = useAppSelector((state) => state.user.tournaments)
+  const isFetching = useAppSelector((state) => state.user.loadingTournaments)
 
-export const Tournaments = () => {
+  const [selectedTournament, setSelectedTournament] = useState<
+    ITournament | undefined
+  >(undefined)
+
+  const onClick = (id: number) => {
+    setSelectedTournament(tournaments!.find((tour) => tour.id === id))
+  }
+
+  const onClose = () => {
+    setSelectedTournament(undefined)
+  }
+
+  useEffect(() => {
+    dispatch(fetchUserTournaments())
+  }, [])
+
+  if (isFetching) {
+    return (
+      <div className={scss.wrapper}>
+        <Loader />
+      </div>
+    )
+  }
+
   return (
     <div className={scss.wrapper}>
-      <div className={scss.content}>
-        {tournaments.map((tournament) => (
-          <TournamentItem
-            {...tournament}
-            key={tournament.id}
-            onClick={() => {
-              return
-            }}
+      {!isFetching ? (
+        <div className={scss.content}>
+          {tournaments?.map((tournament) => (
+            <TournamentItem
+              tournament={tournament}
+              key={tournament.id}
+              onClick={onClick}
+            />
+          ))}
+        </div>
+      ) : (
+        <Loader />
+      )}
+      {selectedTournament ? (
+        <Portal>
+          <SelectedTournament
+            tournament={selectedTournament}
+            onClick={onClose}
           />
-        ))}
-      </div>
+        </Portal>
+      ) : null}
     </div>
   )
 }

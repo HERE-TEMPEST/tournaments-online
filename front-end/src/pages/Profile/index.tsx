@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { Profile } from './Profile'
-import { Tournaments } from './Tournaments'
+import { WinninedTournaments } from './Tournaments'
 
 import scss from './ProfilePage.module.scss'
 import { fetchUserInfo, useAppDispatch, useAppSelector } from '../../redux'
@@ -25,10 +25,10 @@ export const ProfilePage = () => {
         </div>
         <div className={scss.tournaments}>
           <div className={scss.title}>
-            <div className={scss.text}>Победные турниры</div>
+            <div className={scss.text}>Tournaments you have played</div>
           </div>
           <div className={scss.content}>
-            <Tournaments />
+            <WinninedTournaments />
           </div>
         </div>
       </div>

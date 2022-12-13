@@ -6,3 +6,8 @@ export {
   createUpdateUserCredentialsAction,
   createErrorInUpdatingUserCredentialsAction,
 } from './user.actions'
+export {
+  createErrorInFetchingUserTournamentsAction,
+  createFetchingUserTournamentsAction,
+  createUserTournamentsWasLoadedAction,
+} from './user-tournaments.actions'

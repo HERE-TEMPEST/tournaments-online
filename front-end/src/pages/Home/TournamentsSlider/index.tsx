@@ -55,7 +55,7 @@ export const TournamentsSlider = ({
         {tournaments.map((tournament) => (
           <TournamentItem
             className={scss.item}
-            {...tournament}
+            tournament={tournament}
             key={tournament.id}
             onClick={handleClickChoiceTournament}
           />

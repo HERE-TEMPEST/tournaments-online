@@ -12,6 +12,7 @@ export * from './user'
 export * from './tournaments'
 export * from './global-chat'
 export * from './game'
+export * from './events'
 
 export const rootReducer = combineReducers({
   user: userReducer,

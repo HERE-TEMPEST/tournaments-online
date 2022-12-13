@@ -1,5 +1,10 @@
 import { SignOutUserAction } from '../../auth/actions/sign-out.action'
 import {
+  ErrorInFetchingUserTournamentsAction,
+  IsFetchingUserTournamentsAction,
+  UserTournamentsFetchedAction,
+} from './user-tournaments.actions'
+import {
   ErrorInFetchingUserCredentialsAction,
   ErrorInUpdatingUserCredentialsAction,
   IsFetchingUserCredentialsAction,
@@ -13,4 +18,7 @@ export type UserActions =
   | ErrorInFetchingUserCredentialsAction
   | UpdateUserCredentialsAction
   | ErrorInUpdatingUserCredentialsAction
+  | UserTournamentsFetchedAction
+  | ErrorInFetchingUserTournamentsAction
+  | IsFetchingUserTournamentsAction
   | SignOutUserAction

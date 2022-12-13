@@ -3,11 +3,7 @@ import { EventsActions } from './actions'
 
 const initialValue: EventsState = {
   error: null,
-  tournaments: [
-    { id: '1231231', title: 'Some title', message: 'Some message' } as any,
-    { id: '1231232', title: 'Some title', message: 'Some message' } as any,
-    { id: '1231233', title: 'Some title', message: 'Some message' } as any,
-  ],
+  tournaments: [],
 }
 
 export const eventsReducer = (
@@ -24,12 +20,19 @@ export const eventsReducer = (
       }
     }
 
-    case EventsActionsTypes.ADD_TOURNAMENT_WINNER_ACTION: {
+    case EventsActionsTypes.DELETE_TOURNAMENT_WINNER_ACTION: {
       return {
         ...state,
         tournaments: state.tournaments.filter(
           (event) => event.id !== payload.id
         ),
+      }
+    }
+
+    case EventsActionsTypes.SIGNOUT_USER_ACTION: {
+      return {
+        ...state,
+        tournaments: [],
       }
     }
 

@@ -1,6 +1,7 @@
 import { io, Socket } from 'socket.io-client'
 import { serverConfig } from '../../config'
 import { store } from '../../store'
+import { createAddTournamentWinnerActionAsync } from '../events'
 import { ChatActions } from './actions/chat-actions.type'
 import { createOnMessageToChatAction } from './actions/on-message.action'
 import { ChatActionsTypes, ChatState } from './types'
@@ -40,6 +41,12 @@ export const chatReducer = (
 
         globalChatSocket.on('disconnect', () => {
           console.log('disconnect from chat')
+        })
+
+        globalChatSocket.on('winner', ({ tournament, winner }) => {
+          store.dispatch(
+            createAddTournamentWinnerActionAsync({ tournament, winner })
+          )
         })
 
         globalChatSocket.on('user.join', ({ profileUri, username, userId }) => {

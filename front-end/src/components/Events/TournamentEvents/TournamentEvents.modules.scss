@@ -24,7 +24,6 @@
         flex-direction: column;
         margin-left: vh(10);
         margin-top: vh(10);
-        justify-content: space-between;
 
         .title {
           opacity: 50%;
@@ -32,11 +31,13 @@
         }
 
         .message {
+          margin-top: vh(5);
           opacity: 50%;
+          width: vw(200);
           @include textStyleMixin;
           font-weight: vw(600);
-          font-size: vw(14);
-          line-height: vw(14);
+          font-size: vw(13);
+          line-height: vw(13);
         }
       }
 
@@ -49,6 +50,18 @@
         img {
           width: vh(80);
           height: vh(80);
+        }
+      }
+
+      .icon {
+        align-self: flex-start;
+        margin: vh(10) vw(10) 0 auto;
+        width: vw(24);
+        height: vh(24);
+
+        svg {
+          width: vw(24);
+          height: vh(24);
         }
       }
     }
