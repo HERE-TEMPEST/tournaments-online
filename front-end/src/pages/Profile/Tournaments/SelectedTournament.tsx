@@ -21,9 +21,8 @@ export const SelectedTournament: React.FC<tournamentProps> = ({
 }: tournamentProps) => {
   const user = useAppSelector((state) => state.user.user)
 
-  const winner = tournament.members.reduce((prev, curr) =>
-    prev.score > curr.score ? prev : curr
-  )
+  const sortedWinner = tournament.members.sort((a, b) => b.score - a.score)
+  const grand = sortedWinner.findIndex((m) => m.memberId === user?._id)
 
   return (
     <div className={scss.wrapper} onClick={onClick}>
@@ -41,11 +40,16 @@ export const SelectedTournament: React.FC<tournamentProps> = ({
               </div>
             </div>
           </div>
-          <div className={scss.property}>
-            Duration: {toString(tournament.duration)}
-          </div>
-          <div className={scss.property}>
-            Joined: {`${tournament.currentAmount}/${tournament.capacity}`}
+          <div className={scss.winner}>
+            <div>
+              <div className={scss.property}>
+                Duration: {toString(tournament.duration)}
+              </div>
+              <div className={scss.property}>
+                Joined: {`${tournament.currentAmount}/${tournament.capacity}`}
+              </div>
+            </div>
+            <div className={scss.winnerText}>Took {grand + 1}st place</div>
           </div>
         </div>
       </div>

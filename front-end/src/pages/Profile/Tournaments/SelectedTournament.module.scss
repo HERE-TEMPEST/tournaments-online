@@ -88,22 +88,38 @@
         }
       }
 
-      .property {
-        margin-top: vh(10);
-        margin-left: vw(30);
-        @include textStyleMixin;
-        font-size: vh(20);
-        font-weight: 600;
-        line-height: vh(24);
-        opacity: 50%;
-      }
+      .winner {
+        display: flex;
+        justify-content: space-between;
+        width: vw(500);
 
-      .btn {
-        align-self: flex-end;
-        margin-right: vw(30);
-        font-size: vh(30);
-        font-weight: 600;
-        line-height: vh(32);
+        .property {
+          margin-top: vh(10);
+          margin-left: vw(30);
+          @include textStyleMixin;
+          font-size: vh(20);
+          font-weight: 600;
+          line-height: vh(24);
+          opacity: 50%;
+        }
+
+        .winnerText {
+          margin-top: vh(10);
+          margin-left: vw(30);
+          @include textStyleMixin;
+          font-size: vh(26);
+          font-weight: 600;
+          line-height: vh(30);
+          opacity: 50%;
+        }
+
+        .btn {
+          align-self: flex-end;
+          margin-right: vw(30);
+          font-size: vh(30);
+          font-weight: 600;
+          line-height: vh(32);
+        }
       }
     }
   }
