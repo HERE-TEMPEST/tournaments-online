@@ -1,57 +1,61 @@
-import {
-  LOGIN_USER_ACTION,
-  REGISTER_USER_ACTION,
-  SIGNOUT_USER_ACTION,
-  AuthActions,
-} from './actions'
-import { AuthState } from './auth.state'
+import { Reducer } from '@reduxjs/toolkit'
 
-const SAVED_TOKEN_KEY = 'tournaments-online-token'
+import { AuthActionsTypes } from './actions'
+import { AuthState, initialAuthState } from './auth.state'
+import { AuthActionTokens } from './auth.tokens'
 
-const savedToken = localStorage.getItem(SAVED_TOKEN_KEY)
-
-const initialValue: AuthState = {
-  loading: false,
-  error: '',
-  auth: { isAuth: !!savedToken, token: savedToken || '' },
-}
-
-export const authReducer = (
-  state: AuthState = initialValue,
-  action: AuthActions
+export const authReducer: Reducer<AuthState, AuthActionsTypes> = (
+  state = initialAuthState,
+  action
 ) => {
   const { type, payload } = action
 
   switch (type) {
-    case LOGIN_USER_ACTION: {
+    case AuthActionTokens.USER_LOGINED_ACTION: {
       const { token } = payload
-
-      localStorage.setItem(SAVED_TOKEN_KEY, token)
-
-      return { ...state, auth: { token, isAuth: true } }
-    }
-
-    case REGISTER_USER_ACTION: {
-      const { token } = payload
-
-      localStorage.setItem(SAVED_TOKEN_KEY, token)
-
-      return { ...state, auth: { token, isAuth: true } }
-    }
-
-    case SIGNOUT_USER_ACTION: {
-      localStorage.setItem(SAVED_TOKEN_KEY, '')
 
       return {
-        ...initialValue,
-        auth: {
-          token: '',
-          isAuth: false,
+        data: {
+          isAuth: true,
+          token: token,
         },
+        loading: false,
+        error: undefined,
       }
     }
 
-    default:
+    case AuthActionTokens.USER_REGISTERED_ACTION: {
+      const { token } = payload
+
+      return {
+        data: {
+          isAuth: true,
+          token: token,
+        },
+        loading: false,
+        error: undefined,
+      }
+    }
+
+    case AuthActionTokens.AUTH_ERROR_ACTION: {
+      const { message } = payload
+
+      return {
+        data: {
+          isAuth: false,
+          token: undefined,
+        },
+        error: message,
+        loading: false,
+      }
+    }
+
+    case AuthActionTokens.USER_SIGN_OUT_ACTION: {
+      return initialAuthState
+    }
+
+    default: {
       return state
+    }
   }
 }

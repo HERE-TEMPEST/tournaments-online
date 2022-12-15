@@ -1,8 +1,10 @@
-import { LoginUserAction } from './login-user.action'
-import { RegisterUserAction } from './register-user.action'
-import { SignOutUserAction } from './sign-out.action'
+import { UserSignOutAction } from './user-sign-out.action'
+import { UserLoginedAction } from './user-logined.action'
+import { UserRegisteredAction } from './user-registered.action'
+import { AuthErrorAction } from './error.action'
 
-export type AuthActions =
-  | LoginUserAction
-  | SignOutUserAction
-  | RegisterUserAction
+export type AuthActionsTypes =
+  | UserLoginedAction
+  | UserRegisteredAction
+  | UserSignOutAction
+  | AuthErrorAction

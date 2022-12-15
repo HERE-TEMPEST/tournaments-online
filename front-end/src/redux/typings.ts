@@ -8,12 +8,3 @@ export type AppDispatch = typeof store.dispatch
 
 export const useAppDispatch: () => AppDispatch = useDispatch
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
-
-export const useEvents = (type: 'tournament') => {
-  const events = useAppSelector((state) => state.events)
-  if (type === 'tournament') {
-    return events.tournaments
-  }
-
-  return []
-}
