@@ -1,9 +1,9 @@
 import { Navigate, Outlet, useLocation } from 'react-router-dom'
 import { LOGIN_PAGE_ROUTE } from '../constants'
-import { useAppSelector } from '../redux'
+import { useAuth } from '../hooks'
 
 export const PrivateRoute = () => {
-  const isAuth = useAppSelector((state) => state.auth.auth?.isAuth || false)
+  const { isAuth } = useAuth()
   const location = useLocation()
 
   if (!isAuth) {

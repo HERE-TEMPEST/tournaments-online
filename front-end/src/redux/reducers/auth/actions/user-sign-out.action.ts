@@ -1,17 +1,19 @@
 import { PayloadAction, ActionCreator } from '@reduxjs/toolkit'
 
-import { AuthActionTokens } from '../auth.tokens'
+import { ActionTokens } from '../../tokens'
 
-export type UserSignOutAction = PayloadAction<
-  undefined,
-  AuthActionTokens.USER_SIGN_OUT_ACTION
+type AuthUserSignOutActionPayload = undefined
+
+export type AuthUserSignOutAction = PayloadAction<
+  AuthUserSignOutActionPayload,
+  ActionTokens.AUTH_USER_SIGN_OUT_ACTION
 >
 
-export const createUserSignOutAction: ActionCreator<UserSignOutAction> = (
-  payload: undefined
-) => {
+export const createAuthUserSignOutAction: ActionCreator<
+  AuthUserSignOutAction
+> = (payload: AuthUserSignOutActionPayload) => {
   return {
-    type: AuthActionTokens.USER_SIGN_OUT_ACTION,
+    type: ActionTokens.AUTH_USER_SIGN_OUT_ACTION,
     payload,
   }
 }

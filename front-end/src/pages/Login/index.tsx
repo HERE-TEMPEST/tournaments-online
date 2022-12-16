@@ -1,44 +1,54 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { DarkTextInput } from '../../components'
-import { TransparentButton } from '../../components/Buttons'
+
+import { DarkTextInput, TransparentButton } from '../../components'
 import { REGISTRATION_PAGE_ROUTE } from '../../constants'
-import { fetchLoginUser, useAppDispatch } from '../../redux'
+import { createAsyncAuthLoginUserAction, useAppDispatch } from '../../redux'
 
 import scss from './Login.module.scss'
 
 export const LoginPage = () => {
-  const [login, setLogin] = useState('')
-  const [password, setPassword] = useState('')
-
   const dispatch = useAppDispatch()
-
-  const onChangePassword = (e: any) => {
-    setPassword(() => e.target.value)
-  }
-  const onChangeLogin = (e: any) => {
-    setLogin(() => e.target.value)
-  }
+  const [credentials, setCredentials] = useState({
+    login: '',
+    password: '',
+  })
 
   const handleClickLogin = () => {
-    dispatch(fetchLoginUser({ login, password }))
+    dispatch(createAsyncAuthLoginUserAction({ ...credentials }))
+  }
+
+  const onFormChange = (event: any) => {
+    setCredentials((prev) => ({
+      ...prev,
+      [event.target.name]: event.target.value,
+    }))
+  }
+
+  const onFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    handleClickLogin()
   }
 
   return (
     <div className={scss.wrapper}>
-      <div className={scss.content}>
+      <form
+        className={scss.content}
+        onSubmit={onFormSubmit}
+        onChange={onFormChange}
+      >
         <DarkTextInput
           className={scss.login}
           placeholder="Логин..."
-          value={login}
-          onChange={onChangeLogin}
+          value={credentials.login}
+          name="login"
         />
         <DarkTextInput
           className={scss.password}
           placeholder="Пароль..."
-          value={password}
+          value={credentials.password}
           isPassword={true}
-          onChange={onChangePassword}
+          name="password"
         />
         <div className={scss.controls}>
           <TransparentButton
@@ -57,7 +67,7 @@ export const LoginPage = () => {
             </Link>
           </div>
         </div>
-      </div>
+      </form>
     </div>
   )
 }

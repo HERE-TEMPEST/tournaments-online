@@ -1,3 +1,7 @@
 export * from './auth-actions.type'
 export * from './user-logined.action'
 export * from './user-sign-out.action'
+export * from './user-registered.action'
+export * from './error.action'
+export * from './auth-loading.action'
+export * from './error-uploading-profile.action'

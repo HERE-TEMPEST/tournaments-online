@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { Header, Portal, TournamentsEvents } from '../components'
+import { Header, Loader, Portal, TournamentsEvents } from '../components'
+import { useAuth } from '../hooks'
 
 interface MainLayoutProps {
   children:
@@ -10,6 +11,8 @@ interface MainLayoutProps {
 }
 
 export const MainLayout = ({ children }: MainLayoutProps) => {
+  const { loading } = useAuth()
+
   return (
     <>
       <Header />
@@ -17,7 +20,8 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
       <Portal>
         <TournamentsEvents />
       </Portal>
-      {children}
+
+      {loading ? <Loader /> : children}
     </>
   )
 }

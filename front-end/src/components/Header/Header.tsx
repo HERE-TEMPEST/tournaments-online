@@ -10,15 +10,7 @@ import {
   PROFILE_PAGE_ROUTE,
   TABLE_RECORDS_PAGE_ROUTE,
 } from '../../constants'
-import { useSignOut } from '../../hooks'
-import {
-  createSignOutUserAction,
-  useAppDispatch,
-  useAppSelector,
-  createChangeRegionAction,
-  connectToChatAction,
-  createDisconnectChatSocketAction,
-} from '../../redux'
+import { useAuth } from '../../hooks'
 import { Region } from '../../types'
 import { Icon } from '../Icon'
 
@@ -33,20 +25,13 @@ const regions: Array<Region> = [
 ]
 
 export const Header = () => {
-  const isAuth = useAppSelector((state) => state.auth.auth.isAuth)
+  const { isAuth } = useAuth()
   const [iconsVisibility, setIconsVisibility] = useState(isAuth)
   const [isOpenedregionSelector, openCloseRegionSelector] = useState(false)
-  const dispath = useAppDispatch()
-  const signOut = useSignOut()
 
-  const region = useAppSelector((state) => state.tournaments.region)
-  const onChangeRegion = (reg: Region) => {
-    openCloseRegionSelector(false)
-    dispath(createChangeRegionAction(reg))
-    dispatch(connectToChatAction())
-  }
+  const region = 'global'
+  const onChangeRegion = () => {}
 
-  const dispatch = useAppDispatch()
   const location = useLocation()
 
   useEffect(() => {
@@ -61,7 +46,7 @@ export const Header = () => {
             <div
               key={index}
               className={scss.region}
-              onClick={() => onChangeRegion(reg)}
+              onClick={() => onChangeRegion()}
             >
               {reg}
             </div>
@@ -97,7 +82,7 @@ export const Header = () => {
                 <Icon type="Profile" />
               </Link>
             </div>
-            <div className={scss.icon} onClick={signOut}>
+            <div className={scss.icon}>
               <Icon type="Exit" />
             </div>
           </div>

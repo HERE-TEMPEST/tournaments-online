@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { DarkFileInput, DarkTextInput } from '../../components'
 import { TransparentButton } from '../../components/Buttons'
 import { LOGIN_PAGE_ROUTE } from '../../constants'
-import { fetchRegisterUser, useAppDispatch } from '../../redux'
+import { useAppDispatch, createAsyncAuthRegisterUserAction } from '../../redux'
 import { useLogic } from './logic'
 
 import scss from './Registration.module.scss'
@@ -28,7 +28,16 @@ export const RegistrationPage = () => {
   } = useLogic()
 
   const handleClickRegistration = () => {
-    dispatch(fetchRegisterUser({ email, file, login, name, password, surname }))
+    dispatch(
+      createAsyncAuthRegisterUserAction({
+        email,
+        file,
+        login,
+        name,
+        password,
+        surname,
+      })
+    )
   }
 
   return (

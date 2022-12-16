@@ -1,20 +1,12 @@
 import React from 'react'
-import {
-  createDeleteTournamentWinnerAction,
-  useAppDispatch,
-  useEvents,
-} from '../../../redux'
 import { TournamentEventItem } from './Event'
 
 import scss from './TournamentEvents.modules.scss'
 
 export const TournamentsEvents = () => {
-  const dispatch = useAppDispatch()
-  const events = useEvents('tournament')
+  const events: any = []
 
-  const onClose = (id: string) => {
-    dispatch(createDeleteTournamentWinnerAction({ id }))
-  }
+  const onClose = (id: string) => {}
 
   return (
     <div className={scss.wrapper}>
