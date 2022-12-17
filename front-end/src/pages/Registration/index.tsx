@@ -1,87 +1,109 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { DarkFileInput, DarkTextInput } from '../../components'
-import { TransparentButton } from '../../components/Buttons'
+
+import {
+  DarkFileInput,
+  DarkTextInput,
+  TransparentButton,
+} from '../../components'
 import { LOGIN_PAGE_ROUTE } from '../../constants'
 import { useAppDispatch, createAsyncAuthRegisterUserAction } from '../../redux'
-import { useLogic } from './logic'
-
 import scss from './Registration.module.scss'
 
 export const RegistrationPage = () => {
   const dispatch = useAppDispatch()
 
-  const {
-    name,
-    file,
-    surname,
-    login,
-    password,
-    fileUri,
-    email,
-    onChangeEmail,
-    onChangePassword,
-    onChangeName,
-    onChangeSurname,
-    onChangeFile,
-    onChangeLogin,
-  } = useLogic()
+  const [user, setUser] = useState({
+    fileUri: location.origin + '/default-profile.png',
+    file: null,
+    email: '',
+    login: '',
+    password: '',
+    name: '',
+    surname: '',
+  })
 
   const handleClickRegistration = () => {
     dispatch(
       createAsyncAuthRegisterUserAction({
-        email,
-        file,
-        login,
-        name,
-        password,
-        surname,
+        email: user.email,
+        file: user.file,
+        login: user.login,
+        name: user.name,
+        password: user.password,
+        surname: user.surname,
       })
     )
+  }
+  const onFormChange = (event: any) => {
+    if (event.target.name === 'profile') {
+      const file = event.target.files[0]
+      const uri = URL.createObjectURL(file)
+
+      setUser((prev) => ({
+        ...prev,
+        fileUri: uri,
+        file,
+      }))
+    } else {
+      setUser((prev) => ({
+        ...prev,
+        [event.target.name]: event.target.value,
+      }))
+    }
+  }
+
+  const onFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    handleClickRegistration()
   }
 
   return (
     <div className={scss.wrapper}>
-      <div className={scss.content}>
+      <form
+        className={scss.content}
+        onSubmit={onFormSubmit}
+        onChange={onFormChange}
+      >
         <div className={scss.profile}>
           <div className={scss.profileImage}>
-            <img src={fileUri} alt="" />
+            <img src={user.fileUri} alt="" />
           </div>
           <div className={scss.setProfileInput}>
             <div className={scss.title}>Profile</div>
-            <DarkFileInput className={scss.btn} onChange={onChangeFile} />
+            <DarkFileInput className={scss.btn} name="profile" />
           </div>
         </div>
         <DarkTextInput
           className={scss.name}
           placeholder="Name..."
-          value={name}
-          onChange={onChangeName}
+          value={user.name}
+          name="name"
         />
         <DarkTextInput
           className={scss.surname}
           placeholder="Surname..."
-          value={surname}
-          onChange={onChangeSurname}
+          value={user.surname}
+          name="surname"
         />
         <DarkTextInput
           className={scss.surname}
           placeholder="Email..."
-          value={email}
-          onChange={onChangeEmail}
+          value={user.email}
+          name="email"
         />
         <DarkTextInput
           className={scss.login}
           placeholder="Login..."
-          value={login}
-          onChange={onChangeLogin}
+          value={user.login}
+          name="login"
         />
         <DarkTextInput
           className={scss.password}
           placeholder="Password..."
           isPassword={true}
-          value={password}
-          onChange={onChangePassword}
+          value={user.password}
+          name="password"
         />
         <div className={scss.controls}>
           <TransparentButton
@@ -100,7 +122,7 @@ export const RegistrationPage = () => {
             </Link>
           </div>
         </div>
-      </div>
+      </form>
     </div>
   )
 }
