@@ -14,7 +14,12 @@ import {
   // TOURNAMENT_PAGE_ROUTE,
   // TOURNAMENT_WAITING_PAGE_ROUTE,
 } from '../constants'
-import { MainLayout, PrivateRoute, PublicRoute } from '../hoc'
+import {
+  InitGlobalWebSocket,
+  MainLayout,
+  PrivateRoute,
+  PublicRoute,
+} from '../hoc'
 
 import scss from './index.module.scss'
 // import { TableRecordsPage } from './TableRecords'
@@ -28,8 +33,9 @@ export const TournamentsOnlineApp = () => {
       <MainLayout>
         <Routes>
           <Route element={<PrivateRoute />}>
-            <Route path="/" element={<div>Hello</div>} />
-            {/* <Route path={HOME_PAGE_ROUTE} element={<HomePage />} />
+            <Route element={<InitGlobalWebSocket />}>
+              <Route path="/" element={<div>Hello</div>} />
+              {/* <Route path={HOME_PAGE_ROUTE} element={<HomePage />} />
             <Route
               path={TOURNAMENT_WAITING_PAGE_ROUTE}
               element={<GameWaitingPage />}
@@ -44,6 +50,7 @@ export const TournamentsOnlineApp = () => {
               element={<TableRecordsPage />}
             />
             <Route path={TOURNAMENT_PAGE_ROUTE} element={<GamePage />} /> */}
+            </Route>
           </Route>
           <Route element={<PublicRoute />}>
             <Route path={LOGIN_PAGE_ROUTE} element={<LoginPage />} />

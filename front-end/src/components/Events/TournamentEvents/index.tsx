@@ -1,10 +1,11 @@
 import React from 'react'
+import { useEvents } from '../../../hooks'
 import { TournamentEventItem } from './Event'
 
 import scss from './TournamentEvents.modules.scss'
 
 export const TournamentsEvents = () => {
-  const events: any = []
+  const { events } = useEvents()
 
   const onClose = (id: string) => {}
 

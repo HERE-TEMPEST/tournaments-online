@@ -1,10 +1,5 @@
 export const store = {
   global: {
-    chat: {
-      messages: [],
-      loading: 'boolean',
-      error: 'string | undefined',
-    },
     events: {
       events: [],
       loading: 'boolean',
@@ -24,6 +19,11 @@ export const store = {
     },
   },
   home: {
+    chat: {
+      messages: [],
+      loading: 'boolean',
+      error: 'string | undefined',
+    },
     filters: {
       searchLine: 'string',
       filteredTournaments: [],
