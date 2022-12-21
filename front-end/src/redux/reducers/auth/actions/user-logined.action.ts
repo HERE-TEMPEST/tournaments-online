@@ -1,6 +1,6 @@
 import { PayloadAction, ActionCreator } from '@reduxjs/toolkit'
 
-import { ActionTokens } from '../../tokens'
+import { TypesActions } from '../../actions.type'
 
 interface AuthUserLoginedActionPayload {
   token: string
@@ -8,14 +8,14 @@ interface AuthUserLoginedActionPayload {
 
 export type AuthUserLoginedAction = PayloadAction<
   AuthUserLoginedActionPayload,
-  ActionTokens.AUTH_USER_LOGINED_ACTION
+  TypesActions.AUTH_USER_LOGINED_ACTION
 >
 
 export const createAuthUserLoginedAction: ActionCreator<
   AuthUserLoginedAction
 > = (payload: AuthUserLoginedActionPayload) => {
   return {
-    type: ActionTokens.AUTH_USER_LOGINED_ACTION,
+    type: TypesActions.AUTH_USER_LOGINED_ACTION,
     payload,
   }
 }

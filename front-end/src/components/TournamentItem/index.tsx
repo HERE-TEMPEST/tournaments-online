@@ -16,8 +16,6 @@ export const TournamentItem = ({
   className,
   tournament,
 }: TournamentItemProps) => {
-  console.log({ tournament })
-
   return (
     <div
       className={classNames(className || '', scss.wrapper)}

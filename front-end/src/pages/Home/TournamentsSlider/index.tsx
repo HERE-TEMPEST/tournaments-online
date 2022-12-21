@@ -4,41 +4,30 @@ import classNames from 'classnames'
 import scss from './TournamentsSlider.module.scss'
 import { Icon, Loader, Slider } from '../../../components'
 import { TournamentItem } from '../../../components/TournamentItem'
-import {
-  fetchAllTournamentsByRegion,
-  useAppDispatch,
-  useAppSelector,
-} from '../../../redux'
 import { ITournament } from '../../../models'
+import { useHome } from '../../../hooks'
 
 interface TournamentsSliderProps {
-  isOpen: React.Dispatch<React.SetStateAction<boolean>>
   setSelectedTournament: React.Dispatch<
     React.SetStateAction<ITournament | undefined>
   >
 }
 
 export const TournamentsSlider = ({
-  isOpen,
   setSelectedTournament,
 }: TournamentsSliderProps) => {
-  const region = useAppSelector((state) => state.tournaments.region)
-  const tournaments = useAppSelector(
-    (state) => state.tournaments.filteredTournaments
-  )
-  const isLoading = useAppSelector((state) => state.tournaments.loading)
-  const dispath = useAppDispatch()
+  const { tournaments, isLoadingTournaments, region, fetchTournaments } =
+    useHome()
 
   useEffect(() => {
-    dispath(fetchAllTournamentsByRegion())
+    fetchTournaments()
   }, [region])
 
   const handleClickChoiceTournament = (id: number) => {
-    isOpen(true)
     setSelectedTournament(tournaments.find((tour) => tour.id === id))
   }
 
-  if (isLoading) {
+  if (isLoadingTournaments) {
     return (
       <div className={scss.wrapper}>
         <Loader />

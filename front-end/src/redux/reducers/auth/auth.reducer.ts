@@ -2,7 +2,7 @@ import { Reducer } from '@reduxjs/toolkit'
 
 import { AuthActionsTypes } from './actions'
 import { AuthState, initialAuthState } from './auth.state'
-import { ActionTokens } from '../tokens'
+import { TypesActions } from '../actions.type'
 
 export const authReducer: Reducer<AuthState, AuthActionsTypes> = (
   state = initialAuthState,
@@ -11,7 +11,7 @@ export const authReducer: Reducer<AuthState, AuthActionsTypes> = (
   const { type, payload } = action
 
   switch (type) {
-    case ActionTokens.AUTH_USER_LOGINED_ACTION: {
+    case TypesActions.AUTH_USER_LOGINED_ACTION: {
       const { token } = payload
 
       return {
@@ -24,7 +24,7 @@ export const authReducer: Reducer<AuthState, AuthActionsTypes> = (
       }
     }
 
-    case ActionTokens.AUTH_USER_REGISTERED_ACTION: {
+    case TypesActions.AUTH_USER_REGISTERED_ACTION: {
       const { token } = payload
 
       return {
@@ -37,7 +37,7 @@ export const authReducer: Reducer<AuthState, AuthActionsTypes> = (
       }
     }
 
-    case ActionTokens.AUTH_LOADING_ACTION: {
+    case TypesActions.AUTH_LOADING_ACTION: {
       return {
         data: {
           isAuth: false,
@@ -48,7 +48,7 @@ export const authReducer: Reducer<AuthState, AuthActionsTypes> = (
       }
     }
 
-    case ActionTokens.AUTH_ERROR_ACTION: {
+    case TypesActions.AUTH_ERROR_ACTION: {
       const { message } = payload
 
       return {
@@ -61,11 +61,11 @@ export const authReducer: Reducer<AuthState, AuthActionsTypes> = (
       }
     }
 
-    case ActionTokens.AUTH_ERROR_UPLOADING_PROFILE_ACTION: {
+    case TypesActions.AUTH_ERROR_UPLOADING_PROFILE_ACTION: {
       return state
     }
 
-    case ActionTokens.AUTH_USER_SIGN_OUT_ACTION: {
+    case TypesActions.AUTH_USER_SIGN_OUT_ACTION: {
       return initialAuthState
     }
 

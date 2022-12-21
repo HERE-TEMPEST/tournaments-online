@@ -4,7 +4,7 @@
   z-index: 4;
   position: absolute;
   background: transparentize($color-dark, 0.2);
-  width: vw($windowWidth);
+  width: 100vw;
   height: 100vh;
   overflow: hidden;
 

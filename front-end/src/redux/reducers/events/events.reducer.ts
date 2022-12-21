@@ -2,7 +2,7 @@ import { Reducer } from '@reduxjs/toolkit'
 
 import { EventsActionsTypes } from './actions'
 import { EventsState, initialEventsState } from './events.state'
-import { ActionTokens } from '../tokens'
+import { TypesActions } from '../actions.type'
 
 export const eventsReducer: Reducer<EventsState, EventsActionsTypes> = (
   state = initialEventsState,
@@ -11,7 +11,7 @@ export const eventsReducer: Reducer<EventsState, EventsActionsTypes> = (
   const { type, payload } = action
 
   switch (type) {
-    case ActionTokens.AUTH_USER_SIGN_OUT_ACTION: {
+    case TypesActions.AUTH_USER_SIGN_OUT_ACTION: {
       return initialEventsState
     }
 

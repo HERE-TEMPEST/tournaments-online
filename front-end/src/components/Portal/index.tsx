@@ -2,7 +2,6 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 const portal = document.querySelector('#portal')
-console.log({ portal })
 
 interface PortalProps {
   children: React.ReactNode

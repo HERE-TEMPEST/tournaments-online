@@ -1,35 +1,23 @@
-import { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
+
 import { ChatMessage, Loader } from '../../../components'
-import {
-  createSendMessageToChatAction,
-  connectToChatAction,
-  createChatSocketAction,
-  fetchUserInfo,
-  useAppDispatch,
-  useAppSelector,
-} from '../../../redux'
+import { IChatMessage, IUser } from '../../../models'
+
 import scss from './Chat.module.scss'
 
-export const Chat = () => {
+interface ChatProps {
+  messages: Array<IChatMessage>
+  onMessage: (message: string) => void
+  me: IUser | undefined
+}
+
+export const Chat: React.FC<ChatProps> = ({
+  messages,
+  onMessage,
+  me,
+}: ChatProps) => {
   const re = useRef<any>(null)
-  const messages = useAppSelector((state) => state.chat.messages)
   const [messageBody, setMessageBody] = useState('')
-  const user = useAppSelector((state) => state.user.user)
-  const isLoading = useAppSelector((state) => state.user.loading)
-  const dispath = useAppDispatch()
-
-  useEffect(() => {
-    if (!user) {
-      dispath(fetchUserInfo())
-    }
-  }, [])
-
-  useEffect(() => {
-    if (user) {
-      dispath(createChatSocketAction())
-      dispath(connectToChatAction())
-    }
-  }, [user])
 
   useEffect(() => {
     if (re.current) {
@@ -37,23 +25,14 @@ export const Chat = () => {
     }
   }, [messages])
 
-  const postMessage = (e: React.KeyboardEvent<HTMLDivElement>) => {
+  const sendMessage = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === 'Enter') {
-      if (user) {
-        dispath(
-          createSendMessageToChatAction({
-            body: messageBody,
-            profileUri:
-              user.profile?.uri || location.origin + '/default-profile.png',
-            username: user?.surname,
-          })
-        )
-      }
+      onMessage(messageBody)
       setMessageBody('')
     }
   }
 
-  if (isLoading) {
+  if (!me) {
     return (
       <div className={scss.wrapper}>
         <Loader />
@@ -63,13 +42,13 @@ export const Chat = () => {
 
   return (
     <div className={scss.wrapper}>
-      <div className={scss.chatPlace}>
-        <div className={scss.chat} ref={re}>
+      <div className={scss.chatPlace} ref={re}>
+        <div className={scss.chat}>
           {messages.map((message) => (
             <ChatMessage
               message={message}
               key={message.id}
-              isOwner={user?._id === message.userId}
+              isOwner={me?._id === message.userId}
             />
           ))}
         </div>
@@ -78,7 +57,7 @@ export const Chat = () => {
         <input
           placeholder="Напишите сообщение..."
           value={messageBody}
-          onKeyDown={(e) => postMessage(e)}
+          onKeyDown={(e) => sendMessage(e)}
           onChange={(e) => setMessageBody(e.target.value)}
         />
       </div>

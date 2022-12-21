@@ -1,4 +1,5 @@
 import { IChatMessage, ITournament } from '../../../models'
+import { Region } from '../../../types'
 
 export interface HomeState {
   chat: {
@@ -7,9 +8,10 @@ export interface HomeState {
     error: string | undefined
   }
   filters: {
-    searchLine: ''
-    filteredTournaments: []
+    searchLine: string
+    filteredTournaments: Array<ITournament>
   }
+  region: Region
   tournaments: {
     data: Array<ITournament>
     loading: boolean
@@ -27,6 +29,7 @@ export const initialHomeState: HomeState = {
     searchLine: '',
     filteredTournaments: [],
   },
+  region: 'ca-central',
   tournaments: {
     data: [],
     loading: false,

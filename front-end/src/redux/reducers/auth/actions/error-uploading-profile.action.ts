@@ -1,6 +1,6 @@
 import { PayloadAction, ActionCreator } from '@reduxjs/toolkit'
 
-import { ActionTokens } from '../../tokens'
+import { TypesActions } from '../../actions.type'
 
 interface AuthErrorUploadingProfileActionPayload {
   message: string
@@ -8,14 +8,14 @@ interface AuthErrorUploadingProfileActionPayload {
 
 export type AuthErrorUploadingProfileAction = PayloadAction<
   AuthErrorUploadingProfileActionPayload,
-  ActionTokens.AUTH_ERROR_UPLOADING_PROFILE_ACTION
+  TypesActions.AUTH_ERROR_UPLOADING_PROFILE_ACTION
 >
 
 export const createAuthErrorUploadingProfileAction: ActionCreator<
   AuthErrorUploadingProfileAction
 > = (payload: AuthErrorUploadingProfileActionPayload) => {
   return {
-    type: ActionTokens.AUTH_ERROR_UPLOADING_PROFILE_ACTION,
+    type: TypesActions.AUTH_ERROR_UPLOADING_PROFILE_ACTION,
     payload,
   }
 }

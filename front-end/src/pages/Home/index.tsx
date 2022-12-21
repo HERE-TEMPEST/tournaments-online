@@ -1,33 +1,61 @@
-import { useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import scss from './Home.module.scss'
 
-import { Chat } from './Chat'
+import { Portal } from '../../components'
+import { ITournament } from '../../models'
+
 import { SearchInput } from './SearchInput'
 import { TournamentsSlider } from './TournamentsSlider'
 import { SelectedTournament } from './SelectedTournament'
-import { ITournament } from '../../models'
+import { Chat } from './Chat'
+import { GlobalSocketContext } from '../../contexts'
+import { useHome, useUser } from '../../hooks'
 
 export const HomePage = () => {
-  const [isopen, isOpen] = useState(false)
+  const { chatMessages } = useHome()
+  const { user, fetchUser } = useUser()
+
+  const globalSocketContext = useContext(GlobalSocketContext)
   const [selectedTournament, setSelectedTournament] = useState<
     ITournament | undefined
   >(undefined)
 
+  useEffect(() => {
+    if (!user) {
+      fetchUser()
+    }
+  }, [])
+
+  const onCloseTournamentModal = () => {
+    setSelectedTournament(undefined)
+  }
+
   return (
     <div className={scss.wrapper}>
-      {isopen && selectedTournament && (
-        <SelectedTournament tournament={selectedTournament} isOpen={isOpen} />
+      {selectedTournament && (
+        <Portal>
+          <SelectedTournament
+            tournament={selectedTournament}
+            onClose={onCloseTournamentModal}
+          />
+        </Portal>
       )}
       <div className={scss.content}>
         <div className={scss.searchPanel}>
           <SearchInput />
         </div>
-        <TournamentsSlider
-          setSelectedTournament={setSelectedTournament}
-          isOpen={isOpen}
-        />
+        <TournamentsSlider setSelectedTournament={setSelectedTournament} />
         <div className={scss.chatPanel}>
-          <Chat />
+          <Chat
+            me={user}
+            messages={chatMessages}
+            onMessage={
+              globalSocketContext?.sendMessage ||
+              (() => {
+                console.log('error in sending message')
+              })
+            }
+          />
         </div>
       </div>
     </div>

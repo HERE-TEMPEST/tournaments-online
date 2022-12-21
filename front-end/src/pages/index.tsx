@@ -5,6 +5,7 @@ import { LoginPage } from './Login'
 // import { ProfilePage } from './Profile'
 import { RegistrationPage } from './Registration'
 import {
+  HOME_PAGE_ROUTE,
   // CREATE_TOURNAMENT_PAGE_ROUTE,
   // HOME_PAGE_ROUTE,
   LOGIN_PAGE_ROUTE,
@@ -14,14 +15,10 @@ import {
   // TOURNAMENT_PAGE_ROUTE,
   // TOURNAMENT_WAITING_PAGE_ROUTE,
 } from '../constants'
-import {
-  InitGlobalWebSocket,
-  MainLayout,
-  PrivateRoute,
-  PublicRoute,
-} from '../hoc'
+import { MainLayout, PrivateRoute, PublicRoute } from '../hoc'
 
 import scss from './index.module.scss'
+import { HomePage } from './Home'
 // import { TableRecordsPage } from './TableRecords'
 // import { GamePage } from './Game'
 // import { CreateTournamentPage } from './CreateTournament'
@@ -33,10 +30,8 @@ export const TournamentsOnlineApp = () => {
       <MainLayout>
         <Routes>
           <Route element={<PrivateRoute />}>
-            <Route element={<InitGlobalWebSocket />}>
-              <Route path="/" element={<div>Hello</div>} />
-              {/* <Route path={HOME_PAGE_ROUTE} element={<HomePage />} />
-            <Route
+            <Route path={HOME_PAGE_ROUTE} element={<HomePage />} />
+            {/* <Route
               path={TOURNAMENT_WAITING_PAGE_ROUTE}
               element={<GameWaitingPage />}
             />
@@ -50,7 +45,6 @@ export const TournamentsOnlineApp = () => {
               element={<TableRecordsPage />}
             />
             <Route path={TOURNAMENT_PAGE_ROUTE} element={<GamePage />} /> */}
-            </Route>
           </Route>
           <Route element={<PublicRoute />}>
             <Route path={LOGIN_PAGE_ROUTE} element={<LoginPage />} />

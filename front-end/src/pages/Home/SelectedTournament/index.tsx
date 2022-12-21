@@ -11,20 +11,20 @@ import { ITournament } from '../../../models'
 import scss from './SelectedTournament.module.scss'
 
 interface SelectedTournamentProps {
-  isOpen: React.Dispatch<React.SetStateAction<boolean>>
+  onClose: () => void
   tournament: ITournament
 }
 
 const defaultPostUri = location.href + '/1.jpg'
 
 export const SelectedTournament: React.FC<SelectedTournamentProps> = ({
-  isOpen,
   tournament,
+  onClose,
 }: SelectedTournamentProps) => {
   const navigation = useNavigate()
 
   return (
-    <div className={scss.wrapper} onClick={() => isOpen(false)}>
+    <div className={scss.wrapper} onClick={() => onClose()}>
       <div className={scss.modal} onClick={(e) => e.stopPropagation()}>
         <div className={scss.title}>{tournament.name}</div>
         <div className={scss.info}>

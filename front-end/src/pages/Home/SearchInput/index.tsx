@@ -1,9 +1,5 @@
 import { Icon } from '../../../components'
-import {
-  createChangeFilterName,
-  useAppDispatch,
-  useAppSelector,
-} from '../../../redux'
+import { useHome } from '../../../hooks'
 import scss from './SearchInput.module.scss'
 
 // interface SearchInputProps {
@@ -12,17 +8,16 @@ import scss from './SearchInput.module.scss'
 // }
 
 export const SearchInput = () => {
-  const value = useAppSelector((state) => state.tournaments.filters.name)
-  const dispatch = useAppDispatch()
+  const { filters, setFilters } = useHome()
 
   const onChangeSearchParams = (value: string) => {
-    dispatch(createChangeFilterName(value))
+    setFilters({ searchLine: value })
   }
 
   return (
     <div className={scss.wrapper}>
       <input
-        value={value}
+        value={filters.searchLine}
         onChange={(e) => onChangeSearchParams(e.target.value)}
         placeholder={'Введите название турнира...'}
       />

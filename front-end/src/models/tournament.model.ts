@@ -20,3 +20,7 @@ export interface ITournament {
   members: Array<ITournamentMember>
   isStarted: boolean
 }
+
+export interface ITournamentsFilters {
+  searchLine?: string
+}
